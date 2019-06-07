@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Color;
@@ -16,6 +17,7 @@ import java.awt.event.ItemListener;
 import java.text.DecimalFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.border.BevelBorder;
 
 import com.csis3275.Controller.CalculateBMI;
@@ -57,7 +59,32 @@ public class UserGoals {
 	private JLabel lblWeightMetric;
 	private JTextField textFieldHeightMetric;
 	private JTextField textFieldWeightMetric;
-	private ButtonGroup radBtnGrp = new ButtonGroup();
+	private ButtonGroup unitBtnGroup = new ButtonGroup();
+	private ButtonGroup fitnessGoalsBtnGroup = new ButtonGroup();
+	private JPanel panelWeightLoss;
+	private JLabel lblWeightLossPlan;
+	private JRadioButton rdbtnLooseLb;
+	private JRadioButton rdbtnLooseLb_1;
+	private JRadioButton rdbtnLooseLb_2;
+	private JRadioButton rdbtnLooseLb_3;
+	private ButtonGroup weightLossGroup = new ButtonGroup();
+	private JPanel panelWeightGain;
+	private JLabel lblWeightGainPlan;
+	private JRadioButton rdbtnGainLb;
+	private JRadioButton rdbtnGainLb_1;
+	private JRadioButton rdbtnGainLb_2;
+	private JRadioButton rdbtnGainLb_3;
+	private ButtonGroup weightGainGroup = new ButtonGroup();
+	private JPanel panelExtremeWeightLoss;
+	private JLabel lblExtremeWeightLoss;
+	private JRadioButton rdbtnEXLooseLb_1;
+	private JRadioButton rdbtnEXLooseLb_2;
+	private JRadioButton rdbtnExLooseLb_3;
+	private JRadioButton rdbtnExLooseLb_4;
+	private ButtonGroup extremeLossGroup = new ButtonGroup();
+	private JButton btnFindWorkouts;
+	private JPanel panelStayFit;
+	private JLabel lblClickOnFind;
 
 	/**
 	 * Launch the application.
@@ -164,7 +191,7 @@ public class UserGoals {
 		lblSetFitnessGoals_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSetFitnessGoals_1.setFont(new Font("Open Sans", Font.BOLD, 16));
 		lblSetFitnessGoals_1.setBackground(Color.GRAY);
-		lblSetFitnessGoals_1.setBounds(352, 178, 160, 38);
+		lblSetFitnessGoals_1.setBounds(279, 194, 160, 38);
 		frame.getContentPane().add(lblSetFitnessGoals_1);
 		
 		JLabel lblCheckMedication = new JLabel("Check Health Problems");
@@ -205,19 +232,19 @@ public class UserGoals {
 		frame.getContentPane().add(textAreaHealthProblems);
 		
 		JRadioButton rdbtnStayFitPlan = new JRadioButton("Stay Fit Plan");
-		rdbtnStayFitPlan.setBounds(308, 233, 109, 23);
+		rdbtnStayFitPlan.setBounds(279, 249, 109, 23);
 		frame.getContentPane().add(rdbtnStayFitPlan);
 		
-		JRadioButton rdbtnWeightGainPaln = new JRadioButton("Weight Gain Plan");
-		rdbtnWeightGainPaln.setBounds(447, 233, 109, 23);
-		frame.getContentPane().add(rdbtnWeightGainPaln);
+		JRadioButton rdbtnWeightGainPlan = new JRadioButton("Weight Gain Plan");
+		rdbtnWeightGainPlan.setBounds(279, 327, 109, 23);
+		frame.getContentPane().add(rdbtnWeightGainPlan);
 		
 		JRadioButton rdbtnWeightLossPlan = new JRadioButton("Weight Loss Plan");
-		rdbtnWeightLossPlan.setBounds(308, 285, 109, 23);
+		rdbtnWeightLossPlan.setBounds(279, 288, 109, 23);
 		frame.getContentPane().add(rdbtnWeightLossPlan);
 		
 		JRadioButton rdbtnExtremeWeightLoss = new JRadioButton("Extreme Weight Loss Plan");
-		rdbtnExtremeWeightLoss.setBounds(447, 285, 152, 23);
+		rdbtnExtremeWeightLoss.setBounds(279, 364, 152, 23);
 		frame.getContentPane().add(rdbtnExtremeWeightLoss);
 		
 		lblChooseUnit = new JLabel("Choose Unit");
@@ -232,8 +259,105 @@ public class UserGoals {
 		rdbtnImperial.setBounds(173, 33, 86, 23);
 		frame.getContentPane().add(rdbtnImperial);
 		
-		radBtnGrp.add(rdbtnMetric);
-		radBtnGrp.add(rdbtnImperial);
+		panelStayFit = new JPanel();
+		panelStayFit.setBounds(469, 255, 270, 113);
+		frame.getContentPane().add(panelStayFit);
+		panelStayFit.setLayout(null);
+		panelStayFit.setVisible(false);
+		
+		lblClickOnFind = new JLabel("Click on Find Workouts");
+		lblClickOnFind.setHorizontalAlignment(SwingConstants.CENTER);
+		lblClickOnFind.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblClickOnFind.setBounds(35, 38, 171, 52);
+		panelStayFit.add(lblClickOnFind);
+		
+		panelWeightLoss = new JPanel();
+		panelWeightLoss.setBounds(469, 250, 270, 126);
+		frame.getContentPane().add(panelWeightLoss);
+		panelWeightLoss.setLayout(null);
+		panelWeightLoss.setVisible(false);
+		
+		lblWeightLossPlan = new JLabel("Weight Loss Plan (Weekly)");
+		lblWeightLossPlan.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWeightLossPlan.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblWeightLossPlan.setBounds(50, 11, 183, 24);
+		panelWeightLoss.add(lblWeightLossPlan);
+		
+		rdbtnLooseLb = new JRadioButton("Loose 0.5 LB");
+		rdbtnLooseLb.setBounds(18, 46, 99, 23);
+		panelWeightLoss.add(rdbtnLooseLb);
+		
+		rdbtnLooseLb_1 = new JRadioButton("Loose 1 LB");
+		rdbtnLooseLb_1.setBounds(144, 46, 99, 23);
+		panelWeightLoss.add(rdbtnLooseLb_1);
+		
+		rdbtnLooseLb_2 = new JRadioButton("Loose 1.5 LB");
+		rdbtnLooseLb_2.setBounds(18, 80, 109, 23);
+		panelWeightLoss.add(rdbtnLooseLb_2);
+		
+		rdbtnLooseLb_3 = new JRadioButton("Loose 2 LB");
+		rdbtnLooseLb_3.setBounds(144, 80, 109, 23);
+		panelWeightLoss.add(rdbtnLooseLb_3);
+		
+		panelExtremeWeightLoss = new JPanel();
+		panelExtremeWeightLoss.setBounds(469, 249, 270, 122);
+		frame.getContentPane().add(panelExtremeWeightLoss);
+		panelExtremeWeightLoss.setLayout(null);
+		panelExtremeWeightLoss.setVisible(false);
+		
+		lblExtremeWeightLoss = new JLabel("Extreme Weight Loss Plan (Monthly)");
+		lblExtremeWeightLoss.setHorizontalAlignment(SwingConstants.CENTER);
+		lblExtremeWeightLoss.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblExtremeWeightLoss.setBounds(10, 5, 250, 42);
+		panelExtremeWeightLoss.add(lblExtremeWeightLoss);
+		
+		rdbtnEXLooseLb_1 = new JRadioButton("Loose 3 LB");
+		rdbtnEXLooseLb_1.setBounds(20, 45, 109, 23);
+		panelExtremeWeightLoss.add(rdbtnEXLooseLb_1);
+		
+		rdbtnEXLooseLb_2 = new JRadioButton("Loose 5 LB");
+		rdbtnEXLooseLb_2.setBounds(131, 45, 109, 23);
+		panelExtremeWeightLoss.add(rdbtnEXLooseLb_2);
+		
+		rdbtnExLooseLb_3 = new JRadioButton("Loose 7 LB");
+		rdbtnExLooseLb_3.setBounds(20, 80, 109, 23);
+		panelExtremeWeightLoss.add(rdbtnExLooseLb_3);
+		
+		rdbtnExLooseLb_4 = new JRadioButton("Loose 10 LB");
+		rdbtnExLooseLb_4.setBounds(131, 80, 109, 23);
+		panelExtremeWeightLoss.add(rdbtnExLooseLb_4);
+		
+		panelWeightGain = new JPanel();
+		panelWeightGain.setBounds(469, 250, 270, 126);
+		frame.getContentPane().add(panelWeightGain);
+		panelWeightGain.setLayout(null);
+		panelWeightGain.setVisible(false);
+		
+		lblWeightGainPlan = new JLabel("Weight Gain Plan (Weekly)");
+		lblWeightGainPlan.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWeightGainPlan.setBounds(45, 5, 182, 25);
+		lblWeightGainPlan.setFont(new Font("Tahoma", Font.BOLD, 12));
+		panelWeightGain.add(lblWeightGainPlan);
+		
+		rdbtnGainLb = new JRadioButton("Gain 0.5 LB");
+		rdbtnGainLb.setBounds(17, 37, 109, 23);
+		panelWeightGain.add(rdbtnGainLb);
+		
+		rdbtnGainLb_1 = new JRadioButton("Gain 1 LB");
+		rdbtnGainLb_1.setBounds(141, 37, 109, 23);
+		panelWeightGain.add(rdbtnGainLb_1);
+		
+		rdbtnGainLb_2 = new JRadioButton("Gain 1.5 LB");
+		rdbtnGainLb_2.setBounds(17, 77, 109, 23);
+		panelWeightGain.add(rdbtnGainLb_2);
+		
+		rdbtnGainLb_3 = new JRadioButton("Gain 2 LB");
+		rdbtnGainLb_3.setBounds(141, 77, 109, 23);
+		panelWeightGain.add(rdbtnGainLb_3);
+		
+		
+		unitBtnGroup.add(rdbtnMetric);
+		unitBtnGroup.add(rdbtnImperial);
 		
 		rdbtnImperial.addActionListener(new ActionListener() {
 			
@@ -256,6 +380,75 @@ public class UserGoals {
 		});
 		
 		
+		fitnessGoalsBtnGroup.add(rdbtnStayFitPlan);
+		fitnessGoalsBtnGroup.add(rdbtnWeightGainPlan);
+		fitnessGoalsBtnGroup.add(rdbtnWeightLossPlan);
+		fitnessGoalsBtnGroup.add(rdbtnExtremeWeightLoss);
+		
+		weightGainGroup.add(rdbtnGainLb);
+		weightGainGroup.add(rdbtnGainLb_1);
+		weightGainGroup.add(rdbtnGainLb_2);
+		weightGainGroup.add(rdbtnGainLb_3);
+		
+		weightLossGroup.add(rdbtnLooseLb);
+		weightLossGroup.add(rdbtnLooseLb_1);
+		weightLossGroup.add(rdbtnLooseLb_2);
+		weightLossGroup.add(rdbtnLooseLb_3);
+		
+		extremeLossGroup.add(rdbtnEXLooseLb_1);
+		extremeLossGroup.add(rdbtnEXLooseLb_2);
+		extremeLossGroup.add(rdbtnExLooseLb_3);
+		extremeLossGroup.add(rdbtnExLooseLb_4);
+		
+		rdbtnStayFitPlan.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelWeightGain.setVisible(false);
+				panelWeightLoss.setVisible(false);
+				panelExtremeWeightLoss.setVisible(false);
+				panelStayFit.setVisible(true);
+				
+			}
+		});
+		
+		rdbtnWeightGainPlan.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelWeightLoss.setVisible(false);
+				panelExtremeWeightLoss.setVisible(false);
+				panelStayFit.setVisible(false);
+				panelWeightGain.setVisible(true);
+				
+			}
+		});
+		
+		rdbtnWeightLossPlan.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelExtremeWeightLoss.setVisible(false);
+				panelStayFit.setVisible(false);
+				panelWeightGain.setVisible(false);
+				panelWeightLoss.setVisible(true);
+				
+			}
+		});
+		
+		rdbtnExtremeWeightLoss.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelWeightGain.setVisible(false);
+				panelWeightLoss.setVisible(false);
+				panelStayFit.setVisible(false);
+				panelExtremeWeightLoss.setVisible(true);
+				
+			}
+		});
+		
+		
 		JButton btnCalculateBmi = new JButton("Calculate BMI");
 		btnCalculateBmi.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnCalculateBmi.addActionListener(new ActionListener() {
@@ -265,40 +458,51 @@ public class UserGoals {
 				
 				if(rdbtnImperial.isSelected()) {
 					
-					double heightFeets = Double.parseDouble(textFieldHeightFeets.getText().toString());
-					double heightInches = Double.parseDouble(textFieldHeightInches.getText().toString());
+					if(textFieldHeightFeets.getText().isEmpty() || textFieldHeightInches.getText().isEmpty()
+							|| textFieldWeightImperial.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null,"Please Enter Height and weight Values");
+					}
 					
-					
-					
-					userDetails.setHeightFeets(heightFeets);
-					userDetails.setHeightInches(heightInches);
-					
-					userDetails.setHeightType("inches");
-					
-					userDetails.setWeight(Double.parseDouble(textFieldWeightImperial.getText().toString()));
-					userDetails.setWeightType("lb");
-					
-					fmt = new DecimalFormat("0.00");
-					
-					bmi.calculateBMI(userDetails);
-					
-					txtrBmiOutput.setText("BMI output = " + String.valueOf(fmt.format(bmi.calculateBMI(userDetails))) + "\n" 
-					+ bmi.bmiResult());
+					else {
+						double heightFeets = Double.parseDouble(textFieldHeightFeets.getText().toString());
+						double heightInches = Double.parseDouble(textFieldHeightInches.getText().toString());
+						
+						userDetails.setHeightFeets(heightFeets);
+						userDetails.setHeightInches(heightInches);
+						
+						userDetails.setHeightType("inches");
+						
+						userDetails.setWeight(Double.parseDouble(textFieldWeightImperial.getText().toString()));
+						userDetails.setWeightType("lb");
+						
+						fmt = new DecimalFormat("0.00");
+						
+						bmi.calculateBMI(userDetails);
+						
+						txtrBmiOutput.setText("BMI output = " + String.valueOf(fmt.format(bmi.calculateBMI(userDetails))) + "\n" 
+						+ bmi.bmiResult());
+					}
 				}
 				
 				else if(rdbtnMetric.isSelected()){
-					userDetails.setHeightCm(Double.parseDouble(textFieldHeightMetric.getText().toString()));
-					userDetails.setHeightType("cm");
 					
-					userDetails.setWeight(Double.parseDouble(textFieldWeightMetric.getText().toString()));
-					userDetails.setWeightType("kg");
-					
-					fmt = new DecimalFormat("0.00");
-					
-					bmi.calculateBMI(userDetails);
-					
-					txtrBmiOutput.setText("BMI output = " + String.valueOf(fmt.format(bmi.calculateBMI(userDetails))) + "\n" 
-					+ bmi.bmiResult());
+					if(textFieldHeightMetric.getText().isEmpty() || textFieldWeightMetric.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null,"Please Enter Height and weight Values");
+					}
+					else {
+						userDetails.setHeightCm(Double.parseDouble(textFieldHeightMetric.getText().toString()));
+						userDetails.setHeightType("cm");
+						
+						userDetails.setWeight(Double.parseDouble(textFieldWeightMetric.getText().toString()));
+						userDetails.setWeightType("kg");
+						
+						fmt = new DecimalFormat("0.00");
+						
+						bmi.calculateBMI(userDetails);
+						
+						txtrBmiOutput.setText("BMI output = " + String.valueOf(fmt.format(bmi.calculateBMI(userDetails))) + "\n" 
+						+ bmi.bmiResult());
+					}
 				}
 				
 			}
@@ -324,11 +528,11 @@ public class UserGoals {
 				if(chckbxBoneOrJoint.isSelected()) {
 					healthProblems += chckbxBoneOrJoint.getText().toString() + "\n";
 				}
-				if(chckbxChestPain.isSelected()) {
-					healthProblems += chckbxChestPain.getText().toString() + "\n";
-				}
 				if(chckbxDizziness.isSelected()) {
 					healthProblems += chckbxDizziness.getText().toString() + "\n";
+				}
+				if(chckbxChestPain.isSelected()) {
+					healthProblems += chckbxChestPain.getText().toString() + "\n";
 				}
 				textAreaHealthProblems.setText(healthProblems);
 			}
@@ -336,6 +540,20 @@ public class UserGoals {
 		btnAddHealthProblems.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnAddHealthProblems.setBounds(68, 419, 161, 35);
 		frame.getContentPane().add(btnAddHealthProblems);
+		
+		
+		
+		btnFindWorkouts = new JButton("Find Workouts");
+		btnFindWorkouts.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				JOptionPane.showMessageDialog(null, "Have paitence work in progress");
+				
+			}
+		});
+		btnFindWorkouts.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnFindWorkouts.setBounds(420, 413, 137, 35);
+		frame.getContentPane().add(btnFindWorkouts);
 		
 	}
 }
