@@ -1,4 +1,4 @@
-package com.csis3275.Entries;
+package com.csis3275.Entities;
 
 
 public class User {
