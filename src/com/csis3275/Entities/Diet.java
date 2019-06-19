@@ -2,13 +2,17 @@ package com.csis3275.Entities;
 
 import java.util.Vector;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-//@Entity
-//@Table(name = "Diet")
+@Entity
+@Table(name = "Diet")
 public class Diet {
 
-	//@Id
-	//@GeneratedValue
+	@Id
+	@GeneratedValue
 	private int id;
 	private int mealId;
 	private String mealType;
@@ -26,7 +30,6 @@ public class Diet {
 	private double iron;
 	private String author;
 
-	
 	public String getMealType() {
 		return mealType;
 	}
@@ -193,7 +196,5 @@ public class Diet {
 
 		return v;
 	}
-	
-
 
 }
