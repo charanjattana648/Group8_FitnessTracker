@@ -1,5 +1,7 @@
 package com.csis3275.Controller;
 
+import java.util.Vector;
+
 import com.csis3275.Entities.BodyMeasurements;
 
 /**
@@ -11,6 +13,7 @@ import com.csis3275.Entities.BodyMeasurements;
 public class CalculateBMI {
 	
 	//Constants
+	
 	final int CONVERSION = 703;
 	final double UNDERWEIGHT = 18.5;
 	final double NORMAL = 24.9;
@@ -31,13 +34,13 @@ public class CalculateBMI {
 	 */
 	public double calculateBMI(BodyMeasurements user) {
 		
-		if(user.getHeightType().equals("inches") && user.getWeightType().equals("lb")) {
+		if(user.getUnit().equals("Imperial") && user.getHeightType().equals("inches") && user.getWeightType().equals("lb")) {
 			convertedFeetsToInches = user.getHeightFeets() * (double) 12;
 			heightInInches = convertedFeetsToInches + user.getHeightInches();
 			bmi = (user.getWeight() / (heightInInches * heightInInches)) * (double) CONVERSION;
 		}
 		
-		else if(user.getHeightType().equals("cm") && user.getWeightType().equals("kg")) {
+		else if(user.getUnit().equals("Metric") && user.getHeightType().equals("cm") && user.getWeightType().equals("kg")) {
 			heightInMeters = user.getHeightCm() / (double) 100;
 			bmi = user.getWeight() / (heightInMeters * heightInMeters);
 		}
@@ -69,5 +72,11 @@ public class CalculateBMI {
 			
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public Vector bmiVecor() {
+		Vector v = new Vector();
+		v.add(bmi);
+		return v;
+	}
 
 }
