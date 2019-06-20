@@ -3,9 +3,14 @@ package com.csis3275.Boundary;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import com.csis3275.Entities.User;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JSpinner;
@@ -16,6 +21,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.DefaultComboBoxModel;
 
 public class LoginRegisterGUI {
@@ -29,6 +35,7 @@ public class LoginRegisterGUI {
 	private JTextField sptextFirstName;
 	private JTextField sptextLastName;
 	private JPasswordField litxtpassword;
+	UserDAOImpl uD=new UserDAOImpl();
 
 	/**
 	 * Launch the application.
@@ -202,6 +209,46 @@ public class LoginRegisterGUI {
 			public void actionPerformed(ActionEvent e) {
 				logInpanel.setVisible(true);
 				signUpPanel.setVisible(false);
+				boolean isCreated=false;
+				User u=new User();
+				u.setUserEmail(sptextEmail.getText());
+				u.setUserFirstName(sptextFirstName.getText());
+				if(spRbFemale.isSelected())
+				{
+					u.setUserGender("FeMale");					
+				}else if(spRbOther.isSelected()){
+					u.setUserGender("other");
+				}else {
+					u.setUserGender("Male");
+				}
+				u.setUserLastName(splabelLastName.getText());
+				
+				char[] pass=sptextPassword.getPassword();
+				char[] cpass=sptextConfPassword.getPassword();
+				String passT="";
+//				for(int i=0;i<pass.length;i++)
+//				{
+//					passT+=pass[i];
+//				}
+				u.setUserPassword(String.valueOf(pass));
+				u.setUserAge(Integer.parseInt(sptextAge.getText()));
+				if(!String.valueOf(pass).equalsIgnoreCase(String.valueOf(cpass)))
+				{
+					JOptionPane.showMessageDialog(null, "Password and confirm Password does not match");
+				}else {
+					String currEmail=uD.createUserAccount(u);
+					if(currEmail.equalsIgnoreCase(sptextEmail.getText()))
+					{
+						isCreated=true;
+					}
+				}
+				if(isCreated)
+				{
+					JOptionPane.showMessageDialog(null, "Congrats,Account Created");
+				}else {
+					JOptionPane.showMessageDialog(null, "Sorry,Please try Again");
+				}
+			
 			}
 		});
 		spbtnSignup.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -213,6 +260,7 @@ public class LoginRegisterGUI {
 			public void actionPerformed(ActionEvent e) {
 				logInpanel.setVisible(true);
 				signUpPanel.setVisible(false);
+				
 			}
 		});
 		spbtnLogIn.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -233,7 +281,19 @@ public class LoginRegisterGUI {
 		JButton liLogInbutton = new JButton("LogIn");
 		liLogInbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Login Successful");
+				String currEmail=litextUserName.getText();
+				char[] pass=litxtpassword.getPassword();
+				String currPass=String.valueOf(pass);
+				boolean isMatched=uD.checkUEPass(currEmail,currPass);
+				if(isMatched)
+				{
+					System.out.println("Login Successful");	
+					UserGoals.main(null);
+				}else {
+					JOptionPane.showMessageDialog(null, "Sorry,Please try Again");
+				}
+				
+				
 			}
 		});
 		liLogInbutton.setFont(new Font("Tahoma", Font.BOLD, 20));
