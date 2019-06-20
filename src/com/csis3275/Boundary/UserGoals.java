@@ -92,6 +92,7 @@ public class UserGoals {
 	private JLabel lblClickOnFind;
 	private JTable tableBodyMeasurements;
 	private JScrollPane scrollPaneBodyMeasurements;
+	private static String[] currentUEmail=new String[1];
 	
 	
 	private DefaultTableModel tm = new DefaultTableModel();
@@ -105,9 +106,11 @@ public class UserGoals {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					currentUEmail[0]=args[0];
 					UserGoals window = new UserGoals();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -595,6 +598,8 @@ public class UserGoals {
 		JButton btnViewDietPlan = new JButton("View Diet Plan");
 		btnViewDietPlan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				DietGUI.main(currentUEmail);
 				
 			}
 		});

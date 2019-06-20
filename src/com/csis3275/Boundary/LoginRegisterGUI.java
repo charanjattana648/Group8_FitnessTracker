@@ -69,6 +69,11 @@ public class LoginRegisterGUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+
+		
+		JPanel signUpPanel = new JPanel();
+		signUpPanel.setVisible(false);
+		
 		JPanel logInpanel = new JPanel();
 		logInpanel.setLayout(null);
 		
@@ -111,10 +116,44 @@ public class LoginRegisterGUI {
 		liTypeComboBox.setBounds(516, 140, 245, 43);
 		logInpanel.add(liTypeComboBox);
 		
-
+		JButton liSignUpButton = new JButton("SignUp");
+		liSignUpButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				logInpanel.setVisible(false);
+				signUpPanel.setVisible(true);
+			}
+		});
+		liSignUpButton.setFont(new Font("Tahoma", Font.BOLD, 20));
+		liSignUpButton.setBounds(549, 340, 123, 43);
+		logInpanel.add(liSignUpButton);
 		
-		JPanel signUpPanel = new JPanel();
-		signUpPanel.setVisible(false);
+		JButton liLogInbutton = new JButton("LogIn");
+		liLogInbutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(liTypeComboBox.getSelectedItem()=="User")
+				{
+				String[] currEmail=new String[1];
+				currEmail[0]=litextUserName.getText();
+				char[] pass=litxtpassword.getPassword();
+				String currPass=String.valueOf(pass);
+				boolean isMatched=uD.checkUEPass(currEmail[0],currPass);
+				if(isMatched)
+				{
+					System.out.println("Login Successful");	
+					UserGoals.main(currEmail);
+				}else {
+					JOptionPane.showMessageDialog(null, "Sorry,Please try Again");
+				}
+				}
+				
+				
+			}
+		});
+		liLogInbutton.setFont(new Font("Tahoma", Font.BOLD, 20));
+		liLogInbutton.setBounds(357, 340, 123, 43);
+		logInpanel.add(liLogInbutton);
+		logInpanel.setBounds(0, 0, 1061, 608);
+		frame.getContentPane().add(logInpanel);
 		signUpPanel.setBounds(0, 0, 1070, 601);
 		frame.getContentPane().add(signUpPanel);
 		signUpPanel.setLayout(null);
@@ -266,40 +305,5 @@ public class LoginRegisterGUI {
 		spbtnLogIn.setFont(new Font("Tahoma", Font.BOLD, 20));
 		spbtnLogIn.setBounds(528, 527, 123, 43);
 		signUpPanel.add(spbtnLogIn);
-		
-		JButton liSignUpButton = new JButton("SignUp");
-		liSignUpButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				logInpanel.setVisible(false);
-				signUpPanel.setVisible(true);
-			}
-		});
-		liSignUpButton.setFont(new Font("Tahoma", Font.BOLD, 20));
-		liSignUpButton.setBounds(549, 340, 123, 43);
-		logInpanel.add(liSignUpButton);
-		
-		JButton liLogInbutton = new JButton("LogIn");
-		liLogInbutton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String currEmail=litextUserName.getText();
-				char[] pass=litxtpassword.getPassword();
-				String currPass=String.valueOf(pass);
-				boolean isMatched=uD.checkUEPass(currEmail,currPass);
-				if(isMatched)
-				{
-					System.out.println("Login Successful");	
-					UserGoals.main(null);
-				}else {
-					JOptionPane.showMessageDialog(null, "Sorry,Please try Again");
-				}
-				
-				
-			}
-		});
-		liLogInbutton.setFont(new Font("Tahoma", Font.BOLD, 20));
-		liLogInbutton.setBounds(357, 340, 123, 43);
-		logInpanel.add(liLogInbutton);
-		logInpanel.setBounds(0, 0, 1061, 608);
-		frame.getContentPane().add(logInpanel);
 	}
 }
