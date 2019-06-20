@@ -97,6 +97,9 @@ public class UserGoals {
 	private DefaultTableModel tm = new DefaultTableModel();
 	private static BodyMeasurementsDAOImpl boduydao = new BodyMeasurementsDAOImpl();
 	
+	//DietGUI class instance
+	DietGUI dietGui = new DietGUI();
+	
 	
 	/**
 	 * Launch the application.
@@ -130,6 +133,7 @@ public class UserGoals {
 		frame.setBounds(100, 100, 792, 504);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
 		
 		panelImperial = new JPanel();
 		panelImperial.setBounds(22, 36, 218, 67);
@@ -587,6 +591,16 @@ public class UserGoals {
 		tableBodyMeasurements = new JTable();
 		scrollPaneBodyMeasurements.setViewportView(tableBodyMeasurements);
 		tableBodyMeasurements.setModel(tm);
+		
+		JButton btnViewDietPlan = new JButton("View Diet Plan");
+		btnViewDietPlan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		btnViewDietPlan.setFont(new Font("Open Sans", Font.BOLD, 11));
+		btnViewDietPlan.setBounds(22, 416, 118, 33);
+		frame.getContentPane().add(btnViewDietPlan);
 		
 		scrollPaneBodyMeasurements.setVisible(false);
 		tableBodyMeasurements.setVisible(false);
