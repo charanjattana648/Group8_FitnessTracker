@@ -1,13 +1,27 @@
 package com.csis3275.Entities;
 
+import java.util.Vector;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * BodyMeasurements Class
  * @author Gurinder Singh 300289450
  *
  */
 
+@Entity
+@Table(name="userBodyMeasurements")
+
 public class BodyMeasurements {
 	
+	@Id
+	@GeneratedValue
+	private int id;
+	private String unit;
 	private double heightFeets; //user height in feet
 	private double heightInches; // user height in inches
 	private double heightCm; // user height in centimeters
@@ -15,6 +29,34 @@ public class BodyMeasurements {
 	private double weight; // user weight
 	private String weightType; //user weight type LB or KG
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		try {
+			if(unit.equals("Imperial") || unit.equals("Metric")) {
+				this.unit = unit;
+			}
+			else {
+				throw new Exception("Invalid type requested");
+			}
+		}
+		catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+		
+		
+	}
+
 	public String getHeightType() {
 		return heightType;
 	}
@@ -81,6 +123,21 @@ public class BodyMeasurements {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public Vector getVector() {
+		Vector v = new Vector();
+		v.add(id);
+		v.add(heightCm);
+		v.add(heightFeets);
+		v.add(heightInches);
+		v.add(heightType);
+		v.add(unit);
+		v.add(weight);
+		v.add(weightType);
+		return v;
 	}
 
 }
