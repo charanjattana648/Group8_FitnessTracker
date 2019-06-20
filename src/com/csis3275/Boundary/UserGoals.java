@@ -15,10 +15,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.border.BevelBorder;
+import javax.swing.table.DefaultTableModel;
 
 import com.csis3275.Controller.CalculateBMI;
 import com.csis3275.Entities.BodyMeasurements;
@@ -28,6 +31,8 @@ import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JRadioButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 public class UserGoals {
 
@@ -85,7 +90,14 @@ public class UserGoals {
 	private JButton btnFindWorkouts;
 	private JPanel panelStayFit;
 	private JLabel lblClickOnFind;
-
+	private JTable tableBodyMeasurements;
+	private JScrollPane scrollPaneBodyMeasurements;
+	
+	
+	private DefaultTableModel tm = new DefaultTableModel();
+	private static BodyMeasurementsDAOImpl boduydao = new BodyMeasurementsDAOImpl();
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -120,7 +132,7 @@ public class UserGoals {
 		frame.getContentPane().setLayout(null);
 		
 		panelImperial = new JPanel();
-		panelImperial.setBounds(22, 71, 218, 67);
+		panelImperial.setBounds(22, 36, 218, 67);
 		frame.getContentPane().add(panelImperial);
 		panelImperial.setLayout(null);
 		panelImperial.setVisible(false);
@@ -149,7 +161,7 @@ public class UserGoals {
 		panelImperial.add(textFieldWeightImperial);
 		
 		panelMetric = new JPanel();
-		panelMetric.setBounds(22, 71, 218, 67);
+		panelMetric.setBounds(22, 36, 218, 67);
 		frame.getContentPane().add(panelMetric);
 		panelMetric.setLayout(null);
 		panelMetric.setVisible(false);
@@ -183,7 +195,7 @@ public class UserGoals {
 		
 		txtrBmiOutput = new JTextArea();
 		txtrBmiOutput.setText("BMI output:");
-		txtrBmiOutput.setBounds(279, 71, 460, 87);
+		txtrBmiOutput.setBounds(463, 11, 303, 92);
 		frame.getContentPane().add(txtrBmiOutput);
 		
 		JLabel lblSetFitnessGoals_1 = new JLabel("Set Fitness Goals");
@@ -191,76 +203,76 @@ public class UserGoals {
 		lblSetFitnessGoals_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSetFitnessGoals_1.setFont(new Font("Open Sans", Font.BOLD, 16));
 		lblSetFitnessGoals_1.setBackground(Color.GRAY);
-		lblSetFitnessGoals_1.setBounds(279, 194, 160, 38);
+		lblSetFitnessGoals_1.setBounds(188, 315, 160, 38);
 		frame.getContentPane().add(lblSetFitnessGoals_1);
 		
 		JLabel lblCheckMedication = new JLabel("Check Health Problems");
 		lblCheckMedication.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCheckMedication.setFont(new Font("Open Sans", Font.BOLD, 16));
+		lblCheckMedication.setFont(new Font("Open Sans", Font.BOLD, 11));
 		lblCheckMedication.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		lblCheckMedication.setBackground(Color.GRAY);
-		lblCheckMedication.setBounds(22, 194, 218, 38);
+		lblCheckMedication.setBounds(22, 114, 137, 38);
 		frame.getContentPane().add(lblCheckMedication);
 		
 		chckboxDiabetes = new JCheckBox("Diabetes");
-		chckboxDiabetes.setBounds(22, 249, 97, 23);
+		chckboxDiabetes.setBounds(22, 159, 97, 23);
 		frame.getContentPane().add(chckboxDiabetes);
 		
 		chckbxHypertension = new JCheckBox("Hypertension");
-		chckbxHypertension.setBounds(22, 275, 97, 23);
+		chckbxHypertension.setBounds(22, 180, 97, 23);
 		frame.getContentPane().add(chckbxHypertension);
 		
 		chckbxAsthma = new JCheckBox("Asthma");
-		chckbxAsthma.setBounds(22, 301, 97, 23);
+		chckbxAsthma.setBounds(22, 202, 97, 23);
 		frame.getContentPane().add(chckbxAsthma);
 		
 		chckbxBoneOrJoint = new JCheckBox("Bone or Joint");
-		chckbxBoneOrJoint.setBounds(22, 327, 97, 23);
+		chckbxBoneOrJoint.setBounds(22, 224, 97, 23);
 		frame.getContentPane().add(chckbxBoneOrJoint);
 		
 		chckbxDizziness = new JCheckBox("Dizziness");
-		chckbxDizziness.setBounds(22, 353, 97, 23);
+		chckbxDizziness.setBounds(22, 245, 97, 23);
 		frame.getContentPane().add(chckbxDizziness);
 		
 		chckbxChestPain = new JCheckBox("Chest Pain");
-		chckbxChestPain.setBounds(22, 379, 97, 23);
+		chckbxChestPain.setBounds(22, 268, 97, 23);
 		frame.getContentPane().add(chckbxChestPain);
 		
 		textAreaHealthProblems = new JTextArea();
 		textAreaHealthProblems.setFont(new Font("Monospaced", Font.BOLD, 13));
-		textAreaHealthProblems.setBounds(129, 248, 111, 154);
+		textAreaHealthProblems.setBounds(111, 163, 97, 128);
 		frame.getContentPane().add(textAreaHealthProblems);
 		
 		JRadioButton rdbtnStayFitPlan = new JRadioButton("Stay Fit Plan");
-		rdbtnStayFitPlan.setBounds(279, 249, 109, 23);
+		rdbtnStayFitPlan.setBounds(188, 360, 109, 23);
 		frame.getContentPane().add(rdbtnStayFitPlan);
 		
 		JRadioButton rdbtnWeightGainPlan = new JRadioButton("Weight Gain Plan");
-		rdbtnWeightGainPlan.setBounds(279, 327, 109, 23);
+		rdbtnWeightGainPlan.setBounds(296, 360, 109, 23);
 		frame.getContentPane().add(rdbtnWeightGainPlan);
 		
 		JRadioButton rdbtnWeightLossPlan = new JRadioButton("Weight Loss Plan");
-		rdbtnWeightLossPlan.setBounds(279, 288, 109, 23);
+		rdbtnWeightLossPlan.setBounds(188, 386, 109, 23);
 		frame.getContentPane().add(rdbtnWeightLossPlan);
 		
 		JRadioButton rdbtnExtremeWeightLoss = new JRadioButton("Extreme Weight Loss Plan");
-		rdbtnExtremeWeightLoss.setBounds(279, 364, 152, 23);
+		rdbtnExtremeWeightLoss.setBounds(296, 386, 152, 23);
 		frame.getContentPane().add(rdbtnExtremeWeightLoss);
 		
 		lblChooseUnit = new JLabel("Choose Unit");
-		lblChooseUnit.setBounds(24, 37, 70, 14);
+		lblChooseUnit.setBounds(22, 11, 70, 14);
 		frame.getContentPane().add(lblChooseUnit);
 		
 		rdbtnMetric = new JRadioButton("Metric");
-		rdbtnMetric.setBounds(101, 33, 70, 23);
+		rdbtnMetric.setBounds(98, 11, 70, 23);
 		frame.getContentPane().add(rdbtnMetric);
 		
 		rdbtnImperial = new JRadioButton("Imperial");
-		rdbtnImperial.setBounds(173, 33, 86, 23);
+		rdbtnImperial.setBounds(173, 11, 86, 23);
 		frame.getContentPane().add(rdbtnImperial);
 		
 		panelStayFit = new JPanel();
-		panelStayFit.setBounds(469, 255, 270, 113);
+		panelStayFit.setBounds(469, 327, 270, 113);
 		frame.getContentPane().add(panelStayFit);
 		panelStayFit.setLayout(null);
 		panelStayFit.setVisible(false);
@@ -272,7 +284,7 @@ public class UserGoals {
 		panelStayFit.add(lblClickOnFind);
 		
 		panelWeightLoss = new JPanel();
-		panelWeightLoss.setBounds(469, 250, 270, 126);
+		panelWeightLoss.setBounds(469, 323, 270, 126);
 		frame.getContentPane().add(panelWeightLoss);
 		panelWeightLoss.setLayout(null);
 		panelWeightLoss.setVisible(false);
@@ -300,7 +312,7 @@ public class UserGoals {
 		panelWeightLoss.add(rdbtnLooseLb_3);
 		
 		panelExtremeWeightLoss = new JPanel();
-		panelExtremeWeightLoss.setBounds(469, 249, 270, 122);
+		panelExtremeWeightLoss.setBounds(469, 327, 270, 122);
 		frame.getContentPane().add(panelExtremeWeightLoss);
 		panelExtremeWeightLoss.setLayout(null);
 		panelExtremeWeightLoss.setVisible(false);
@@ -328,7 +340,7 @@ public class UserGoals {
 		panelExtremeWeightLoss.add(rdbtnExLooseLb_4);
 		
 		panelWeightGain = new JPanel();
-		panelWeightGain.setBounds(469, 250, 270, 126);
+		panelWeightGain.setBounds(469, 328, 270, 126);
 		frame.getContentPane().add(panelWeightGain);
 		panelWeightGain.setLayout(null);
 		panelWeightGain.setVisible(false);
@@ -450,11 +462,12 @@ public class UserGoals {
 		
 		
 		JButton btnCalculateBmi = new JButton("Calculate BMI");
-		btnCalculateBmi.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnCalculateBmi.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnCalculateBmi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				userDetails = new BodyMeasurements();
-					
+				tableBodyMeasurements.setVisible(true);
+				scrollPaneBodyMeasurements.setVisible(true);
 				
 				if(rdbtnImperial.isSelected()) {
 					
@@ -474,6 +487,7 @@ public class UserGoals {
 						
 						userDetails.setWeight(Double.parseDouble(textFieldWeightImperial.getText().toString()));
 						userDetails.setWeightType("lb");
+						userDetails.setUnit("Imperial");
 						
 						fmt = new DecimalFormat("0.00");
 						
@@ -481,6 +495,9 @@ public class UserGoals {
 						
 						txtrBmiOutput.setText("BMI output = " + String.valueOf(fmt.format(bmi.calculateBMI(userDetails))) + "\n" 
 						+ bmi.bmiResult());
+						
+						boduydao.createBodydata(userDetails);
+						updateBodyTable();
 					}
 				}
 				
@@ -495,6 +512,7 @@ public class UserGoals {
 						
 						userDetails.setWeight(Double.parseDouble(textFieldWeightMetric.getText().toString()));
 						userDetails.setWeightType("kg");
+						userDetails.setUnit("Metric");
 						
 						fmt = new DecimalFormat("0.00");
 						
@@ -502,12 +520,19 @@ public class UserGoals {
 						
 						txtrBmiOutput.setText("BMI output = " + String.valueOf(fmt.format(bmi.calculateBMI(userDetails))) + "\n" 
 						+ bmi.bmiResult());
+						
+						
+						boduydao.createBodydata(userDetails);
+						
+						updateBodyTable();
+						
+						
 					}
 				}
 				
 			}
 		});
-		btnCalculateBmi.setBounds(114, 147, 126, 38);
+		btnCalculateBmi.setBounds(279, 65, 126, 38);
 		frame.getContentPane().add(btnCalculateBmi);
 		
 		
@@ -537,8 +562,8 @@ public class UserGoals {
 				textAreaHealthProblems.setText(healthProblems);
 			}
 		});
-		btnAddHealthProblems.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnAddHealthProblems.setBounds(68, 419, 161, 35);
+		btnAddHealthProblems.setFont(new Font("Tahoma", Font.BOLD, 10));
+		btnAddHealthProblems.setBounds(22, 317, 146, 35);
 		frame.getContentPane().add(btnAddHealthProblems);
 		
 		
@@ -551,9 +576,47 @@ public class UserGoals {
 				
 			}
 		});
-		btnFindWorkouts.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnFindWorkouts.setBounds(420, 413, 137, 35);
+		btnFindWorkouts.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnFindWorkouts.setBounds(188, 416, 137, 35);
 		frame.getContentPane().add(btnFindWorkouts);
 		
+		scrollPaneBodyMeasurements = new JScrollPane();
+		scrollPaneBodyMeasurements.setBounds(225, 112, 541, 183);
+		frame.getContentPane().add(scrollPaneBodyMeasurements);
+		
+		tableBodyMeasurements = new JTable();
+		scrollPaneBodyMeasurements.setViewportView(tableBodyMeasurements);
+		tableBodyMeasurements.setModel(tm);
+		
+		scrollPaneBodyMeasurements.setVisible(false);
+		tableBodyMeasurements.setVisible(false);
+		
+////////////call update table body measurements
+	updateBodyTable();
+	}
+	
+	public void updateBodyTable() {
+		
+		List<BodyMeasurements> bList = new ArrayList<BodyMeasurements>();
+		
+		tm = new DefaultTableModel();
+		tm.addColumn("Id");
+		tm.addColumn("Ht Cm");
+		tm.addColumn("Ht Ft");
+		tm.addColumn("Ht In");
+		tm.addColumn("Ht Type");
+		tm.addColumn("Unit");
+		tm.addColumn("Weight");
+		tm.addColumn("Wt Type");
+		//tm.addColumn("BMI");
+		
+		bList = boduydao.getBodyData();
+		
+		for(BodyMeasurements b : bList) {
+			tm.addRow(b.getVector());
+		}
+		//tm.addColumn(bmi.toString(), bmi.bmiVecor());
+		
+		tableBodyMeasurements.setModel(tm);
 	}
 }
