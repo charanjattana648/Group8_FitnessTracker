@@ -1,13 +1,22 @@
 package com.csis3275.Entities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import com.google.inject.internal.Nullable;
+
+@Entity
+@Table(name="User")
 public class User {
-	
+	@Id
+	@Column(name="USER_EMAIL",nullable=false)	
+	private String userEmail;
 	private String userFirstName;
 	private String userLastName;
 	private int userAge;
-	private String userGender;
-	private String userEmail;
+	private String userGender;	
 	private String userPassword;
 	
 	
