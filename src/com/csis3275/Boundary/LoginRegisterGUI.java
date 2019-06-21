@@ -39,6 +39,7 @@ public class LoginRegisterGUI {
 
 	/**
 	 * Launch the application.
+	 * @param args return email at 0 index.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

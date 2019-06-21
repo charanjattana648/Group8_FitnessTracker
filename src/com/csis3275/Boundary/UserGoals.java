@@ -104,6 +104,7 @@ public class UserGoals {
 	
 	/**
 	 * Launch the application.
+	 * @param args array.
 	 */
 	public static void main(String[] args) {
 		

@@ -8,10 +8,20 @@ import org.hibernate.Transaction;
 
 import com.csis3275.Entities.User;
 
+/**
+ * 
+ * @author Harpreet Kaur
+ *
+ */
 public class UserDAOImpl {
 	
 	DietDAOImpl dietIns=new DietDAOImpl();
 
+	/**
+	 * Create User
+	 * @param u New User 
+	 * @return key of user (Email).
+	 */
 	public String createUserAccount(User u)
 	{
 		SessionFactory fx=null;

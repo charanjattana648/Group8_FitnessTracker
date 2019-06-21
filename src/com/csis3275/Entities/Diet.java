@@ -6,7 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+/**
+ * 
+ * @author charanpreet Singh
+ *
+ */
 @Entity
 @Table(name = "Diet")
 public class Diet {

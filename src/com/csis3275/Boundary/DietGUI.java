@@ -63,6 +63,7 @@ public class DietGUI {
 
 	/**
 	 * Launch the application.
+	 * @param args return email at 0 index.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -531,6 +532,9 @@ public class DietGUI {
 		updateUserSelTable();
 	}
 
+	/**
+	 * updateTable() to update the Diet table after each operation.
+	 */
 	public void updateTable() {
 		table.getSelectionModel().removeListSelectionListener(lsl);
 		dtm = new DefaultTableModel();
@@ -575,6 +579,10 @@ public class DietGUI {
 		table.getSelectionModel().addListSelectionListener(lsl);
 
 	}
+	/**
+	 * updateUserSelTable() to update the selected UserDiet table after each operation.
+	 *
+	 */
 	public void updateUserSelTable() {
 		UserSelDietTable.getSelectionModel().removeListSelectionListener(lsl_userT);
 		dtm = new DefaultTableModel();
@@ -600,26 +608,13 @@ public class DietGUI {
 
 		UserSelDietTable.getSelectionModel().addListSelectionListener(lsl_userT);
 
-//		private int id;
-//		private int mealId;
-//		private String mealType;
-//		private String foodName;
-//		private String foodType;
-//		private String foodCategory;
-//		private int readyTime;
-//		private double calories;
-//		private double protein;
-//		private double fat;
-//		private double carbohydrates;
-//		private double vitaminA;
-//		private double vitaminC;
-//		private double calcium;
-//		private double iron;
-//		private String author;
 
 	}
 	
-	
+	/**
+	 * Used by Different operations Insertion,etc.
+	 * @return Diet Object
+	 */
 	
 	public Diet getData()
 	{

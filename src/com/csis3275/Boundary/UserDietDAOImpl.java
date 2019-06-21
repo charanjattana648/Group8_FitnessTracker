@@ -9,10 +9,20 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.csis3275.Entities.UserDiet;
-
+/**
+ * 
+ * @author charanpreet Singh 300288458
+ *
+ */
 public class UserDietDAOImpl {
 	DietDAOImpl dI=new DietDAOImpl();
 	
+	/**
+	 * Query To get User Diet List
+	 * @param email this is Current user Email of string type.
+	 * @param date This is a current date or selected date stored in string 
+	 * @return UserDiet List
+	 */
 	public ArrayList<UserDiet> getUserDietList(String email,String date)
 	{
 		SessionFactory fx=null;
@@ -43,6 +53,11 @@ public class UserDietDAOImpl {
 		}
 		return userDietList;
 	}
+	/**
+	 * 
+	 * @param email User Current Email Used in Query
+	 * @return Will return the date list of items added.
+	 */
 	public ArrayList<String> getLastDPDates(String email)
 	{
 		SessionFactory fx=null;
@@ -72,6 +87,10 @@ public class UserDietDAOImpl {
 		return dateList;
 	}
 	
+	/**
+	 * Add the UserDiet to table.
+	 * @param ud is new UserDiet.
+	 */
 	public void addUserDiet(UserDiet ud)
 	{
 		SessionFactory fx=null;
@@ -95,6 +114,11 @@ public class UserDietDAOImpl {
 			fx.close();
 		}
 	}
+	/**
+	 * 
+	 * @param id Id is unique integer.
+	 * @return UserDiet
+	 */
 	public UserDiet getUserDiet(int id)
 	{
 		SessionFactory fx=null;
@@ -121,6 +145,10 @@ public class UserDietDAOImpl {
 		}
 		return ud;
 	}
+	/**
+	 * Delete userDiet
+	 * @param ud UserDiet that is to deleted.
+	 */
 	public void deleteUserDiet(UserDiet ud)
 	{
 		SessionFactory fx=null;

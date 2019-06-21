@@ -14,9 +14,17 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import com.csis3275.Entities.Diet;
-
+/**
+ * 
+ * @author Charanpreet Singh
+ *
+ */
 public class DietDAOImpl {
 
+	/**
+	 * 
+	 * @return SessionFactory for hibernate.
+	 */
 	public static SessionFactory getFactory() {
 		StandardServiceRegistry ssr = null;
 		Metadata meta = null;
@@ -31,6 +39,11 @@ public class DietDAOImpl {
 		return factory;
 	}
 
+	/**
+	 * Adding new Diet
+	 * @param d Diet Object.
+	 * @return integer unique id of added Diet.
+	 */
 	public int addMeal(Diet d) {
 		SessionFactory fx = null;
 		Session sx = null;
@@ -55,6 +68,10 @@ public class DietDAOImpl {
 		return newDietId;
 	}
 
+	/**
+	 * Diet List
+	 * @return ArrayList of Diet.
+	 */
 	public ArrayList<Diet> getDietList() {
 		SessionFactory fx = null;
 		Session sx = null;
@@ -82,7 +99,11 @@ public class DietDAOImpl {
 		return dietList;
 	}
 
-	
+	/**
+	 * For Diet Ordered List
+	 * @param s query how to order the diet.
+	 * @return ArrayList of ordered diet.
+	 */
 	public ArrayList<Diet> getDietOrderedList(String s) {
 		SessionFactory fx = null;
 		Session sx = null;
@@ -109,6 +130,11 @@ public class DietDAOImpl {
 		}
 		return dietList;
 	}
+	/**
+	 * 
+	 * @param id Primary key.
+	 * @return Diet of entered id.
+	 */
 	public Diet getDiet(int id) {
 		SessionFactory fx = null;
 		Session sx = null;
@@ -136,7 +162,10 @@ public class DietDAOImpl {
 
 		return d;
 	}
-	//
+	/**
+	 * Delete Diet
+	 * @param d Diet object that is to deleted.
+	 */
 	public void deleteDiet(Diet d)
 	{
 		SessionFactory fx=null;
@@ -160,6 +189,10 @@ public class DietDAOImpl {
 			sx.close();
 		}
 	}
+	/**
+	 * Update Diet
+	 * @param d Diet object that is to updated.
+	 */
 	public void updateDiet(Diet d)
 	{
 		SessionFactory fx=null;
@@ -184,6 +217,10 @@ public class DietDAOImpl {
 		
 	}
 	}
+	/**
+	 * 
+	 * @return list of Meal types.
+	 */
 	public ArrayList<String> getMealTypeList()
 	{
 		SessionFactory fx = null;
@@ -212,6 +249,10 @@ public class DietDAOImpl {
 		}
 		return mealTypeList;
 	}
+	/**
+	 * 
+	 * @return list of Food types.
+	 */
 	public ArrayList<String> getFoodTypeList()
 	{
 		SessionFactory fx = null;
@@ -240,6 +281,10 @@ public class DietDAOImpl {
 		}
 		return foodTypeList;
 	}
+	/**
+	 * 
+	 * @return list of Food Category.
+	 */
 	public ArrayList<String> getFoodCategoryList()
 	{
 		SessionFactory fx = null;
@@ -268,6 +313,10 @@ public class DietDAOImpl {
 		}
 		return foodCategoryList;
 	}
+	/**
+	 * 
+	 * @return list of Author List.
+	 */
 	public ArrayList<String> getAuthorList()
 	{
 		SessionFactory fx = null;
@@ -297,6 +346,11 @@ public class DietDAOImpl {
 		return authorList;
 	}
 	
+	/**
+	 * 
+	 * @param clauses used in query.
+	 * @return list of Filtered List by clauses.
+	 */
 	public ArrayList<Diet> getFilteredList(String clauses)
 	{
 		SessionFactory fx = null;

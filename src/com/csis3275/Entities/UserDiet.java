@@ -7,6 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+/**
+ * UserDiet Object.
+ * @author charanpreet Singh
+ *
+ */
 @Entity
 @Table(name="UserDiet")
 public class UserDiet {
