@@ -15,6 +15,5 @@
             <mapping class="com.csis3275.Entities.Diet"/>
             <mapping class="com.csis3275.Entities.BodyMeasurements"/>
             <mapping class="com.csis3275.Entities.User"/>
-            <mapping class="com.csis3275.Entities.UserDiet"/>
         </session-factory>  
     </hibernate-configuration>
