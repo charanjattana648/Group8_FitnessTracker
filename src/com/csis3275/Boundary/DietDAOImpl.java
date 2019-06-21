@@ -70,6 +70,10 @@ public class DietDAOImpl {
 			tx.commit();
 
 		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
 			System.err.println(hx.getMessage());
 		} finally {
 			sx.close();
@@ -94,6 +98,10 @@ public class DietDAOImpl {
 			tx.commit();
 
 		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
 			System.err.println(hx.getMessage());
 		} finally {
 			sx.close();
@@ -115,8 +123,12 @@ public class DietDAOImpl {
 			query.setParameter("id", id);
 			d = (Diet) query.list().get(0);
 			tx.commit();
-		} catch (HibernateException hx) {
-			System.err.println("Error " + hx.getMessage());
+		} catch (HibernateException hx) {	
+			if(tx!=null)
+		{
+			tx.rollback();
+		}
+		System.err.println(hx.getMessage());
 		} finally {
 			fx.close();
 			sx.close();
@@ -138,8 +150,11 @@ public class DietDAOImpl {
 			tx.commit();
 			
 		}catch(HibernateException hx)
+		{	if(tx!=null)
 		{
-			System.err.println("Error " + hx.getMessage());
+			tx.rollback();
+		}
+		System.err.println(hx.getMessage());
 		}finally {
 			fx.close();
 			sx.close();
@@ -157,7 +172,11 @@ public class DietDAOImpl {
 		sx.update(d);
 		tx.commit();
 	}catch(HibernateException hx)
+	{	if(tx!=null)
 	{
+		tx.rollback();
+	}
+	System.err.println(hx.getMessage());
 		
 	}finally {
 		fx.close();
@@ -182,6 +201,10 @@ public class DietDAOImpl {
 			tx.commit();
 
 		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
 			System.err.println(hx.getMessage());
 		} finally {
 			sx.close();
@@ -206,6 +229,10 @@ public class DietDAOImpl {
 			tx.commit();
 
 		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
 			System.err.println(hx.getMessage());
 		} finally {
 			sx.close();
@@ -230,6 +257,10 @@ public class DietDAOImpl {
 			tx.commit();
 
 		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
 			System.err.println(hx.getMessage());
 		} finally {
 			sx.close();
@@ -254,6 +285,10 @@ public class DietDAOImpl {
 			tx.commit();
 
 		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
 			System.err.println(hx.getMessage());
 		} finally {
 			sx.close();
@@ -278,6 +313,10 @@ public class DietDAOImpl {
 			tx.commit();
 
 		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
 			System.err.println(hx.getMessage());
 		} finally {
 			sx.close();
