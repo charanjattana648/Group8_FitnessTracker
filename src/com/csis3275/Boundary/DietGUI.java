@@ -15,6 +15,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.csis3275.Entities.Diet;
+import com.csis3275.Entities.UserDiet;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -57,6 +58,8 @@ public class DietGUI {
 	private String orderType="";
 	private boolean isFiltered=false;
 	private String filteredClause="";
+	private static String[] currentUEmail=new String[1];
+	private UserDietDAOImpl udI=new UserDietDAOImpl();
 
 	/**
 	 * Launch the application.
@@ -65,6 +68,11 @@ public class DietGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					if(args.length>0)
+					{
+					currentUEmail[0]=args[0];
+					}
+					System.out.println("Email : "+currentUEmail[0]);
 					DietGUI window = new DietGUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -172,16 +180,17 @@ public class DietGUI {
 				Date currDate=new Date();
 				int currId=(int) table.getValueAt(table.getSelectedRow(), 0);
 				Diet d=dI.getDiet(currId);
-//				
-//				UserDiet ud=new UserDiet();
-//				ud.setAuthor(d.getAuthor());
-//				ud.setCalories(d.getCalories());
-//				ud.setDate(df.format(currDate));
-//				ud.setDietId(d.getId());
-//				ud.setFoodName(d.getFoodName());
-//				ud.setMealType(d.getMealType());
-//				ud.setReadyTime(d.getReadyTime());
-//				udI.addUserDiet(ud);
+				
+				UserDiet ud=new UserDiet();
+				ud.setAuthor(d.getAuthor());
+				ud.setCalories(d.getCalories());
+				ud.setDate(df.format(currDate));
+				ud.setDietId(d.getId());
+				ud.setFoodName(d.getFoodName());
+				ud.setMealType(d.getMealType());
+				ud.setReadyTime(d.getReadyTime());
+				ud.setUserEmail(currentUEmail[0]);
+				udI.addUserDiet(ud);
 
 				updateUserSelTable();
 				
@@ -191,6 +200,14 @@ public class DietGUI {
 		UserPanel.add(btnNewButton);
 		
 		JButton btnDeleteFromMeal = new JButton("Delete from Meal List");
+		btnDeleteFromMeal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int currId=(int) UserSelDietTable.getValueAt(UserSelDietTable.getSelectedRow(), 0);
+				UserDiet ud=udI.getUserDiet(currId);
+				udI.deleteUserDiet(ud);
+				updateUserSelTable();
+			}
+		});
 		btnDeleteFromMeal.setBounds(211, 239, 153, 40);
 		UserPanel.add(btnDeleteFromMeal);
 		
@@ -491,11 +508,21 @@ public class DietGUI {
 		UserSelDietTable = new JTable();
 		scrollPaneUserT.setViewportView(UserSelDietTable);
 		
-//		ArrayList<String> dateListCB=udI.getLastDPDates();
-//		JComboBox comboBoxDate = new JComboBox(dateListCB.toArray());
-//		comboBoxDate.setBounds(884, 267, 114, 22);
-//		frame.getContentPane().add(comboBoxDate);
-//		
+		
+		if(udI.getLastDPDates(currentUEmail[0]).size()>0)
+		{
+			ArrayList<String> dateListCB=udI.getLastDPDates(currentUEmail[0]);
+			JComboBox comboBoxDate = new JComboBox(dateListCB.toArray());
+			comboBoxDate.setBounds(884, 267, 114, 22);
+			frame.getContentPane().add(comboBoxDate);
+		}else {
+		JComboBox comboBoxDate = new JComboBox();
+		comboBoxDate.setBounds(884, 267, 114, 22);
+		frame.getContentPane().add(comboBoxDate);
+		}
+		
+		
+		
 		JLabel lblDate = new JLabel("Date :");
 		lblDate.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		lblDate.setBounds(750, 267, 64, 27);
@@ -552,18 +579,23 @@ public class DietGUI {
 		UserSelDietTable.getSelectionModel().removeListSelectionListener(lsl_userT);
 		dtm = new DefaultTableModel();
 		//ud = new UserDiet();
-		dtm.addColumn("Id");
+		dtm.addColumn("Id");		
 		dtm.addColumn("Diet Id");
 		dtm.addColumn("Meal Type");
 		dtm.addColumn("Food Name");
 		dtm.addColumn("Calories (g)");
 		dtm.addColumn("Date");
 		dtm.addColumn("Author");
-//		ArrayList<UserDiet> dietList =udI.getUserDietList();
-//			
-//		for (UserDiet ud : dietList) {	
-//			dtm.addRow(ud.getVector());
-//		}
+		ArrayList<UserDiet> dietList=new ArrayList<UserDiet>();
+		if(udI.getLastDPDates(currentUEmail[0]).size()>0)
+		{
+			ArrayList<String> dateListCB=udI.getLastDPDates(currentUEmail[0]);			
+		String currDate=udI.getLastDPDates(currentUEmail[0]).get(0);
+		dietList =udI.getUserDietList(currentUEmail[0],currDate);
+		}
+		for (UserDiet ud : dietList) {	
+			dtm.addRow(ud.getVector());
+		}
 		UserSelDietTable.setModel(dtm);
 
 		UserSelDietTable.getSelectionModel().addListSelectionListener(lsl_userT);

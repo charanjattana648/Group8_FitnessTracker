@@ -110,7 +110,11 @@ public class UserGoals {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					if(args.length>0)
+					{
 					currentUEmail[0]=args[0];
+					}
+					System.out.println("Email : "+currentUEmail[0]);
 					UserGoals window = new UserGoals();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
