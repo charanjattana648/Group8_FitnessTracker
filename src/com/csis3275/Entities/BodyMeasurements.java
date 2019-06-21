@@ -29,6 +29,7 @@ public class BodyMeasurements {
 	private double weight; // user weight
 	private String weightType; //user weight type LB or KG
 	
+	//generated getters and setters
 	public int getId() {
 		return id;
 	}
@@ -125,7 +126,10 @@ public class BodyMeasurements {
 		}
 	}
 
-	
+	/**
+	 * vector method to display data in JTable
+	 * @return vector object
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Vector getVector() {
 		Vector v = new Vector();

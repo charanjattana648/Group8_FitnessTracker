@@ -619,6 +619,9 @@ public class UserGoals {
 	updateBodyTable();
 	}
 	
+	/**
+	 * update the jtable with all the values from the database
+	 */
 	public void updateBodyTable() {
 		
 		List<BodyMeasurements> bList = new ArrayList<BodyMeasurements>();

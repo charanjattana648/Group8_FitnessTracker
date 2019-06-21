@@ -15,6 +15,10 @@ import com.csis3275.Entities.BodyMeasurements;
 
 public class BodyMeasurementsDAOImpl {
 	
+	/**
+	 * method to get the session factory and connect to db
+	 * @return session factory
+	 */
 	public static SessionFactory getFactory() {
 		
 		SessionFactory factory = null;
@@ -33,6 +37,11 @@ public class BodyMeasurementsDAOImpl {
 		return factory;
 	}
 	
+	/**
+	 * create new body data
+	 * @param body
+	 * @return int newBodyId
+	 */
 	public int createBodydata(BodyMeasurements body) {
 		
 		int newBodyId = 0;
@@ -62,6 +71,10 @@ public class BodyMeasurementsDAOImpl {
 		return newBodyId;
 	}
 	
+	/**
+	 * get all the values from database in a list
+	 * @return lis of body data
+	 */
 	@SuppressWarnings("unchecked")
 	public List<BodyMeasurements> getBodyData(){
 		
