@@ -65,11 +65,12 @@ public class UserDAOImpl {
 //			((javax.persistence.Query) sx).setParameter("uEmail", currUserEmail);
 //			((javax.persistence.Query) sx).setParameter("UPass", currPass);
 			//getPassQuery.executeUpdate().c;
-			String sql="SELECT u FROM User u where u.userEmail=:uEmail and u.userPassword=:UPass";
-			Query query=sx.createQuery(sql);
-			query.setParameter("uEmail", currUserEmail);
-			query.setParameter("UPass", currPass);
-			int x=query.list().size();
+			//String sql="SELECT u FROM User u where u.userEmail=:uEmail and u.userPassword=:UPass";
+			//Query query=sx.createQuery(sql);
+			int x=sx.getNamedQuery("CheckUser").setParameter("uEmail", currUserEmail).setParameter("UPass", currPass).getMaxResults();
+//			query.setParameter("uEmail", currUserEmail);
+//			query.setParameter("UPass", currPass);
+//			int x=query.list().size();
 			
 				if(x>0)
 				{

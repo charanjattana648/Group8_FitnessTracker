@@ -92,7 +92,8 @@ public class UserGoals {
 	private JLabel lblClickOnFind;
 	private JTable tableBodyMeasurements;
 	private JScrollPane scrollPaneBodyMeasurements;
-	private static String[] currentUEmail=new String[1];
+	private static String[] currentUEmail=new String[2];
+	
 	
 	
 	private DefaultTableModel tm = new DefaultTableModel();
@@ -114,8 +115,11 @@ public class UserGoals {
 					if(args.length>0)
 					{
 					currentUEmail[0]=args[0];
+					currentUEmail[1]=args[1];
+					//usertype=args[1];
 					}
-					System.out.println("Email : "+currentUEmail[0]);
+					System.out.println("UG Email : "+currentUEmail[0]);
+					System.out.println("UG type : "+currentUEmail[1]);
 					UserGoals window = new UserGoals();
 					window.frame.setVisible(true);
 				} catch (Exception e) {

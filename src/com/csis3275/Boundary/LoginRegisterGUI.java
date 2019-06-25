@@ -133,8 +133,10 @@ public class LoginRegisterGUI {
 			public void actionPerformed(ActionEvent e) {
 				if(liTypeComboBox.getSelectedItem()=="User")
 				{
-				String[] currEmail=new String[1];
+				String[] currEmail=new String[2];
 				currEmail[0]=litextUserName.getText();
+				System.out.println("-------------------------"+liTypeComboBox.getSelectedItem().toString());
+				currEmail[1]=liTypeComboBox.getSelectedItem().toString();
 				char[] pass=litxtpassword.getPassword();
 				String currPass=String.valueOf(pass);
 				boolean isMatched=uD.checkUEPass(currEmail[0],currPass);

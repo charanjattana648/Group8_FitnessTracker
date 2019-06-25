@@ -3,11 +3,13 @@ package com.csis3275.Entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.google.inject.internal.Nullable;
 
 @Entity
+@NamedQuery(name="CheckUser",query="FROM User u where u.userEmail=:uEmail and u.userPassword=:UPass")
 @Table(name="User")
 public class User {
 	@Id
