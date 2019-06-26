@@ -1,11 +1,20 @@
 package com.csis3275.Entities;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * 
  * @author charanpreet Singh
  *
  */
+@Entity
+@Table(name="Admin")
 public class Admin {
-
+@Id
+@GeneratedValue	
 	private String adminid;
 	private String adminName;
 	private String adminPassword;

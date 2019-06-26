@@ -22,6 +22,7 @@ public class UserDAOImpl {
 	 * @param u New User 
 	 * @return key of user (Email).
 	 */
+	
 	public String createUserAccount(User u)
 	{
 		SessionFactory fx=null;

@@ -10,9 +10,11 @@ import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.Utilities;
 
 import com.csis3275.Entities.Diet;
 import com.csis3275.Entities.UserDiet;
@@ -55,13 +57,15 @@ public class DietGUI {
 	private JTextField txtAuthor;
 	private JTable UserSelDietTable;
 	private JComboBox comboBoxDate;
+	private JPanel UserPanel;
+	private JPanel DietPanel;	
 	private boolean isOrder=false;
 	private String orderType="";
 	private boolean isFiltered=false;
 	private String filteredClause="";
 	private static String[] currentUEmail=new String[2];
 	private UserDietDAOImpl udI=new UserDietDAOImpl();
-	private String mealtypeSel="",orderby="";
+	private String mealtypeSel="",authorSel="",foodCategorySel="",foodtypeSel="",orderby="";
 	private static String usertype="";
 	/**
 	 * Launch the application.
@@ -101,7 +105,7 @@ public class DietGUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1372, 742);
+		frame.setBounds(100, 100, 1372, 830);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		lsl = new ListSelectionListener() {
@@ -132,17 +136,20 @@ public class DietGUI {
 		};
 		frame.getContentPane().setLayout(null);
 		
-		JPanel DietPanel = new JPanel();
+		UserPanel = new JPanel();
+		UserPanel.setVisible(false);
+		UserPanel.setBounds(12, 322, 469, 409);
+		frame.getContentPane().add(UserPanel);
+		UserPanel.setLayout(null);
+		
+		
+		
+		DietPanel = new JPanel();
 		DietPanel.setVisible(false);
-		DietPanel.setBounds(12, 282, 515, 380);
+		DietPanel.setBounds(12, 337, 515, 380);
 		frame.getContentPane().add(DietPanel);
 		DietPanel.setLayout(null);
 		
-		JPanel UserPanel = new JPanel();
-		UserPanel.setVisible(false);
-		UserPanel.setBounds(12, 267, 469, 395);
-		frame.getContentPane().add(UserPanel);
-		UserPanel.setLayout(null);
 		System.out.println("first");
 		
 		if(usertype.equalsIgnoreCase("User"))
@@ -151,6 +158,204 @@ public class DietGUI {
 		}else {
 			DietPanel.setVisible(true);
 		}
+		
+		
+		
+		JLabel lblFilter = new JLabel("Filter :");
+		lblFilter.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		lblFilter.setBounds(12, 37, 64, 27);
+		UserPanel.add(lblFilter);
+		
+		ArrayList<String> mealTypeListCB=dI.getMealTypeList();
+		JComboBox comboBoxMealType = new JComboBox(mealTypeListCB.toArray());
+		comboBoxMealType.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(comboBoxMealType.getSelectedIndex()!=0)
+				{
+				dI.getFilteredMealTypeList(comboBoxMealType.getSelectedItem().toString());
+				}
+				//updateTable();
+			}
+		});
+		comboBoxMealType.setBounds(80, 40, 114, 22);
+		UserPanel.add(comboBoxMealType);
+		
+		ArrayList<String> foodTypeListCB=dI.getFoodTypeList();
+		JComboBox comboBoxFoodType = new JComboBox(foodTypeListCB.toArray());
+		comboBoxFoodType.setBounds(216, 40, 114, 22);
+		UserPanel.add(comboBoxFoodType);
+		
+		ArrayList<String> foodCategoryListCB=dI.getFoodCategoryList();
+		JComboBox comboBoxFoodCategory = new JComboBox(foodCategoryListCB.toArray());
+		comboBoxFoodCategory.setBounds(216, 75, 114, 22);
+		UserPanel.add(comboBoxFoodCategory);
+		
+		ArrayList<String> authorListCB=dI.getAuthorList();
+		JComboBox comboBoxAuthor = new JComboBox(authorListCB.toArray());
+		comboBoxAuthor.setBounds(80, 77, 114, 22);
+		UserPanel.add(comboBoxAuthor);
+		
+		JLabel lblSort = new JLabel("Sort : ");
+		lblSort.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		lblSort.setBounds(12, 138, 64, 27);
+		UserPanel.add(lblSort);
+		
+		JComboBox comboBoxAscDesc = new JComboBox();
+		comboBoxAscDesc.setModel(new DefaultComboBoxModel(new String[] {"None", "Highest", "Lowest"}));
+		comboBoxAscDesc.setBounds(80, 141, 114, 22);
+		UserPanel.add(comboBoxAscDesc);
+		
+		JComboBox comboBoxNutrients = new JComboBox();
+		comboBoxNutrients.setModel(new DefaultComboBoxModel(new String[] {"None", "Calories", "Fat", "Protein", "Carbohydrates", "VitaminA", "VitaminC", "Iron", "Calcium"}));
+		comboBoxNutrients.setBounds(216, 141, 114, 22);
+		UserPanel.add(comboBoxNutrients);
+		
+		JButton btnAddUserMeal = new JButton("Add to Meal List");
+		btnAddUserMeal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DateFormat df=new SimpleDateFormat("MM/dd/yyyy");
+				Date currDate=new Date();
+				int currId=(int) table.getValueAt(table.getSelectedRow(), 0);
+				Diet d=dI.getDiet(currId);
+				
+				UserDiet ud=new UserDiet();
+				ud.setAuthor(d.getAuthor());
+				ud.setCalories(d.getCalories());
+				ud.setDate(df.format(currDate));
+				ud.setDietId(d.getId());
+				ud.setFoodName(d.getFoodName());
+				ud.setMealType(d.getMealType());
+				ud.setReadyTime(d.getReadyTime());
+				ud.setUserEmail(currentUEmail[0]);
+				udI.addUserDiet(ud);
+				updateDateCb();
+				updateUserSelTable();
+				
+			}
+		});
+		btnAddUserMeal.setBounds(36, 239, 134, 40);
+		UserPanel.add(btnAddUserMeal);
+		
+		JButton btnDeleteFromMeal = new JButton("Delete from Meal List");
+		btnDeleteFromMeal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int currId=(int) UserSelDietTable.getValueAt(UserSelDietTable.getSelectedRow(), 0);
+				UserDiet ud=udI.getUserDiet(currId);
+				udI.deleteUserDiet(ud);
+				updateDateCb();
+				updateUserSelTable();
+			}
+		});
+		btnDeleteFromMeal.setBounds(211, 239, 153, 40);
+		UserPanel.add(btnDeleteFromMeal);
+		
+		JButton btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				isFiltered=false;
+				isOrder=false;
+				int count=0;
+				
+				if(comboBoxAscDesc.getSelectedIndex()==1)
+				{	
+					isOrder=true;
+					if(comboBoxNutrients.getSelectedItem()!="None")	
+					{
+					orderby=comboBoxNutrients.getSelectedItem().toString();//+" DESC";
+					}
+				}else if(comboBoxAscDesc.getSelectedIndex()==2)
+				{
+					isOrder=true;									
+					if(comboBoxNutrients.getSelectedItem()!="None")	
+					{
+					orderby=(String) comboBoxNutrients.getSelectedItem().toString();//+" ASC";
+					}
+				}
+				if(comboBoxAuthor.getSelectedItem()!="None")
+				{
+					authorSel=comboBoxAuthor.getSelectedItem().toString();
+					isFiltered=true;
+				}
+				if(comboBoxFoodCategory.getSelectedItem()!="None")
+				{
+					isFiltered=true;
+					foodCategorySel=comboBoxFoodCategory.getSelectedItem().toString();
+					
+				}
+				if(comboBoxFoodType.getSelectedItem()!="None")
+				{
+					isFiltered=true;
+					foodtypeSel=comboBoxFoodType.getSelectedItem().toString();
+					System.out.println("c----"+mealtypeSel);
+					
+				}
+				if(comboBoxMealType.getSelectedItem()!="None")
+				{
+					isFiltered=true;
+					mealtypeSel=comboBoxMealType.getSelectedItem().toString();
+				}
+				
+				updateTable();
+			}
+		});
+		btnSearch.setBounds(36, 311, 153, 40);
+		UserPanel.add(btnSearch);
+		
+		JButton btnRefresh_1 = new JButton("Refresh");
+		btnRefresh_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//updateDateCb();
+				//updateUserSelTable();
+//				SwingUtilities.updateComponentTreeUI(comboBoxDate);
+//				comboBoxDate.invalidate();
+//				comboBoxDate.validate();
+//				comboBoxDate.repaint();
+				
+			}
+		});
+		btnRefresh_1.setBounds(211, 311, 153, 40);
+		UserPanel.add(btnRefresh_1);
+		
+		JButton btnExercise = new JButton("Exercise Activity");
+		btnExercise.setBounds(36, 364, 153, 40);
+		UserPanel.add(btnExercise);
+		
+		JButton btnCheckProgress = new JButton("Check Progress");
+		btnCheckProgress.setBounds(211, 364, 153, 40);
+		UserPanel.add(btnCheckProgress);
+
+		JScrollPane scrollPaneData = new JScrollPane();
+		scrollPaneData.setBounds(12, 68, 1293, 227);
+		frame.getContentPane().add(scrollPaneData);
+
+		table = new JTable();
+		scrollPaneData.setViewportView(table);
+		
+		JScrollPane scrollPaneUserT = new JScrollPane();
+		scrollPaneUserT.setBounds(578, 369, 626, 348);
+		frame.getContentPane().add(scrollPaneUserT);
+		
+		UserSelDietTable = new JTable();
+		scrollPaneUserT.setViewportView(UserSelDietTable);
+		
+		
+		updateDateCb();
+		comboBoxDate.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("entering---");
+				updateUserSelTable();
+				
+			}
+		});
+		
+		
+		JLabel lblDate = new JLabel("Date :");
+		lblDate.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		lblDate.setBounds(750, 322, 64, 27);
+		frame.getContentPane().add(lblDate);
+	
 		
 		JLabel lblId = new JLabel("Id :");
 		lblId.setBounds(12, 16, 25, 16);
@@ -278,7 +483,7 @@ public class DietGUI {
 		
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {			
+			public void actionPerformed(ActionEvent e) {						
 				
 				txtId.setText("");
 				txtMealId.setText("");
@@ -297,6 +502,7 @@ public class DietGUI {
 				txtIron.setText("");
                 txtAuthor.setText("");				
 				updateTable();
+			
 			}
 		});
 		btnRefresh.setBounds(382, 324, 97, 25);
@@ -366,180 +572,10 @@ public class DietGUI {
 		txtAuthor.setBounds(204, 215, 144, 22);
 		DietPanel.add(txtAuthor);
 		
-		
-		
-		JLabel lblFilter = new JLabel("Filter :");
-		lblFilter.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		lblFilter.setBounds(12, 37, 64, 27);
-		UserPanel.add(lblFilter);
-		
-		ArrayList<String> mealTypeListCB=dI.getMealTypeList();
-		JComboBox comboBoxMealType = new JComboBox(mealTypeListCB.toArray());
-		comboBoxMealType.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(comboBoxMealType.getSelectedIndex()!=0)
-				{
-				dI.getFilteredMealTypeList(comboBoxMealType.getSelectedItem().toString());
-				}
-				//updateTable();
-			}
-		});
-		comboBoxMealType.setBounds(80, 40, 114, 22);
-		UserPanel.add(comboBoxMealType);
-		
-		ArrayList<String> foodTypeListCB=dI.getFoodTypeList();
-		JComboBox comboBoxFoodType = new JComboBox(foodTypeListCB.toArray());
-		comboBoxFoodType.setBounds(216, 40, 114, 22);
-		UserPanel.add(comboBoxFoodType);
-		
-		ArrayList<String> foodCategoryListCB=dI.getFoodCategoryList();
-		JComboBox comboBoxFoodCategory = new JComboBox(foodCategoryListCB.toArray());
-		comboBoxFoodCategory.setBounds(216, 75, 114, 22);
-		UserPanel.add(comboBoxFoodCategory);
-		
-		ArrayList<String> authorListCB=dI.getAuthorList();
-		JComboBox comboBoxAuthor = new JComboBox(authorListCB.toArray());
-		comboBoxAuthor.setBounds(80, 77, 114, 22);
-		UserPanel.add(comboBoxAuthor);
-		
-		JLabel lblSort = new JLabel("Sort : ");
-		lblSort.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		lblSort.setBounds(12, 138, 64, 27);
-		UserPanel.add(lblSort);
-		
-		JComboBox comboBoxAscDesc = new JComboBox();
-		comboBoxAscDesc.setModel(new DefaultComboBoxModel(new String[] {"None", "Highest", "Lowest"}));
-		comboBoxAscDesc.setBounds(80, 141, 114, 22);
-		UserPanel.add(comboBoxAscDesc);
-		
-		JComboBox comboBoxNutrients = new JComboBox();
-		comboBoxNutrients.setModel(new DefaultComboBoxModel(new String[] {"None", "Calories", "Fat", "Protein", "Carbohydrates", "VitaminA", "VitaminC", "Iron", "Calcium"}));
-		comboBoxNutrients.setBounds(216, 141, 114, 22);
-		UserPanel.add(comboBoxNutrients);
-		
-		JButton btnNewButton = new JButton("Add to Meal List");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				DateFormat df=new SimpleDateFormat("MM/dd/yyyy");
-				Date currDate=new Date();
-				int currId=(int) table.getValueAt(table.getSelectedRow(), 0);
-				Diet d=dI.getDiet(currId);
-				
-				UserDiet ud=new UserDiet();
-				ud.setAuthor(d.getAuthor());
-				ud.setCalories(d.getCalories());
-				ud.setDate(df.format(currDate));
-				ud.setDietId(d.getId());
-				ud.setFoodName(d.getFoodName());
-				ud.setMealType(d.getMealType());
-				ud.setReadyTime(d.getReadyTime());
-				ud.setUserEmail(currentUEmail[0]);
-				udI.addUserDiet(ud);
-
-				updateDateCb();
-				updateUserSelTable();
-				
-			}
-		});
-		btnNewButton.setBounds(36, 239, 134, 40);
-		UserPanel.add(btnNewButton);
-		
-		JButton btnDeleteFromMeal = new JButton("Delete from Meal List");
-		btnDeleteFromMeal.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int currId=(int) UserSelDietTable.getValueAt(UserSelDietTable.getSelectedRow(), 0);
-				UserDiet ud=udI.getUserDiet(currId);
-				udI.deleteUserDiet(ud);
-				updateUserSelTable();
-			}
-		});
-		btnDeleteFromMeal.setBounds(211, 239, 153, 40);
-		UserPanel.add(btnDeleteFromMeal);
-		
-		JButton btnSearch = new JButton("Search");
-		btnSearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				isFiltered=false;
-				isOrder=false;
-				int count=0;
-				
-				if(comboBoxAscDesc.getSelectedIndex()==1)
-				{	
-					isOrder=true;
-					if(comboBoxNutrients.getSelectedItem()!="None")	
-					{
-					orderby=comboBoxNutrients.getSelectedItem().toString();//+" DESC";
-					}
-				}else if(comboBoxAscDesc.getSelectedIndex()==2)
-				{
-					isOrder=true;									
-					if(comboBoxNutrients.getSelectedItem()!="None")	
-					{
-					orderby=(String) comboBoxNutrients.getSelectedItem().toString();//+" ASC";
-					}
-				}
-				if(comboBoxAuthor.getSelectedItem()!="None")
-				{
-					filteredClause=comboBoxAuthor.getSelectedItem().toString();
-					isFiltered=true;
-				}
-				if(comboBoxFoodCategory.getSelectedItem()!="None")
-				{
-					isFiltered=true;
-					filteredClause=comboBoxFoodCategory.getSelectedItem().toString();
-				}
-				if(comboBoxFoodType.getSelectedItem()!="None")
-				{
-					isFiltered=true;
-					filteredClause=comboBoxFoodType.getSelectedItem().toString();
-					System.out.println("c----"+mealtypeSel);
-						
-				}
-				if(comboBoxMealType.getSelectedItem()!="None")
-				{
-					isFiltered=true;
-					mealtypeSel=comboBoxMealType.getSelectedItem().toString();
-				}
-				
-				updateTable();
-			}
-		});
-		btnSearch.setBounds(36, 311, 153, 40);
-		UserPanel.add(btnSearch);
-		
-		JButton btnRefresh_1 = new JButton("Refresh");
-		btnRefresh_1.setBounds(211, 311, 153, 40);
-		UserPanel.add(btnRefresh_1);
-
-		JScrollPane scrollPaneData = new JScrollPane();
-		scrollPaneData.setBounds(12, 13, 1293, 227);
-		frame.getContentPane().add(scrollPaneData);
-
-		table = new JTable();
-		scrollPaneData.setViewportView(table);
-		
-		JScrollPane scrollPaneUserT = new JScrollPane();
-		scrollPaneUserT.setBounds(578, 314, 626, 348);
-		frame.getContentPane().add(scrollPaneUserT);
-		
-		UserSelDietTable = new JTable();
-		scrollPaneUserT.setViewportView(UserSelDietTable);
-		
-		
-		updateDateCb();
-		comboBoxDate.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				updateUserSelTable();
-			}
-		});
-		
-		
-		JLabel lblDate = new JLabel("Date :");
-		lblDate.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		lblDate.setBounds(750, 267, 64, 27);
-		frame.getContentPane().add(lblDate);
+		JLabel lblDietPlan = new JLabel("Diet Plan");
+		lblDietPlan.setFont(new Font("Tahoma", Font.BOLD, 24));
+		lblDietPlan.setBounds(646, 25, 116, 24);
+		frame.getContentPane().add(lblDietPlan);
 		updateTable();
 		updateUserSelTable();
 	}
@@ -577,7 +613,17 @@ public class DietGUI {
 			}
 		}
 		if(isFiltered)
+		{
+			if(mealtypeSel!="")
 			dietList=dI.getFilteredMealTypeList(mealtypeSel);
+			if(foodtypeSel!="")
+				dietList=dI.getFilteredFoodTypeList(foodtypeSel);
+			if(authorSel!="")
+				dietList=dI.getFilteredauthorList(authorSel);
+			if(foodCategorySel!="")
+				dietList=dI.getFilterFoodCategoryList(foodCategorySel);
+			
+		}
 //		{
 //			if(isOrder && orderType!="")
 //			{			
@@ -605,6 +651,8 @@ public class DietGUI {
 		{
 			ArrayList<String> dateListCB=udI.getLastDPDates(currentUEmail[0]);
 			comboBoxDate = new JComboBox(dateListCB.toArray());
+			//comboBoxDate.getFocusListeners();
+			
 			comboBoxDate.setBounds(884, 267, 114, 22);
 			frame.getContentPane().add(comboBoxDate);
 		}else {
@@ -612,6 +660,7 @@ public class DietGUI {
 		comboBoxDate.setBounds(884, 267, 114, 22);
 		frame.getContentPane().add(comboBoxDate);
 		}
+        
 		
 	}
 	/**
@@ -619,6 +668,7 @@ public class DietGUI {
 	 *
 	 */
 	public void updateUserSelTable() {
+		//updateDateCb();
 		UserSelDietTable.getSelectionModel().removeListSelectionListener(lsl_userT);
 		dtm = new DefaultTableModel();
 		//ud = new UserDiet();
@@ -634,7 +684,8 @@ public class DietGUI {
 		{
 			//ArrayList<String> dateListCB=udI.getLastDPDates(currentUEmail[0]);			
 		//String currDate=udI.getLastDPDates(currentUEmail[0]).get(0);
-			String currDate=(String) comboBoxDate.getSelectedItem();
+			String currDate=(String) comboBoxDate.getSelectedItem();			
+			//System.out.println(currDate);
 		dietList =udI.getUserDietList(currentUEmail[0],currDate);
 		}
 		for (UserDiet ud : dietList) {	

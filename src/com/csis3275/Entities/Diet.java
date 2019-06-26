@@ -14,7 +14,10 @@ import javax.persistence.Table;
  */
 @Entity
 @NamedQuery(name="mealTypeListQuery",query="select distinct d.mealType from Diet d")
-@NamedQuery(name="getFilteredMealTypeList",query="select d from Diet d where d.mealType=:mealType")
+@NamedQuery(name="getFilteredMealTypeListQuery",query="select d from Diet d where d.mealType=:mealType")
+@NamedQuery(name="getFilterFoodCategoryListQuery",query="select d from Diet d where d.foodCategory=:foodCategory")
+@NamedQuery(name="getFilteredfoodTypeListQuery",query="select d from Diet d where d.foodType=:foodType")
+@NamedQuery(name="getFilteredauthorListQuery",query="select d from Diet d where d.author=:author")
 @NamedQuery(name="getAuthorListQuery",query="Select distinct d.author from Diet d")
 @NamedQuery(name="foodCategoryListQuery",query="Select distinct d.foodCategory from Diet d")
 @NamedQuery(name="foodTypeListQuery",query="Select distinct d.foodType from Diet d")

@@ -137,6 +137,7 @@ public class LoginRegisterGUI {
 				currEmail[0]=litextUserName.getText();
 				System.out.println("-------------------------"+liTypeComboBox.getSelectedItem().toString());
 				currEmail[1]=liTypeComboBox.getSelectedItem().toString();
+				//currEmail[1]="Admin";
 				char[] pass=litxtpassword.getPassword();
 				String currPass=String.valueOf(pass);
 				boolean isMatched=uD.checkUEPass(currEmail[0],currPass);
