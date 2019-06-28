@@ -1,38 +1,51 @@
 package com.csis3275.Entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
+@NamedQuery(name="getDailyActivityQuery",query="from DailyActivity where date=:currdate and userEmail=:curremail")
+@NamedQuery(name="getDailyActivityListQuery",query="from DailyActivity where userEmail=:curremail")
 @Table(name="DailyActivity")
 public class DailyActivity {
 	
 	@Id
 	@GeneratedValue
 	private int id;
+	@Column(unique=true)
+	private String date;
 	private String userEmail;
-	private double sleepHour;
-	private double sleepMinute;
+	private int sleepHour;
+	private int sleepMinute;
 	private int waterGlass;
-	private double exerciseHour;
-	private double exerciseMinute;
-	private double meditationHour;
-	private double meditationMinute;
-	private double walkingHour;
-	private double walkingMinute;
+	private int exerciseHour;
+	private int exerciseMinute;
+	private int meditationHour;
+	private int meditationMinute;
+	private int walkingHour;
+	private int walkingMinute;
 	private double extraCalories;
 	private double extraProtein;
 	private double extraFat;
 	private String workType;
-	private double workHour;
-	private double workMinute;
+	private int workHour;
+	private int workMinute;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
 	}
 	public String getUserEmail() {
 		return userEmail;
@@ -40,16 +53,16 @@ public class DailyActivity {
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
-	public double getSleepHour() {
+	public int getSleepHour() {
 		return sleepHour;
 	}
-	public void setSleepHour(double sleepHour) {
+	public void setSleepHour(int sleepHour) {
 		this.sleepHour = sleepHour;
 	}
-	public double getSleepMinute() {
+	public int getSleepMinute() {
 		return sleepMinute;
 	}
-	public void setSleepMinute(double sleepMinute) {
+	public void setSleepMinute(int sleepMinute) {
 		this.sleepMinute = sleepMinute;
 	}
 	public int getWaterGlass() {
@@ -58,40 +71,40 @@ public class DailyActivity {
 	public void setWaterGlass(int waterGlass) {
 		this.waterGlass = waterGlass;
 	}
-	public double getExerciseHour() {
+	public int getExerciseHour() {
 		return exerciseHour;
 	}
-	public void setExerciseHour(double exerciseHour) {
+	public void setExerciseHour(int exerciseHour) {
 		this.exerciseHour = exerciseHour;
 	}
-	public double getExerciseMinute() {
+	public int getExerciseMinute() {
 		return exerciseMinute;
 	}
-	public void setExerciseMinute(double exerciseMinute) {
+	public void setExerciseMinute(int exerciseMinute) {
 		this.exerciseMinute = exerciseMinute;
 	}
-	public double getMeditationHour() {
+	public int getMeditationHour() {
 		return meditationHour;
 	}
-	public void setMeditationHour(double meditationHour) {
+	public void setMeditationHour(int meditationHour) {
 		this.meditationHour = meditationHour;
 	}
-	public double getMeditationMinute() {
+	public int getMeditationMinute() {
 		return meditationMinute;
 	}
-	public void setMeditationMinute(double meditationMinute) {
+	public void setMeditationMinute(int meditationMinute) {
 		this.meditationMinute = meditationMinute;
 	}
-	public double getWalkingHour() {
+	public int getWalkingHour() {
 		return walkingHour;
 	}
-	public void setWalkingHour(double walkingHour) {
+	public void setWalkingHour(int walkingHour) {
 		this.walkingHour = walkingHour;
 	}
-	public double getWalkingMinute() {
+	public int getWalkingMinute() {
 		return walkingMinute;
 	}
-	public void setWalkingMinute(double walkingMinute) {
+	public void setWalkingMinute(int walkingMinute) {
 		this.walkingMinute = walkingMinute;
 	}
 	public double getExtraCalories() {
@@ -118,18 +131,19 @@ public class DailyActivity {
 	public void setWorkType(String workType) {
 		this.workType = workType;
 	}
-	public double getWorkHour() {
+	public int getWorkHour() {
 		return workHour;
 	}
-	public void setWorkHour(double workHour) {
+	public void setWorkHour(int workHour) {
 		this.workHour = workHour;
 	}
-	public double getWorkMinute() {
+	public int getWorkMinute() {
 		return workMinute;
 	}
-	public void setWorkMinute(double workMinute) {
+	public void setWorkMinute(int workMinute) {
 		this.workMinute = workMinute;
 	}
+
 	
 
 }

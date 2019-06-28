@@ -321,6 +321,11 @@ public class DietGUI {
 		UserPanel.add(btnExercise);
 		
 		JButton btnCheckProgress = new JButton("Check Progress");
+		btnCheckProgress.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DailyActivitiesGUI.main(currentUEmail);
+			}
+		});
 		btnCheckProgress.setBounds(211, 364, 153, 40);
 		UserPanel.add(btnCheckProgress);
 

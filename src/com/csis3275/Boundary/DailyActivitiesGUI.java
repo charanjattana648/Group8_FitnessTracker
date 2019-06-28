@@ -1,15 +1,26 @@
 package com.csis3275.Boundary;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.transaction.Transactional.TxType;
+
+import com.csis3275.Entities.DailyActivity;
+
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JPanel;
+import javax.persistence.Column;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.awt.event.ActionEvent;
 
 public class DailyActivitiesGUI {
 
@@ -28,6 +39,21 @@ public class DailyActivitiesGUI {
 	private JTextField eatFatstext;
 	private JTextField workHrstext;
 	private JTextField workMinttext;
+	private JProgressBar sleepHorsprogressBar;
+	private JProgressBar waterprogressBar;
+	private JProgressBar WalkingprogressBar;
+	private JProgressBar ExcersiseprogressBar;
+	private JProgressBar MeditationprogressBar;
+	private DailyActivity da=new DailyActivity();
+	private DailyActivityDAOImpl daI=new DailyActivityDAOImpl();
+	private static String userEmail="";
+	private int walkingRed=30,walkingGreen=120,walkingYellow=150;
+	private int exerciseRed=30,exerciseGreen=240,exerciseYellow=300;
+	private int meditationRed=5,meditationGreen=90,meditationYellow=120;
+	private int sleepRed=330,sleepGreen=540,sleepYellow=600;
+	private int waterRed=5,waterGreen=15,waterYellow=20;
+	private final int MIN_PER_HOUR=60;
+	
 
 	/**
 	 * Launch the application.
@@ -36,6 +62,10 @@ public class DailyActivitiesGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					if(args.length>0)
+					{
+					userEmail=args[0];
+					}
 					DailyActivitiesGUI window = new DailyActivitiesGUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -72,6 +102,7 @@ public class DailyActivitiesGUI {
 		frame.getContentPane().add(lblSleeoHours);
 		
 		sleepHrstext = new JTextField();
+		sleepHrstext.setText("00");
 		sleepHrstext.setBounds(310, 132, 82, 26);
 		frame.getContentPane().add(sleepHrstext);
 		sleepHrstext.setColumns(10);
@@ -81,6 +112,7 @@ public class DailyActivitiesGUI {
 		frame.getContentPane().add(lblHours);
 		
 		sleepMinttext = new JTextField();
+		sleepMinttext.setText("00");
 		sleepMinttext.setBounds(468, 132, 82, 26);
 		frame.getContentPane().add(sleepMinttext);
 		sleepMinttext.setColumns(10);
@@ -89,7 +121,8 @@ public class DailyActivitiesGUI {
 		lblMinutes.setBounds(571, 135, 69, 20);
 		frame.getContentPane().add(lblMinutes);
 		
-		JProgressBar sleepHorsprogressBar = new JProgressBar();
+		sleepHorsprogressBar = new JProgressBar();
+		sleepHorsprogressBar.setMaximum(12);
 		sleepHorsprogressBar.setBounds(719, 132, 427, 14);
 		frame.getContentPane().add(sleepHorsprogressBar);
 		
@@ -99,6 +132,7 @@ public class DailyActivitiesGUI {
 		frame.getContentPane().add(lblDrinkWater);
 		
 		waterGlasstext = new JTextField();
+		waterGlasstext.setText("0");
 		waterGlasstext.setColumns(10);
 		waterGlasstext.setBounds(310, 200, 82, 26);
 		frame.getContentPane().add(waterGlasstext);
@@ -107,7 +141,8 @@ public class DailyActivitiesGUI {
 		lblGlass.setBounds(407, 203, 69, 20);
 		frame.getContentPane().add(lblGlass);
 		
-		JProgressBar waterprogressBar = new JProgressBar();
+		waterprogressBar = new JProgressBar();
+		waterprogressBar.setMaximum(20);
 		waterprogressBar.setBounds(719, 200, 427, 14);
 		frame.getContentPane().add(waterprogressBar);
 		
@@ -117,6 +152,7 @@ public class DailyActivitiesGUI {
 		frame.getContentPane().add(lblWalking);
 		
 		walkingHrstext = new JTextField();
+		walkingHrstext.setText("00");
 		walkingHrstext.setColumns(10);
 		walkingHrstext.setBounds(310, 265, 82, 26);
 		frame.getContentPane().add(walkingHrstext);
@@ -126,6 +162,7 @@ public class DailyActivitiesGUI {
 		frame.getContentPane().add(label);
 		
 		walkingMinttext = new JTextField();
+		walkingMinttext.setText("00");
 		walkingMinttext.setColumns(10);
 		walkingMinttext.setBounds(468, 265, 82, 26);
 		frame.getContentPane().add(walkingMinttext);
@@ -134,7 +171,8 @@ public class DailyActivitiesGUI {
 		label_1.setBounds(571, 268, 69, 20);
 		frame.getContentPane().add(label_1);
 		
-		JProgressBar WalkingprogressBar = new JProgressBar();
+		WalkingprogressBar = new JProgressBar();
+		WalkingprogressBar.setMaximum(180);
 		WalkingprogressBar.setBounds(719, 276, 427, 14);
 		frame.getContentPane().add(WalkingprogressBar);
 		
@@ -144,6 +182,7 @@ public class DailyActivitiesGUI {
 		frame.getContentPane().add(lblExcersise);
 		
 		excersiseHrstext = new JTextField();
+		excersiseHrstext.setText("00");
 		excersiseHrstext.setColumns(10);
 		excersiseHrstext.setBounds(310, 334, 82, 26);
 		frame.getContentPane().add(excersiseHrstext);
@@ -153,6 +192,7 @@ public class DailyActivitiesGUI {
 		frame.getContentPane().add(label_2);
 		
 		ExcersiseMinttext = new JTextField();
+		ExcersiseMinttext.setText("00");
 		ExcersiseMinttext.setColumns(10);
 		ExcersiseMinttext.setBounds(468, 334, 82, 26);
 		frame.getContentPane().add(ExcersiseMinttext);
@@ -161,7 +201,8 @@ public class DailyActivitiesGUI {
 		label_3.setBounds(571, 337, 69, 20);
 		frame.getContentPane().add(label_3);
 		
-		JProgressBar ExcersiseprogressBar = new JProgressBar();
+		ExcersiseprogressBar = new JProgressBar();
+		ExcersiseprogressBar.setMaximum(360);
 		ExcersiseprogressBar.setBounds(719, 343, 427, 14);
 		frame.getContentPane().add(ExcersiseprogressBar);
 		
@@ -171,6 +212,7 @@ public class DailyActivitiesGUI {
 		frame.getContentPane().add(lblMeditation);
 		
 		meditationHrstext = new JTextField();
+		meditationHrstext.setText("00");
 		meditationHrstext.setColumns(10);
 		meditationHrstext.setBounds(310, 399, 82, 26);
 		frame.getContentPane().add(meditationHrstext);
@@ -180,6 +222,7 @@ public class DailyActivitiesGUI {
 		frame.getContentPane().add(label_4);
 		
 		meditationMinttext = new JTextField();
+		meditationMinttext.setText("00");
 		meditationMinttext.setColumns(10);
 		meditationMinttext.setBounds(468, 399, 82, 26);
 		frame.getContentPane().add(meditationMinttext);
@@ -188,7 +231,8 @@ public class DailyActivitiesGUI {
 		label_5.setBounds(571, 402, 69, 20);
 		frame.getContentPane().add(label_5);
 		
-		JProgressBar MeditationprogressBar = new JProgressBar();
+	    MeditationprogressBar = new JProgressBar();
+		MeditationprogressBar.setMaximum(150);
 		MeditationprogressBar.setBounds(719, 408, 427, 14);
 		frame.getContentPane().add(MeditationprogressBar);
 		
@@ -219,6 +263,7 @@ public class DailyActivitiesGUI {
 		eatingPanel.add(lblIfYesHow);
 		
 		eatCaltext = new JTextField();
+		eatCaltext.setText("0.0");
 		eatCaltext.setBounds(15, 52, 76, 26);
 		eatingPanel.add(eatCaltext);
 		eatCaltext.setColumns(10);
@@ -228,6 +273,7 @@ public class DailyActivitiesGUI {
 		eatingPanel.add(lblCalories);
 		
 		eatProteintext = new JTextField();
+		eatProteintext.setText("0.0");
 		eatProteintext.setColumns(10);
 		eatProteintext.setBounds(183, 52, 76, 26);
 		eatingPanel.add(eatProteintext);
@@ -237,6 +283,7 @@ public class DailyActivitiesGUI {
 		eatingPanel.add(lblProtein);
 		
 		eatFatstext = new JTextField();
+		eatFatstext.setText("0.0");
 		eatFatstext.setColumns(10);
 		eatFatstext.setBounds(366, 52, 76, 26);
 		eatingPanel.add(eatFatstext);
@@ -271,6 +318,7 @@ public class DailyActivitiesGUI {
 		frame.getContentPane().add(lblHowLongYou);
 		
 		workHrstext = new JTextField();
+		workHrstext.setText("00");
 		workHrstext.setColumns(10);
 		workHrstext.setBounds(719, 618, 82, 26);
 		frame.getContentPane().add(workHrstext);
@@ -280,6 +328,7 @@ public class DailyActivitiesGUI {
 		frame.getContentPane().add(label_6);
 		
 		workMinttext = new JTextField();
+		workMinttext.setText("00");
 		workMinttext.setColumns(10);
 		workMinttext.setBounds(890, 619, 82, 26);
 		frame.getContentPane().add(workMinttext);
@@ -293,15 +342,142 @@ public class DailyActivitiesGUI {
 		frame.getContentPane().add(btnPreviousPage);
 		
 		JButton btnAddRecord = new JButton("Add Record");
+		btnAddRecord.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				 setProgress();
+				String workTyp="";
+				if(rdbtnActiveWork.isSelected()) {
+					workTyp="Active Work";
+				}else if(rdbtnOfficeWork.isSelected()) {
+					workTyp="Office Work";
+				}else {
+					workTyp="Heavy Work";
+				}
+				DateFormat df=new SimpleDateFormat("MM/dd/yyyy");
+				Date currDate=new Date();
+				da=new DailyActivity();
+				da.setDate(df.format(currDate));
+				da.setUserEmail(userEmail);
+				da.setSleepHour(Integer.parseInt(sleepHrstext.getText()));
+				da.setSleepMinute(Integer.parseInt(sleepMinttext.getText()));
+				da.setWaterGlass(Integer.parseInt(waterGlasstext.getText()));
+				da.setExerciseHour(Integer.parseInt(excersiseHrstext.getText()));
+				da.setExerciseMinute(Integer.parseInt(ExcersiseMinttext.getText()));
+				da.setMeditationHour(Integer.parseInt(meditationHrstext.getText()));
+				da.setMeditationMinute(Integer.parseInt(meditationMinttext.getText()));
+				da.setWalkingHour(Integer.parseInt(walkingHrstext.getText()));
+				da.setWalkingMinute(Integer.parseInt(walkingMinttext.getText()));
+				da.setExtraCalories(Double.parseDouble(eatCaltext.getText()));
+				da.setExtraProtein(Double.parseDouble(eatProteintext.getText()));
+				da.setExtraFat(Double.parseDouble(eatFatstext.getText()));
+				da.setWorkType(workTyp);
+				da.setWorkHour(Integer.parseInt(workHrstext.getText()));
+				da.setWorkMinute(Integer.parseInt(workMinttext.getText()));
+				//daI=new DailyActivityDAOImpl();
+				daI.addDailyActivities(da);
+				
+			}
+		});
 		btnAddRecord.setBounds(468, 703, 115, 29);
 		frame.getContentPane().add(btnAddRecord);
 		
 		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				WalkingprogressBar.setValue(0);
+				sleepHorsprogressBar.setValue(0);
+				waterprogressBar.setValue(0);
+				ExcersiseprogressBar.setValue(0);
+				MeditationprogressBar.setValue(0);
+				sleepHrstext.setText("00");
+				sleepMinttext.setText("00");
+				waterGlasstext.setText("0");
+				walkingHrstext.setText("00");
+				walkingMinttext.setText("00");
+				excersiseHrstext.setText("00");
+				ExcersiseMinttext.setText("00");
+				meditationHrstext.setText("00");
+				meditationMinttext.setText("00");
+				eatCaltext.setText("0.0");
+				eatProteintext.setText("0.0");
+				eatFatstext.setText("0.0");
+				workHrstext.setText("00");
+				workMinttext.setText("00");
+				
+			}
+		});
 		btnRefresh.setBounds(614, 703, 115, 29);
 		frame.getContentPane().add(btnRefresh);
 		
 		JButton btnNextPage = new JButton("Next Page");
 		btnNextPage.setBounds(766, 703, 115, 29);
 		frame.getContentPane().add(btnNextPage);
+	}
+	
+	private void setProgress()
+	{
+		
+		int walkingMin=(Integer.parseInt(walkingHrstext.getText())*MIN_PER_HOUR)+Integer.parseInt(walkingMinttext.getText());
+		int sleepMin=(Integer.parseInt(sleepHrstext.getText())*MIN_PER_HOUR)+Integer.parseInt(sleepMinttext.getText());
+		int exerciseMin=(Integer.parseInt(excersiseHrstext.getText())*MIN_PER_HOUR)+Integer.parseInt(ExcersiseMinttext.getText());
+		int meditationMin=(Integer.parseInt(meditationHrstext.getText())*MIN_PER_HOUR)+Integer.parseInt(meditationMinttext.getText());
+		int waterGlass=Integer.parseInt(waterGlasstext.getText());
+		int workMin=(Integer.parseInt(workHrstext.getText())*MIN_PER_HOUR)+Integer.parseInt(workMinttext.getText());
+		WalkingprogressBar.setValue(walkingMin);
+		sleepHorsprogressBar.setValue(sleepMin);
+		waterprogressBar.setValue(waterGlass);
+		ExcersiseprogressBar.setValue(exerciseMin);
+		MeditationprogressBar.setValue(meditationMin);
+	
+		if(meditationMin<=meditationRed)
+		{
+			MeditationprogressBar.setForeground(Color.RED);
+		}else if(meditationMin>meditationRed && meditationMin<=meditationGreen)
+		{
+			MeditationprogressBar.setForeground(Color.GREEN);
+		}else {
+			MeditationprogressBar.setForeground(Color.YELLOW);
+		}
+		
+		if(exerciseMin<=exerciseRed)
+		{
+			ExcersiseprogressBar.setForeground(Color.RED);
+		}else if(exerciseMin>exerciseRed && exerciseMin<=exerciseGreen)
+		{
+			ExcersiseprogressBar.setForeground(Color.GREEN);
+		}else {
+			ExcersiseprogressBar.setForeground(Color.YELLOW);
+		}
+		
+		if(waterGlass<=waterRed)
+		{
+			waterprogressBar.setForeground(Color.RED);
+		}else if(waterGlass>waterRed && waterGlass<=waterGreen)
+		{
+			waterprogressBar.setForeground(Color.GREEN);
+		}else {
+			waterprogressBar.setForeground(Color.YELLOW);
+		}
+		
+		if(walkingMin<=walkingRed)
+		{
+			WalkingprogressBar.setForeground(Color.RED);
+		}else if(walkingMin>walkingRed && walkingMin<=walkingGreen)
+		{
+			WalkingprogressBar.setForeground(Color.GREEN);
+		}else {
+			WalkingprogressBar.setForeground(Color.YELLOW);
+		}
+		
+		if(sleepMin<=sleepRed)
+		{
+			sleepHorsprogressBar.setForeground(Color.RED);
+		}else if(sleepMin>sleepRed && sleepMin<=sleepGreen)
+		{
+			sleepHorsprogressBar.setForeground(Color.GREEN);
+		}else {
+			sleepHorsprogressBar.setForeground(Color.YELLOW);
+		}
 	}
 }
