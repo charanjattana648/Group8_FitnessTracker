@@ -304,8 +304,8 @@ public class DietGUI {
 		JButton btnRefresh_1 = new JButton("Refresh");
 		btnRefresh_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//updateDateCb();
-				//updateUserSelTable();
+				updateDateCb();
+				updateUserSelTable();
 //				SwingUtilities.updateComponentTreeUI(comboBoxDate);
 //				comboBoxDate.invalidate();
 //				comboBoxDate.validate();
@@ -342,14 +342,15 @@ public class DietGUI {
 		
 		UserSelDietTable = new JTable();
 		scrollPaneUserT.setViewportView(UserSelDietTable);
-		
+	
 		
 		updateDateCb();
 		comboBoxDate.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("entering---");
+				System.out.println("entering---"+comboBoxDate.getSelectedItem());
+				
 				updateUserSelTable();
 				
 			}
@@ -654,15 +655,22 @@ public class DietGUI {
 	{
 		if(currentUEmail.length>0 )
 		{
+			//if(comboBoxDate!=null)
+			//comboBoxDate.removeAllItems();
 			ArrayList<String> dateListCB=udI.getLastDPDates(currentUEmail[0]);
+			for(String s:dateListCB)
+			{
+			System.out.println("a----  "+s);
+			}
 			comboBoxDate = new JComboBox(dateListCB.toArray());
 			//comboBoxDate.getFocusListeners();
-			
-			comboBoxDate.setBounds(884, 267, 114, 22);
+			comboBoxDate.setBounds(828, 322, 114, 22);
 			frame.getContentPane().add(comboBoxDate);
+			
+			updateUserSelTable();
 		}else {
 		comboBoxDate = new JComboBox();
-		comboBoxDate.setBounds(884, 267, 114, 22);
+		comboBoxDate.setBounds(828, 322, 114, 22);
 		frame.getContentPane().add(comboBoxDate);
 		}
         
@@ -673,7 +681,7 @@ public class DietGUI {
 	 *
 	 */
 	public void updateUserSelTable() {
-		//updateDateCb();
+	
 		UserSelDietTable.getSelectionModel().removeListSelectionListener(lsl_userT);
 		dtm = new DefaultTableModel();
 		//ud = new UserDiet();
@@ -689,8 +697,9 @@ public class DietGUI {
 		{
 			//ArrayList<String> dateListCB=udI.getLastDPDates(currentUEmail[0]);			
 		//String currDate=udI.getLastDPDates(currentUEmail[0]).get(0);
+			
 			String currDate=(String) comboBoxDate.getSelectedItem();			
-			//System.out.println(currDate);
+			System.out.println(currDate+" item count "+comboBoxDate.getItemCount());
 		dietList =udI.getUserDietList(currentUEmail[0],currDate);
 		}
 		for (UserDiet ud : dietList) {	
