@@ -189,6 +189,7 @@ public class Diet {
 		return sb.toString();
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Vector getVector() {
 		Vector v = new Vector();
 		v.add(getId());

@@ -2,6 +2,7 @@ package com.csis3275.Boundary;
 
 import java.util.ArrayList;
 
+import org.hibernate.CacheMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -66,6 +67,8 @@ public class UserDietDAOImpl {
 			fx=dI.getFactory();
 			sx=fx.openSession();
 			tx=sx.beginTransaction();
+			//sx.setCacheMode(CacheMode.IGNORE);
+			//sx.clear();
 			dateList=(ArrayList<String>) sx.getNamedQuery("UserDietdateQuery").setParameter("uEmail", email).list();
 			tx.commit();
 		}catch(HibernateException hx)

@@ -16,6 +16,8 @@ import javax.persistence.Table;
 @Entity
 @NamedQuery(name="userDietListQuery",query="Select ud from UserDiet ud where ud.userEmail=:uEmail and ud.date=:date")
 @NamedQuery(name="UserDietdateQuery",query="Select distinct ud.date from UserDiet ud where ud.userEmail=:uEmail order by ud.id desc")
+@NamedQuery(name="getCaloriesConsumedQuery",query="Select SUM(ud.calories) from UserDiet ud where ud.userEmail=:uEmail Group by ud.date order by ud.date desc")
+//ud.date,
 @Table(name="UserDiet")
 public class UserDiet {
 
@@ -93,10 +95,19 @@ public class UserDiet {
 		v.add(String.valueOf(getDietId()));
 		v.add(getMealType());
 		v.add(getFoodName());
-		v.add(String.valueOf(getReadyTime()));
 		v.add(String.valueOf(getCalories()));
 		v.add(getDate());
 		v.add(getAuthor());
+		return v;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public Vector getDietVector() {
+		Vector v = new Vector();
+		v.add(getDate());
+		v.add(getMealType());
+		v.add(getFoodName());
+		v.add(String.valueOf(getCalories()));
 		return v;
 	}
 	
