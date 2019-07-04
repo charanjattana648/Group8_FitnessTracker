@@ -62,6 +62,8 @@ public class LoginRegisterGUI {
 	 */
 	public LoginRegisterGUI() {
 		initialize();
+		//Manually 
+		//uD.admin();
 	}
 
 	/**
@@ -148,7 +150,6 @@ public class LoginRegisterGUI {
 				String[] currEmail=new String[2];
 				currEmail[0]=litextUserName.getText();
 				currEmail[1]=liTypeComboBox.getSelectedItem().toString();
-				System.out.println(liTypeComboBox.getSelectedItem().toString()+"---------------------------------");
 				char[] pass=litxtpassword.getPassword();
 				String currPass=String.valueOf(pass);
 				
@@ -172,7 +173,14 @@ public class LoginRegisterGUI {
 						JOptionPane.showMessageDialog(null, "Sorry,Please try Again");
 					}
 				}else {
-					
+					boolean isMatched=uD.checkAdminEPass(currEmail[0],currPass);
+					if(isMatched)
+					{
+						System.out.println("Admin Login Successful");	
+						UserGoals.main(currEmail);
+					}else {
+						JOptionPane.showMessageDialog(null, "Sorry,Please try Again");
+					}
 				}
 				
 				
@@ -271,57 +279,45 @@ public class LoginRegisterGUI {
 		JButton spbtnSignup = new JButton("SignUp");
 		spbtnSignup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				logInpanel.setVisible(true);
-				signUpPanel.setVisible(false);
+			
 				boolean isCreated=false;
 				
 				User u=new User();
-				u.setUserEmail(sptextEmail.getText());
-				u.setUserFirstName(sptextFirstName.getText());
-				if(spRbFemale.isSelected())
+				u=vu.validate(sptextEmail.getText(),sptextFirstName.getText(),sptextLastName.getText(),sptextPassword.getPassword(),
+						sptextConfPassword.getPassword(),sptextAge.getText());
+
+				if(u!=null)
 				{
-					u.setUserGender("FeMale");					
-				}else if(spRbOther.isSelected()){
-					u.setUserGender("other");
-				}else {
-					u.setUserGender("Male");
-				}
-				u.setUserLastName(splabelLastName.getText());
-				
-				char[] pass=sptextPassword.getPassword();
-				char[] cpass=sptextConfPassword.getPassword();
-				String passT="";
-//				for(int i=0;i<pass.length;i++)
-//				{
-//					passT+=pass[i];
-//				}
-				u.setUserPassword(String.valueOf(pass));
-				u.setUserAge(Integer.parseInt(sptextAge.getText()));
-				
-				
-				if(!String.valueOf(pass).equalsIgnoreCase(String.valueOf(cpass)))
-				{
-					JOptionPane.showMessageDialog(null, "Password and confirm Password does not match");
-				}else if(vu.validate(u)) {
+					if(spRbFemale.isSelected())
+					{
+						u.setUserGender("FeMale");					
+					}else if(spRbOther.isSelected()){
+						u.setUserGender("other");
+					}else {
+						u.setUserGender("Male");
+					}
 					String currEmail="";
 					u.setInstructor(suTypeComboBox.getSelectedItem().toString());
 					if(suTypeComboBox.getSelectedIndex()==0)
 					{						
 						currEmail=uD.createUserAccount(u);
+						System.out.println("entering");
 					}else {
 						currEmail=uD.createInstructorAccount(u);
 					}
-					
-					
+										
 					if(currEmail.equalsIgnoreCase(sptextEmail.getText()))
 					{
 						isCreated=true;
 					}
+					logInpanel.setVisible(true);
+					signUpPanel.setVisible(false);
 				}
 				if(isCreated)
 				{
 					JOptionPane.showMessageDialog(null, "Congrats,"+suTypeComboBox.getSelectedItem()+" Account Created");
 				}else {
+					System.out.println("----------------------------------------------------");
 					JOptionPane.showMessageDialog(null, "Sorry,Please try Again");
 				}
 			
