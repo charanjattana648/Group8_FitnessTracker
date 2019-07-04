@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import com.csis3275.Entities.Admin;
 import com.csis3275.Entities.User;
 
 /**
@@ -144,4 +145,67 @@ public boolean checkInstrucorEPass(String currUserEmail,String currPass) {
 		return isInstructorFound;
 		
 	}
+public void admin()
+{
+
+	SessionFactory fx=null;
+	Session sx=null;
+	Transaction tx=null;
+	try {
+		fx=dietIns.getFactory();
+		sx=fx.openSession();
+		tx=sx.beginTransaction();
+		Admin a=new Admin();
+		a.setAdminid("admin");
+		a.setAdminName("admin");
+		a.setAdminPassword("root");
+		sx.save(a);
+		tx.commit();
+	}catch(HibernateException ex) {
+		
+		if(tx!=null) {
+			tx.rollback();
+		}
+		System.err.println(ex.getMessage());
+		
+	}finally {
+		sx.close();
+		fx.close();
+		
+	}
+	
+}
+
+public boolean checkAdminEPass(String currUserEmail,String currPass) {
+	
+	SessionFactory fx=null;
+	Session sx=null;
+	Transaction tx=null;
+	boolean isAdminFound=false;
+	try {
+		fx=dietIns.getFactory();
+		sx=fx.openSession();
+		tx=sx.beginTransaction();
+		int x=sx.getNamedQuery("CheckAdmin").setParameter("adminid", currUserEmail).setParameter("adminPassword", currPass).list().size();		
+				
+				if(x>0)
+				{
+					isAdminFound=true;
+				}
+				tx.commit();
+	}catch(HibernateException ex) {
+		
+		if(tx!=null) {
+			tx.rollback();
+		}
+		System.err.println(ex.getMessage());
+		
+	}finally {
+		sx.close();
+		fx.close();
+		
+	}
+	return isAdminFound;
+	
+}
 }
