@@ -50,6 +50,35 @@ public class UserDAOImpl {
 		}		
 		return newUser;
 	}
+	//
+	
+	public String createInstructorAccount(User u)
+	{
+		SessionFactory fx=null;
+		Session sx=null;
+		Transaction tx=null;
+		
+		String newInstructor="";
+		
+		try {
+			
+          fx=dietIns.getFactory();
+          sx=fx.openSession();
+          tx=sx.beginTransaction();
+          newInstructor=(String) sx.save(u);
+          tx.commit();
+			
+		}catch(HibernateException ex) {
+			if(tx!=null) {
+				tx.rollback();
+			}			
+			System.err.println(ex.getMessage());			
+		}finally {
+			sx.close();
+			fx.close();			
+		}		
+		return newInstructor;
+	}
 	
 	public boolean checkUEPass(String currUserEmail,String currPass) {
 		
@@ -61,24 +90,12 @@ public class UserDAOImpl {
 			fx=dietIns.getFactory();
 			sx=fx.openSession();
 			tx=sx.beginTransaction();
-//			String sql="SELECT * FROM User u where u.userEmail=:uEmail and u.userPassword=:UPass";
-//			int x=sx.createQuery(sql).list().size();
-//			((javax.persistence.Query) sx).setParameter("uEmail", currUserEmail);
-//			((javax.persistence.Query) sx).setParameter("UPass", currPass);
-			//getPassQuery.executeUpdate().c;
-			//String sql="SELECT u FROM User u where u.userEmail=:uEmail and u.userPassword=:UPass";
-			//Query query=sx.createQuery(sql);
-			int x=sx.getNamedQuery("CheckUser").setParameter("uEmail", currUserEmail).setParameter("UPass", currPass).getMaxResults();
-//			query.setParameter("uEmail", currUserEmail);
-//			query.setParameter("UPass", currPass);
-//			int x=query.list().size();
-			
-				if(x>0)
-				{
-					System.out.println("Entering .........................");
-					isUserFound=true;
-				}
-					tx.commit();
+			int x=sx.getNamedQuery("CheckUser").setParameter("uEmail", currUserEmail).setParameter("UPass", currPass).list().size();		
+			if(x>0)
+			{
+				isUserFound=true;
+			}	
+			tx.commit();
 		}catch(HibernateException ex) {
 			
 			if(tx!=null) {
@@ -92,6 +109,39 @@ public class UserDAOImpl {
 			
 		}
 		return isUserFound;
+		
+	}
+	
+public boolean checkInstrucorEPass(String currUserEmail,String currPass) {
+		
+		SessionFactory fx=null;
+		Session sx=null;
+		Transaction tx=null;
+		boolean isInstructorFound=false;
+		try {
+			fx=dietIns.getFactory();
+			sx=fx.openSession();
+			tx=sx.beginTransaction();
+			int x=sx.getNamedQuery("CheckInstructor").setParameter("uEmail", currUserEmail).setParameter("UPass", currPass).list().size();		
+					
+					if(x>0)
+					{
+						isInstructorFound=true;
+					}
+					tx.commit();
+		}catch(HibernateException ex) {
+			
+			if(tx!=null) {
+				tx.rollback();
+			}
+			System.err.println(ex.getMessage());
+			
+		}finally {
+			sx.close();
+			fx.close();
+			
+		}
+		return isInstructorFound;
 		
 	}
 }
