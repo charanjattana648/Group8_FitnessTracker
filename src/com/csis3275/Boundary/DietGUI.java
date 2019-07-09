@@ -67,6 +67,8 @@ public class DietGUI {
 	private UserDietDAOImpl udI=new UserDietDAOImpl();
 	private String mealtypeSel="",authorSel="",foodCategorySel="",foodtypeSel="",orderby="";
 	private static String usertype="";
+	private JTextField txtCaloriesN;
+	private JTable tableCreatedDiet;
 	/**
 	 * Launch the application.
 	 * @param args return email at 0 index.
@@ -134,30 +136,34 @@ public class DietGUI {
 
 			}
 		};
-		frame.getContentPane().setLayout(null);
-		
-		UserPanel = new JPanel();
-		UserPanel.setVisible(false);
-		UserPanel.setBounds(12, 322, 469, 409);
-		frame.getContentPane().add(UserPanel);
-		UserPanel.setLayout(null);
 		
 		
 		
 		DietPanel = new JPanel();
+		DietPanel.setBounds(12, 337, 515, 366);
 		DietPanel.setVisible(false);
-		DietPanel.setBounds(12, 337, 515, 380);
-		frame.getContentPane().add(DietPanel);
-		DietPanel.setLayout(null);
 		
-		System.out.println("first");
+		UserPanel = new JPanel();
+		UserPanel.setBounds(12, 322, 469, 372);
+		UserPanel.setVisible(false);
+		frame.getContentPane().setLayout(null);
 		
-		if(usertype.equalsIgnoreCase("User"))
-		{
-			UserPanel.setVisible(true);
-		}else {
-			DietPanel.setVisible(true);
-		}
+		JScrollPane scrollPaneUserT = new JScrollPane();
+		scrollPaneUserT.setBounds(578, 369, 626, 348);
+		frame.getContentPane().add(scrollPaneUserT);
+		
+		UserSelDietTable = new JTable();
+		scrollPaneUserT.setViewportView(UserSelDietTable);
+		
+		JScrollPane scrollPaneUserDietCT = new JScrollPane();
+		scrollPaneUserDietCT.setVisible(false);
+		scrollPaneUserDietCT.setBounds(574, 369, 630, 348);
+		frame.getContentPane().add(scrollPaneUserDietCT);
+		
+		tableCreatedDiet = new JTable();
+		scrollPaneUserDietCT.setViewportView(tableCreatedDiet);
+		frame.getContentPane().add(UserPanel);
+		UserPanel.setLayout(null);
 		
 		
 		
@@ -166,7 +172,11 @@ public class DietGUI {
 		lblFilter.setBounds(12, 37, 64, 27);
 		UserPanel.add(lblFilter);
 		
-		ArrayList<String> mealTypeListCB=dI.getMealTypeList();
+		ArrayList<String> mealTypeListCB=dI.getMealTypeList();		
+		ArrayList<String> foodTypeListCB=dI.getFoodTypeList();		
+		ArrayList<String> foodCategoryListCB=dI.getFoodCategoryList();		
+		ArrayList<String> authorListCB=dI.getAuthorList();
+			
 		JComboBox comboBoxMealType = new JComboBox(mealTypeListCB.toArray());
 		comboBoxMealType.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -179,18 +189,14 @@ public class DietGUI {
 		});
 		comboBoxMealType.setBounds(80, 40, 114, 22);
 		UserPanel.add(comboBoxMealType);
-		
-		ArrayList<String> foodTypeListCB=dI.getFoodTypeList();
+	  
+
 		JComboBox comboBoxFoodType = new JComboBox(foodTypeListCB.toArray());
 		comboBoxFoodType.setBounds(216, 40, 114, 22);
 		UserPanel.add(comboBoxFoodType);
-		
-		ArrayList<String> foodCategoryListCB=dI.getFoodCategoryList();
 		JComboBox comboBoxFoodCategory = new JComboBox(foodCategoryListCB.toArray());
 		comboBoxFoodCategory.setBounds(216, 75, 114, 22);
 		UserPanel.add(comboBoxFoodCategory);
-		
-		ArrayList<String> authorListCB=dI.getAuthorList();
 		JComboBox comboBoxAuthor = new JComboBox(authorListCB.toArray());
 		comboBoxAuthor.setBounds(80, 77, 114, 22);
 		UserPanel.add(comboBoxAuthor);
@@ -233,7 +239,7 @@ public class DietGUI {
 				
 			}
 		});
-		btnAddUserMeal.setBounds(36, 239, 134, 40);
+		btnAddUserMeal.setBounds(41, 256, 153, 40);
 		UserPanel.add(btnAddUserMeal);
 		
 		JButton btnDeleteFromMeal = new JButton("Delete from Meal List");
@@ -246,7 +252,7 @@ public class DietGUI {
 				updateUserSelTable();
 			}
 		});
-		btnDeleteFromMeal.setBounds(211, 239, 153, 40);
+		btnDeleteFromMeal.setBounds(216, 256, 153, 40);
 		UserPanel.add(btnDeleteFromMeal);
 		
 		JButton btnSearch = new JButton("Search");
@@ -298,7 +304,7 @@ public class DietGUI {
 				updateTable();
 			}
 		});
-		btnSearch.setBounds(36, 311, 153, 40);
+		btnSearch.setBounds(41, 319, 153, 40);
 		UserPanel.add(btnSearch);
 		
 		JButton btnRefresh_1 = new JButton("Refresh");
@@ -313,44 +319,278 @@ public class DietGUI {
 				
 			}
 		});
-		btnRefresh_1.setBounds(211, 311, 153, 40);
+		btnRefresh_1.setBounds(216, 319, 153, 40);
 		UserPanel.add(btnRefresh_1);
 		
-		JButton btnExercise = new JButton("Exercise Activity");
-		btnExercise.setBounds(36, 364, 153, 40);
-		UserPanel.add(btnExercise);
+		JLabel lblCaloriesNeeded = new JLabel("Calories Needed : ");
+		lblCaloriesNeeded.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		lblCaloriesNeeded.setBounds(41, 178, 153, 16);
+		UserPanel.add(lblCaloriesNeeded);
 		
-		JButton btnCheckProgress = new JButton("Check Progress");
-		btnCheckProgress.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				DailyActivitiesGUI.main(currentUEmail);
+		txtCaloriesN = new JTextField();
+		txtCaloriesN.setBounds(41, 207, 153, 30);
+		UserPanel.add(txtCaloriesN);
+		txtCaloriesN.setColumns(10);
+		
+		JButton btnCreateMeal = new JButton("Create Meal");
+		btnCreateMeal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(txtCalories.getText().isEmpty() || Double.isNaN(Double.parseDouble(txtCalories.getText())))
+				{
+					JOptionPane.showMessageDialog(null, "Enter Calories needed to consume.");
+				}else {
+					
+				}
 			}
 		});
-		btnCheckProgress.setBounds(211, 364, 153, 40);
-		UserPanel.add(btnCheckProgress);
+		btnCreateMeal.setBounds(216, 201, 153, 40);
+		UserPanel.add(btnCreateMeal);
+		frame.getContentPane().add(DietPanel);
+		DietPanel.setLayout(null);
+		
+			
+			JLabel lblId = new JLabel("Id :");
+			lblId.setBounds(12, 16, 25, 16);
+			DietPanel.add(lblId);
+			
+			JLabel lblMealId = new JLabel("Meal Id :");
+			lblMealId.setBounds(119, 16, 56, 16);
+			DietPanel.add(lblMealId);
+			
+			JLabel lblMealType = new JLabel("Meal Type :");
+			lblMealType.setBounds(249, 16, 77, 16);
+			DietPanel.add(lblMealType);
+			
+			JLabel lblFoodType = new JLabel("Food Type :");
+			lblFoodType.setBounds(267, 58, 77, 16);
+			DietPanel.add(lblFoodType);
+			
+			JLabel lblReadyTime = new JLabel("Ready Time :");
+			lblReadyTime.setBounds(277, 96, 77, 16);
+			DietPanel.add(lblReadyTime);
+			
+			JLabel lblCalories = new JLabel("Calories :");
+			lblCalories.setBounds(12, 139, 56, 16);
+			DietPanel.add(lblCalories);
+			
+			JLabel lblProtein = new JLabel("Protein :");
+			lblProtein.setBounds(234, 139, 56, 16);
+			DietPanel.add(lblProtein);
+			
+			JLabel lblFat = new JLabel("Fat :");
+			lblFat.setBounds(136, 139, 30, 16);
+			DietPanel.add(lblFat);
+			
+			JLabel lblCarbohydrates = new JLabel("Carbohydrates :");
+			lblCarbohydrates.setBounds(348, 139, 99, 16);
+			DietPanel.add(lblCarbohydrates);
+			
+			txtId = new JTextField();
+			txtId.setEditable(false);
+			txtId.setColumns(10);
+			txtId.setBounds(45, 13, 44, 22);
+			DietPanel.add(txtId);
+			
+			txtMealId = new JTextField();
+			txtMealId.setColumns(10);
+			txtMealId.setBounds(187, 13, 44, 22);
+			DietPanel.add(txtMealId);
+			
+			txtMealType = new JTextField();
+			txtMealType.setColumns(10);
+			txtMealType.setBounds(338, 13, 154, 22);
+			DietPanel.add(txtMealType);
+			
+			txtFoodType = new JTextField();
+			txtFoodType.setColumns(10);
+			txtFoodType.setBounds(348, 55, 144, 22);
+			DietPanel.add(txtFoodType);
+			
+			txtReadyTime = new JTextField();
+			txtReadyTime.setColumns(10);
+			txtReadyTime.setBounds(366, 93, 44, 22);
+			DietPanel.add(txtReadyTime);
+			
+			txtCalories = new JTextField();
+			txtCalories.setColumns(10);
+			txtCalories.setBounds(80, 136, 44, 22);
+			DietPanel.add(txtCalories);
+			
+			txtFat = new JTextField();
+			txtFat.setColumns(10);
+			txtFat.setBounds(178, 136, 44, 22);
+			DietPanel.add(txtFat);
+			
+			txtProtein = new JTextField();
+			txtProtein.setColumns(10);
+			txtProtein.setBounds(287, 136, 44, 22);
+			DietPanel.add(txtProtein);
+			
+			txtCarbohydrates = new JTextField();
+			txtCarbohydrates.setColumns(10);
+			txtCarbohydrates.setBounds(459, 136, 44, 22);
+			DietPanel.add(txtCarbohydrates);
+			
+			JButton btnAdd = new JButton("Add");
+			btnAdd.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					
+					Diet d=getData();
+					dI.addMeal(d);
+					updateTable();
 
+					
+				}
+			});
+			btnAdd.setBounds(27, 324, 97, 25);
+			DietPanel.add(btnAdd);
+			
+			JButton btnUpdate = new JButton("Update");
+			btnUpdate.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					int curId=(int) table.getValueAt(table.getSelectedRow(), 0);
+					Diet d=getData();
+					d.setId(curId);
+					dI.updateDiet(d);
+					updateTable();
+
+					
+				}
+			});
+			btnUpdate.setBounds(273, 324, 97, 25);
+			DietPanel.add(btnUpdate);
+			
+			JButton btnDelete = new JButton("Delete");
+			btnDelete.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					int curId=(int) table.getValueAt(table.getSelectedRow(), 0);
+					Diet d=dI.getDiet(curId);
+					dI.deleteDiet(d);
+					updateTable();
+				}
+			});
+			btnDelete.setBounds(152, 324, 97, 25);
+			DietPanel.add(btnDelete);
+			
+			JButton btnRefresh = new JButton("Refresh");
+			btnRefresh.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {						
+					
+					txtId.setText("");
+					txtMealId.setText("");
+					txtMealType.setText("");
+					txtFoodType.setText("");
+					txtReadyTime.setText("");
+					txtCalories.setText("");
+					txtFat.setText("");
+					txtProtein.setText("");
+					txtCarbohydrates.setText("");
+					txtFoodName.setText("");
+					txtFoodCategory.setText("");
+					txtVitaminA.setText("");
+					txtVitaminC.setText("");
+					txtCalcium.setText("");
+					txtIron.setText("");
+                txtAuthor.setText("");				
+					updateTable();
+				
+				}
+			});
+			btnRefresh.setBounds(382, 324, 97, 25);
+			DietPanel.add(btnRefresh);
+			
+			JLabel lblFoodName = new JLabel("Food name :");
+			lblFoodName.setBounds(12, 58, 77, 16);
+			DietPanel.add(lblFoodName);
+			
+			txtFoodName = new JTextField();
+			txtFoodName.setColumns(10);
+			txtFoodName.setBounds(101, 55, 154, 22);
+			DietPanel.add(txtFoodName);
+			
+			JLabel lblFoodCategory = new JLabel("Food Category :");
+			lblFoodCategory.setBounds(12, 96, 99, 16);
+			DietPanel.add(lblFoodCategory);
+			
+			txtFoodCategory = new JTextField();
+			txtFoodCategory.setColumns(10);
+			txtFoodCategory.setBounds(123, 93, 144, 22);
+			DietPanel.add(txtFoodCategory);
+			
+			JLabel lblVitamina = new JLabel("VitaminA :");
+			lblVitamina.setBounds(12, 179, 77, 16);
+			DietPanel.add(lblVitamina);
+			
+			txtVitaminA = new JTextField();
+			txtVitaminA.setColumns(10);
+			txtVitaminA.setBounds(103, 176, 44, 22);
+			DietPanel.add(txtVitaminA);
+			
+			JLabel lblVitaminc = new JLabel("VitaminC :");
+			lblVitaminc.setBounds(175, 179, 74, 16);
+			DietPanel.add(lblVitaminc);
+			
+			txtVitaminC = new JTextField();
+			txtVitaminC.setColumns(10);
+			txtVitaminC.setBounds(264, 176, 44, 22);
+			DietPanel.add(txtVitaminC);
+			
+			JLabel lblCalcium = new JLabel("Calcium :");
+			lblCalcium.setBounds(343, 179, 56, 16);
+			DietPanel.add(lblCalcium);
+			
+			txtCalcium = new JTextField();
+			txtCalcium.setColumns(10);
+			txtCalcium.setBounds(435, 176, 44, 22);
+			DietPanel.add(txtCalcium);
+			
+			JLabel lblIron = new JLabel("Iron :");
+			lblIron.setBounds(12, 218, 56, 16);
+			DietPanel.add(lblIron);
+			
+			txtIron = new JTextField();
+			txtIron.setColumns(10);
+			txtIron.setBounds(80, 215, 44, 22);
+			DietPanel.add(txtIron);
+			
+			JLabel lblAuthor = new JLabel("Author :");
+			lblAuthor.setBounds(136, 218, 56, 16);
+			DietPanel.add(lblAuthor);
+			
+			txtAuthor = new JTextField();
+			txtAuthor.setText("Admin");
+			txtAuthor.setColumns(10);
+			txtAuthor.setBounds(204, 215, 144, 22);
+			DietPanel.add(txtAuthor);
+		
+		System.out.println("first");
+		
+		if(usertype.equalsIgnoreCase("User"))
+		{
+			UserPanel.setVisible(true);
+		}else {
+			DietPanel.setVisible(true);
+		}
+		
+	
 		JScrollPane scrollPaneData = new JScrollPane();
 		scrollPaneData.setBounds(12, 68, 1293, 227);
 		frame.getContentPane().add(scrollPaneData);
 
 		table = new JTable();
 		scrollPaneData.setViewportView(table);
-		
-		JScrollPane scrollPaneUserT = new JScrollPane();
-		scrollPaneUserT.setBounds(578, 369, 626, 348);
-		frame.getContentPane().add(scrollPaneUserT);
-		
-		UserSelDietTable = new JTable();
-		scrollPaneUserT.setViewportView(UserSelDietTable);
 	
-		
+		comboBoxDate = new JComboBox();
+		comboBoxDate.setBounds(828, 322, 114, 22);
+		frame.getContentPane().add(comboBoxDate);
 		updateDateCb();
 		comboBoxDate.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("entering---"+comboBoxDate.getSelectedItem());
-				
+				//updateDateCb();
 				updateUserSelTable();
 				
 			}
@@ -358,230 +598,31 @@ public class DietGUI {
 		
 		
 		JLabel lblDate = new JLabel("Date :");
-		lblDate.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		lblDate.setBounds(750, 322, 64, 27);
+		lblDate.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		frame.getContentPane().add(lblDate);
-	
-		
-		JLabel lblId = new JLabel("Id :");
-		lblId.setBounds(12, 16, 25, 16);
-		DietPanel.add(lblId);
-		
-		JLabel lblMealId = new JLabel("Meal Id :");
-		lblMealId.setBounds(119, 16, 56, 16);
-		DietPanel.add(lblMealId);
-		
-		JLabel lblMealType = new JLabel("Meal Type :");
-		lblMealType.setBounds(249, 16, 77, 16);
-		DietPanel.add(lblMealType);
-		
-		JLabel lblFoodType = new JLabel("Food Type :");
-		lblFoodType.setBounds(267, 58, 77, 16);
-		DietPanel.add(lblFoodType);
-		
-		JLabel lblReadyTime = new JLabel("Ready Time :");
-		lblReadyTime.setBounds(277, 96, 77, 16);
-		DietPanel.add(lblReadyTime);
-		
-		JLabel lblCalories = new JLabel("Calories :");
-		lblCalories.setBounds(12, 139, 56, 16);
-		DietPanel.add(lblCalories);
-		
-		JLabel lblProtein = new JLabel("Protein :");
-		lblProtein.setBounds(234, 139, 56, 16);
-		DietPanel.add(lblProtein);
-		
-		JLabel lblFat = new JLabel("Fat :");
-		lblFat.setBounds(136, 139, 30, 16);
-		DietPanel.add(lblFat);
-		
-		JLabel lblCarbohydrates = new JLabel("Carbohydrates :");
-		lblCarbohydrates.setBounds(348, 139, 99, 16);
-		DietPanel.add(lblCarbohydrates);
-		
-		txtId = new JTextField();
-		txtId.setEditable(false);
-		txtId.setColumns(10);
-		txtId.setBounds(45, 13, 44, 22);
-		DietPanel.add(txtId);
-		
-		txtMealId = new JTextField();
-		txtMealId.setColumns(10);
-		txtMealId.setBounds(187, 13, 44, 22);
-		DietPanel.add(txtMealId);
-		
-		txtMealType = new JTextField();
-		txtMealType.setColumns(10);
-		txtMealType.setBounds(338, 13, 154, 22);
-		DietPanel.add(txtMealType);
-		
-		txtFoodType = new JTextField();
-		txtFoodType.setColumns(10);
-		txtFoodType.setBounds(348, 55, 144, 22);
-		DietPanel.add(txtFoodType);
-		
-		txtReadyTime = new JTextField();
-		txtReadyTime.setColumns(10);
-		txtReadyTime.setBounds(366, 93, 44, 22);
-		DietPanel.add(txtReadyTime);
-		
-		txtCalories = new JTextField();
-		txtCalories.setColumns(10);
-		txtCalories.setBounds(80, 136, 44, 22);
-		DietPanel.add(txtCalories);
-		
-		txtFat = new JTextField();
-		txtFat.setColumns(10);
-		txtFat.setBounds(178, 136, 44, 22);
-		DietPanel.add(txtFat);
-		
-		txtProtein = new JTextField();
-		txtProtein.setColumns(10);
-		txtProtein.setBounds(287, 136, 44, 22);
-		DietPanel.add(txtProtein);
-		
-		txtCarbohydrates = new JTextField();
-		txtCarbohydrates.setColumns(10);
-		txtCarbohydrates.setBounds(459, 136, 44, 22);
-		DietPanel.add(txtCarbohydrates);
-		
-		JButton btnAdd = new JButton("Add");
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				Diet d=getData();
-				dI.addMeal(d);
-				updateTable();
-
-				
-			}
-		});
-		btnAdd.setBounds(27, 324, 97, 25);
-		DietPanel.add(btnAdd);
-		
-		JButton btnUpdate = new JButton("Update");
-		btnUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				int curId=(int) table.getValueAt(table.getSelectedRow(), 0);
-				Diet d=getData();
-				d.setId(curId);
-				dI.updateDiet(d);
-				updateTable();
-
-				
-			}
-		});
-		btnUpdate.setBounds(273, 324, 97, 25);
-		DietPanel.add(btnUpdate);
-		
-		JButton btnDelete = new JButton("Delete");
-		btnDelete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int curId=(int) table.getValueAt(table.getSelectedRow(), 0);
-				Diet d=dI.getDiet(curId);
-				dI.deleteDiet(d);
-				updateTable();
-			}
-		});
-		btnDelete.setBounds(152, 324, 97, 25);
-		DietPanel.add(btnDelete);
-		
-		JButton btnRefresh = new JButton("Refresh");
-		btnRefresh.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {						
-				
-				txtId.setText("");
-				txtMealId.setText("");
-				txtMealType.setText("");
-				txtFoodType.setText("");
-				txtReadyTime.setText("");
-				txtCalories.setText("");
-				txtFat.setText("");
-				txtProtein.setText("");
-				txtCarbohydrates.setText("");
-				txtFoodName.setText("");
-				txtFoodCategory.setText("");
-				txtVitaminA.setText("");
-				txtVitaminC.setText("");
-				txtCalcium.setText("");
-				txtIron.setText("");
-                txtAuthor.setText("");				
-				updateTable();
-			
-			}
-		});
-		btnRefresh.setBounds(382, 324, 97, 25);
-		DietPanel.add(btnRefresh);
-		
-		JLabel lblFoodName = new JLabel("Food name :");
-		lblFoodName.setBounds(12, 58, 77, 16);
-		DietPanel.add(lblFoodName);
-		
-		txtFoodName = new JTextField();
-		txtFoodName.setColumns(10);
-		txtFoodName.setBounds(101, 55, 154, 22);
-		DietPanel.add(txtFoodName);
-		
-		JLabel lblFoodCategory = new JLabel("Food Category :");
-		lblFoodCategory.setBounds(12, 96, 99, 16);
-		DietPanel.add(lblFoodCategory);
-		
-		txtFoodCategory = new JTextField();
-		txtFoodCategory.setColumns(10);
-		txtFoodCategory.setBounds(123, 93, 144, 22);
-		DietPanel.add(txtFoodCategory);
-		
-		JLabel lblVitamina = new JLabel("VitaminA :");
-		lblVitamina.setBounds(12, 179, 77, 16);
-		DietPanel.add(lblVitamina);
-		
-		txtVitaminA = new JTextField();
-		txtVitaminA.setColumns(10);
-		txtVitaminA.setBounds(103, 176, 44, 22);
-		DietPanel.add(txtVitaminA);
-		
-		JLabel lblVitaminc = new JLabel("VitaminC :");
-		lblVitaminc.setBounds(175, 179, 74, 16);
-		DietPanel.add(lblVitaminc);
-		
-		txtVitaminC = new JTextField();
-		txtVitaminC.setColumns(10);
-		txtVitaminC.setBounds(264, 176, 44, 22);
-		DietPanel.add(txtVitaminC);
-		
-		JLabel lblCalcium = new JLabel("Calcium :");
-		lblCalcium.setBounds(343, 179, 56, 16);
-		DietPanel.add(lblCalcium);
-		
-		txtCalcium = new JTextField();
-		txtCalcium.setColumns(10);
-		txtCalcium.setBounds(435, 176, 44, 22);
-		DietPanel.add(txtCalcium);
-		
-		JLabel lblIron = new JLabel("Iron :");
-		lblIron.setBounds(12, 218, 56, 16);
-		DietPanel.add(lblIron);
-		
-		txtIron = new JTextField();
-		txtIron.setColumns(10);
-		txtIron.setBounds(80, 215, 44, 22);
-		DietPanel.add(txtIron);
-		
-		JLabel lblAuthor = new JLabel("Author :");
-		lblAuthor.setBounds(136, 218, 56, 16);
-		DietPanel.add(lblAuthor);
-		
-		txtAuthor = new JTextField();
-		txtAuthor.setText("Admin");
-		txtAuthor.setColumns(10);
-		txtAuthor.setBounds(204, 215, 144, 22);
-		DietPanel.add(txtAuthor);
 		
 		JLabel lblDietPlan = new JLabel("Diet Plan");
-		lblDietPlan.setFont(new Font("Tahoma", Font.BOLD, 24));
 		lblDietPlan.setBounds(646, 25, 116, 24);
+		lblDietPlan.setFont(new Font("Tahoma", Font.BOLD, 24));
 		frame.getContentPane().add(lblDietPlan);
+		
+		JButton btnExercise = new JButton("Exercise Activity");
+		btnExercise.setBounds(49, 707, 153, 40);
+		btnExercise.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		frame.getContentPane().add(btnExercise);
+		
+		JButton btnCheckProgress = new JButton("Daily Activities");
+		btnCheckProgress.setBounds(227, 707, 153, 40);
+		frame.getContentPane().add(btnCheckProgress);
+		btnCheckProgress.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DailyActivitiesGUI.main(currentUEmail);
+			}
+		});
 		updateTable();
 		updateUserSelTable();
 	}
@@ -655,25 +696,14 @@ public class DietGUI {
 	{
 		if(currentUEmail.length>0 )
 		{
-			//if(comboBoxDate!=null)
-			//comboBoxDate.removeAllItems();
 			ArrayList<String> dateListCB=udI.getLastDPDates(currentUEmail[0]);
-			for(String s:dateListCB)
+			comboBoxDate.removeAllItems();
+			for(String item:dateListCB)
 			{
-			System.out.println("a----  "+s);
-			}
-			comboBoxDate = new JComboBox(dateListCB.toArray());
-			//comboBoxDate.getFocusListeners();
-			comboBoxDate.setBounds(828, 322, 114, 22);
-			frame.getContentPane().add(comboBoxDate);
-			
+			comboBoxDate.addItem(item);
+			}			
 			updateUserSelTable();
-		}else {
-		comboBoxDate = new JComboBox();
-		comboBoxDate.setBounds(828, 322, 114, 22);
-		frame.getContentPane().add(comboBoxDate);
-		}
-        
+		}        
 		
 	}
 	/**
@@ -684,6 +714,7 @@ public class DietGUI {
 	
 		UserSelDietTable.getSelectionModel().removeListSelectionListener(lsl_userT);
 		dtm = new DefaultTableModel();
+		udI=new UserDietDAOImpl();
 		//ud = new UserDiet();
 		dtm.addColumn("Id");		
 		dtm.addColumn("Diet Id");
@@ -695,7 +726,7 @@ public class DietGUI {
 		ArrayList<UserDiet> dietList=new ArrayList<UserDiet>();
 		if(currentUEmail.length>0)
 		{
-			//ArrayList<String> dateListCB=udI.getLastDPDates(currentUEmail[0]);			
+		//	ArrayList<String> dateListCB=udI.getLastDPDates(currentUEmail[0]);			
 		//String currDate=udI.getLastDPDates(currentUEmail[0]).get(0);
 			
 			String currDate=(String) comboBoxDate.getSelectedItem();			
@@ -703,8 +734,10 @@ public class DietGUI {
 		dietList =udI.getUserDietList(currentUEmail[0],currDate);
 		}
 		for (UserDiet ud : dietList) {	
+			//System.out.println("entering ----  : " + ud.getFoodName());
 			dtm.addRow(ud.getVector());
 		}
+		System.out.println("data --------------------------------------------------------------------------------");
 		UserSelDietTable.setModel(dtm);
 
 		UserSelDietTable.getSelectionModel().addListSelectionListener(lsl_userT);

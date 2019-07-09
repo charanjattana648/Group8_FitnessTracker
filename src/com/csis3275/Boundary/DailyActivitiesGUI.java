@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 import javax.transaction.Transactional.TxType;
 
 import com.csis3275.Entities.DailyActivity;
+import com.csis3275.Entities.ProgressActivity;
 
 import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
@@ -53,6 +54,7 @@ public class DailyActivitiesGUI {
 	private int sleepRed=330,sleepGreen=540,sleepYellow=600;
 	private int waterRed=5,waterGreen=15,waterYellow=20;
 	private final int MIN_PER_HOUR=60;
+	static String[] currUser=new String[2];
 	
 
 	/**
@@ -64,6 +66,7 @@ public class DailyActivitiesGUI {
 				try {
 					if(args.length>0)
 					{
+						currUser=args;
 					userEmail=args[0];
 					}
 					DailyActivitiesGUI window = new DailyActivitiesGUI();
@@ -337,7 +340,13 @@ public class DailyActivitiesGUI {
 		label_7.setBounds(998, 622, 69, 20);
 		frame.getContentPane().add(label_7);
 		
-		JButton btnPreviousPage = new JButton("Previous Page");
+		JButton btnPreviousPage = new JButton("Exercise Activity");
+		btnPreviousPage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+		});
 		btnPreviousPage.setBounds(294, 703, 153, 29);
 		frame.getContentPane().add(btnPreviousPage);
 		
@@ -357,8 +366,9 @@ public class DailyActivitiesGUI {
 				DateFormat df=new SimpleDateFormat("MM/dd/yyyy");
 				Date currDate=new Date();
 				da=new DailyActivity();
+				
 				da.setDate(df.format(currDate));
-				da.setUserEmail(userEmail);
+				da.setUserEmail(currUser[0]);
 				da.setSleepHour(Integer.parseInt(sleepHrstext.getText()));
 				da.setSleepMinute(Integer.parseInt(sleepMinttext.getText()));
 				da.setWaterGlass(Integer.parseInt(waterGlasstext.getText()));
@@ -410,7 +420,12 @@ public class DailyActivitiesGUI {
 		btnRefresh.setBounds(614, 703, 115, 29);
 		frame.getContentPane().add(btnRefresh);
 		
-		JButton btnNextPage = new JButton("Next Page");
+		JButton btnNextPage = new JButton("Progress Activity");
+		btnNextPage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProgressActivityGUI.main(currUser);
+			}
+		});
 		btnNextPage.setBounds(766, 703, 115, 29);
 		frame.getContentPane().add(btnNextPage);
 	}
