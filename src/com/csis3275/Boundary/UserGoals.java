@@ -220,7 +220,7 @@ public class UserGoals {
 		lblSetFitnessGoals_1.setBounds(332, 197, 160, 38);
 		frame.getContentPane().add(lblSetFitnessGoals_1);
 		
-		JLabel lblCheckMedication = new JLabel("Check Health Problems");
+		JLabel lblCheckMedication = new JLabel("Select Health Problems");
 		lblCheckMedication.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCheckMedication.setFont(new Font("Open Sans", Font.BOLD, 15));
 		lblCheckMedication.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
