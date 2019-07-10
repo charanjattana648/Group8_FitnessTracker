@@ -146,7 +146,7 @@ public class UserGoals {
 		
 		
 		panelImperial = new JPanel();
-		panelImperial.setBounds(22, 36, 218, 67);
+		panelImperial.setBounds(44, 102, 218, 67);
 		frame.getContentPane().add(panelImperial);
 		panelImperial.setLayout(null);
 		panelImperial.setVisible(false);
@@ -175,7 +175,7 @@ public class UserGoals {
 		panelImperial.add(textFieldWeightImperial);
 		
 		panelMetric = new JPanel();
-		panelMetric.setBounds(22, 36, 218, 67);
+		panelMetric.setBounds(44, 102, 218, 67);
 		frame.getContentPane().add(panelMetric);
 		panelMetric.setLayout(null);
 		panelMetric.setVisible(false);
@@ -200,7 +200,7 @@ public class UserGoals {
 		
 		JLabel lblSetFitnessGoals = new JLabel("Get Fitness Status");
 		lblSetFitnessGoals.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		lblSetFitnessGoals.setBounds(279, 11, 167, 38);
+		lblSetFitnessGoals.setBounds(332, 82, 167, 38);
 		lblSetFitnessGoals.setBackground(Color.GRAY);
 		lblSetFitnessGoals.setFont(new Font("Open Sans", Font.BOLD, 16));
 		lblSetFitnessGoals.setHorizontalAlignment(SwingConstants.CENTER);
@@ -209,7 +209,7 @@ public class UserGoals {
 		
 		txtrBmiOutput = new JTextArea();
 		txtrBmiOutput.setText("BMI output:");
-		txtrBmiOutput.setBounds(463, 11, 303, 92);
+		txtrBmiOutput.setBounds(611, 77, 349, 92);
 		frame.getContentPane().add(txtrBmiOutput);
 		
 		JLabel lblSetFitnessGoals_1 = new JLabel("Set Fitness Goals");
@@ -217,76 +217,76 @@ public class UserGoals {
 		lblSetFitnessGoals_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSetFitnessGoals_1.setFont(new Font("Open Sans", Font.BOLD, 16));
 		lblSetFitnessGoals_1.setBackground(Color.GRAY);
-		lblSetFitnessGoals_1.setBounds(188, 315, 160, 38);
+		lblSetFitnessGoals_1.setBounds(332, 197, 160, 38);
 		frame.getContentPane().add(lblSetFitnessGoals_1);
 		
 		JLabel lblCheckMedication = new JLabel("Check Health Problems");
 		lblCheckMedication.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCheckMedication.setFont(new Font("Open Sans", Font.BOLD, 11));
+		lblCheckMedication.setFont(new Font("Open Sans", Font.BOLD, 15));
 		lblCheckMedication.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		lblCheckMedication.setBackground(Color.GRAY);
-		lblCheckMedication.setBounds(22, 114, 137, 38);
+		lblCheckMedication.setBounds(44, 197, 215, 38);
 		frame.getContentPane().add(lblCheckMedication);
 		
 		chckboxDiabetes = new JCheckBox("Diabetes");
-		chckboxDiabetes.setBounds(22, 159, 97, 23);
+		chckboxDiabetes.setBounds(44, 242, 97, 23);
 		frame.getContentPane().add(chckboxDiabetes);
 		
 		chckbxHypertension = new JCheckBox("Hypertension");
-		chckbxHypertension.setBounds(22, 180, 97, 23);
+		chckbxHypertension.setBounds(44, 268, 97, 23);
 		frame.getContentPane().add(chckbxHypertension);
 		
 		chckbxAsthma = new JCheckBox("Asthma");
-		chckbxAsthma.setBounds(22, 202, 97, 23);
+		chckbxAsthma.setBounds(44, 294, 97, 23);
 		frame.getContentPane().add(chckbxAsthma);
 		
 		chckbxBoneOrJoint = new JCheckBox("Bone or Joint");
-		chckbxBoneOrJoint.setBounds(22, 224, 97, 23);
+		chckbxBoneOrJoint.setBounds(44, 323, 97, 23);
 		frame.getContentPane().add(chckbxBoneOrJoint);
 		
 		chckbxDizziness = new JCheckBox("Dizziness");
-		chckbxDizziness.setBounds(22, 245, 97, 23);
+		chckbxDizziness.setBounds(44, 351, 97, 23);
 		frame.getContentPane().add(chckbxDizziness);
 		
 		chckbxChestPain = new JCheckBox("Chest Pain");
-		chckbxChestPain.setBounds(22, 268, 97, 23);
+		chckbxChestPain.setBounds(44, 379, 97, 23);
 		frame.getContentPane().add(chckbxChestPain);
 		
 		textAreaHealthProblems = new JTextArea();
 		textAreaHealthProblems.setFont(new Font("Monospaced", Font.BOLD, 13));
-		textAreaHealthProblems.setBounds(111, 163, 97, 128);
+		textAreaHealthProblems.setBounds(150, 246, 109, 156);
 		frame.getContentPane().add(textAreaHealthProblems);
 		
 		JRadioButton rdbtnStayFitPlan = new JRadioButton("Stay Fit Plan");
-		rdbtnStayFitPlan.setBounds(188, 360, 109, 23);
+		rdbtnStayFitPlan.setBounds(332, 242, 109, 23);
 		frame.getContentPane().add(rdbtnStayFitPlan);
 		
 		JRadioButton rdbtnWeightGainPlan = new JRadioButton("Weight Gain Plan");
-		rdbtnWeightGainPlan.setBounds(296, 360, 109, 23);
+		rdbtnWeightGainPlan.setBounds(332, 308, 109, 23);
 		frame.getContentPane().add(rdbtnWeightGainPlan);
 		
 		JRadioButton rdbtnWeightLossPlan = new JRadioButton("Weight Loss Plan");
-		rdbtnWeightLossPlan.setBounds(188, 386, 109, 23);
+		rdbtnWeightLossPlan.setBounds(332, 276, 109, 23);
 		frame.getContentPane().add(rdbtnWeightLossPlan);
 		
 		JRadioButton rdbtnExtremeWeightLoss = new JRadioButton("Extreme Weight Loss Plan");
-		rdbtnExtremeWeightLoss.setBounds(296, 386, 152, 23);
+		rdbtnExtremeWeightLoss.setBounds(332, 343, 152, 23);
 		frame.getContentPane().add(rdbtnExtremeWeightLoss);
 		
 		lblChooseUnit = new JLabel("Choose Unit");
-		lblChooseUnit.setBounds(22, 11, 70, 14);
+		lblChooseUnit.setBounds(43, 76, 70, 14);
 		frame.getContentPane().add(lblChooseUnit);
 		
 		rdbtnMetric = new JRadioButton("Metric");
-		rdbtnMetric.setBounds(98, 11, 70, 23);
+		rdbtnMetric.setBounds(114, 72, 70, 23);
 		frame.getContentPane().add(rdbtnMetric);
 		
 		rdbtnImperial = new JRadioButton("Imperial");
-		rdbtnImperial.setBounds(173, 11, 86, 23);
+		rdbtnImperial.setBounds(192, 72, 86, 23);
 		frame.getContentPane().add(rdbtnImperial);
 		
 		panelStayFit = new JPanel();
-		panelStayFit.setBounds(469, 327, 270, 113);
+		panelStayFit.setBounds(611, 218, 270, 113);
 		frame.getContentPane().add(panelStayFit);
 		panelStayFit.setLayout(null);
 		panelStayFit.setVisible(false);
@@ -298,7 +298,7 @@ public class UserGoals {
 		panelStayFit.add(lblClickOnFind);
 		
 		panelWeightLoss = new JPanel();
-		panelWeightLoss.setBounds(469, 323, 270, 126);
+		panelWeightLoss.setBounds(611, 202, 270, 126);
 		frame.getContentPane().add(panelWeightLoss);
 		panelWeightLoss.setLayout(null);
 		panelWeightLoss.setVisible(false);
@@ -326,7 +326,7 @@ public class UserGoals {
 		panelWeightLoss.add(rdbtnLooseLb_3);
 		
 		panelExtremeWeightLoss = new JPanel();
-		panelExtremeWeightLoss.setBounds(469, 327, 270, 122);
+		panelExtremeWeightLoss.setBounds(611, 244, 270, 122);
 		frame.getContentPane().add(panelExtremeWeightLoss);
 		panelExtremeWeightLoss.setLayout(null);
 		panelExtremeWeightLoss.setVisible(false);
@@ -354,7 +354,7 @@ public class UserGoals {
 		panelExtremeWeightLoss.add(rdbtnExLooseLb_4);
 		
 		panelWeightGain = new JPanel();
-		panelWeightGain.setBounds(469, 328, 270, 126);
+		panelWeightGain.setBounds(611, 220, 270, 126);
 		frame.getContentPane().add(panelWeightGain);
 		panelWeightGain.setLayout(null);
 		panelWeightGain.setVisible(false);
@@ -541,7 +541,7 @@ public class UserGoals {
 				
 			}
 		});
-		btnCalculateBmi.setBounds(279, 65, 126, 38);
+		btnCalculateBmi.setBounds(332, 131, 126, 38);
 		frame.getContentPane().add(btnCalculateBmi);
 		
 		
@@ -572,7 +572,7 @@ public class UserGoals {
 			}
 		});
 		btnAddHealthProblems.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnAddHealthProblems.setBounds(22, 317, 146, 35);
+		btnAddHealthProblems.setBounds(44, 416, 146, 35);
 		frame.getContentPane().add(btnAddHealthProblems);
 		
 		
@@ -586,7 +586,7 @@ public class UserGoals {
 			}
 		});
 		btnFindWorkouts.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnFindWorkouts.setBounds(188, 416, 137, 35);
+		btnFindWorkouts.setBounds(333, 416, 137, 35);
 		frame.getContentPane().add(btnFindWorkouts);
 		
 		JButton btnViewDietPlan = new JButton("View Diet Plan");
@@ -598,9 +598,13 @@ public class UserGoals {
 			}
 		});
 		btnViewDietPlan.setFont(new Font("Open Sans", Font.BOLD, 11));
-		btnViewDietPlan.setBounds(22, 647, 118, 33);
+		btnViewDietPlan.setBounds(42, 17, 118, 33);
 		frame.getContentPane().add(btnViewDietPlan);
 		
+		JLabel lblUserGoals = new JLabel("User Goals");
+		lblUserGoals.setFont(new Font("Open Sans", Font.BOLD, 17));
+		lblUserGoals.setBounds(348, 15, 110, 38);
+		frame.getContentPane().add(lblUserGoals);
+		
 	}
-	
 }
