@@ -90,8 +90,6 @@ public class UserGoals {
 	private JButton btnFindWorkouts;
 	private JPanel panelStayFit;
 	private JLabel lblClickOnFind;
-	private JTable tableBodyMeasurements;
-	private JScrollPane scrollPaneBodyMeasurements;
 	private static String[] currentUEmail=new String[2];
 	
 	
@@ -142,7 +140,7 @@ public class UserGoals {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 792, 504);
+		frame.setBounds(100, 100, 1372, 830);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -482,8 +480,6 @@ public class UserGoals {
 		btnCalculateBmi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				userDetails = new BodyMeasurements();
-				tableBodyMeasurements.setVisible(true);
-				scrollPaneBodyMeasurements.setVisible(true);
 				
 				if(rdbtnImperial.isSelected()) {
 					
@@ -513,7 +509,6 @@ public class UserGoals {
 						+ bmi.bmiResult());
 						
 						boduydao.createBodydata(userDetails);
-						updateBodyTable();
 					}
 				}
 				
@@ -539,8 +534,6 @@ public class UserGoals {
 						
 						
 						boduydao.createBodydata(userDetails);
-						
-						updateBodyTable();
 						
 						
 					}
@@ -596,14 +589,6 @@ public class UserGoals {
 		btnFindWorkouts.setBounds(188, 416, 137, 35);
 		frame.getContentPane().add(btnFindWorkouts);
 		
-		scrollPaneBodyMeasurements = new JScrollPane();
-		scrollPaneBodyMeasurements.setBounds(225, 112, 541, 183);
-		frame.getContentPane().add(scrollPaneBodyMeasurements);
-		
-		tableBodyMeasurements = new JTable();
-		scrollPaneBodyMeasurements.setViewportView(tableBodyMeasurements);
-		tableBodyMeasurements.setModel(tm);
-		
 		JButton btnViewDietPlan = new JButton("View Diet Plan");
 		btnViewDietPlan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -613,41 +598,9 @@ public class UserGoals {
 			}
 		});
 		btnViewDietPlan.setFont(new Font("Open Sans", Font.BOLD, 11));
-		btnViewDietPlan.setBounds(22, 416, 118, 33);
+		btnViewDietPlan.setBounds(22, 647, 118, 33);
 		frame.getContentPane().add(btnViewDietPlan);
 		
-		scrollPaneBodyMeasurements.setVisible(false);
-		tableBodyMeasurements.setVisible(false);
-		
-////////////call update table body measurements
-	updateBodyTable();
 	}
 	
-	/**
-	 * update the jtable with all the values from the database
-	 */
-	public void updateBodyTable() {
-		
-		List<BodyMeasurements> bList = new ArrayList<BodyMeasurements>();
-		
-		tm = new DefaultTableModel();
-		tm.addColumn("Id");
-		tm.addColumn("Ht Cm");
-		tm.addColumn("Ht Ft");
-		tm.addColumn("Ht In");
-		tm.addColumn("Ht Type");
-		tm.addColumn("Unit");
-		tm.addColumn("Weight");
-		tm.addColumn("Wt Type");
-		//tm.addColumn("BMI");
-		
-		bList = boduydao.getBodyData();
-		
-		for(BodyMeasurements b : bList) {
-			tm.addRow(b.getVector());
-		}
-		//tm.addColumn(bmi.toString(), bmi.bmiVecor());
-		
-		tableBodyMeasurements.setModel(tm);
-	}
 }
