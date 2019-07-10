@@ -2,6 +2,7 @@ package com.csis3275.Boundary;
 
 import java.util.ArrayList;
 
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -53,7 +54,11 @@ public class DietDAOImpl {
 			fx = getFactory();
 			sx = fx.openSession();
 			tx = sx.beginTransaction();
-			newDietId = (int) sx.save(d);
+			for(int i=0;i<21;i++)
+			{
+				newDietId = (int) sx.save(d);
+			}
+		
 			tx.commit();
 		} catch (HibernateException hx) {
 			if (tx != null) {
@@ -82,7 +87,7 @@ public class DietDAOImpl {
 			fx = getFactory();
 			sx = fx.openSession();
 			tx = sx.beginTransaction();
-			String sql = "SELECT d FROM Diet d";
+			String sql = "FROM Diet d";
 			dietList = (ArrayList<Diet>) sx.createQuery(sql).list();
 			tx.commit();
 
@@ -104,18 +109,18 @@ public class DietDAOImpl {
 	 * @param s query how to order the diet.
 	 * @return ArrayList of ordered diet.
 	 */
-	public ArrayList<Diet> getDietOrderedList(String s) {
+	public ArrayList<Diet> getDietOrderedList(String orderby) {
 		SessionFactory fx = null;
 		Session sx = null;
 		Transaction tx = null;
 		ArrayList<Diet> dietList = new ArrayList<Diet>();
 		try {
-
 			fx = getFactory();
 			sx = fx.openSession();
 			tx = sx.beginTransaction();
-			String sql = "SELECT d FROM Diet d order by "+s;
-			dietList = (ArrayList<Diet>) sx.createQuery(sql).list();
+			String sql = "SELECT d FROM Diet d order by :orderby ASC ";
+			dietList = (ArrayList<Diet>) sx.createQuery(sql).setParameter("orderby", orderby).list();
+			//dietList = (ArrayList<Diet>) sx.getNamedQuery("getDietOrderedListQuery").setParameter("orderby", orderby).list();
 			tx.commit();
 
 		} catch (HibernateException hx) {
@@ -144,10 +149,7 @@ public class DietDAOImpl {
 			fx = getFactory();
 			sx = fx.openSession();
 			tx = sx.beginTransaction();
-
-			Query query = sx.createQuery("select d from Diet d where d.id=:id");
-			query.setParameter("id", id);
-			d = (Diet) query.list().get(0);
+			d = (Diet) sx.get(Diet.class, id);
 			tx.commit();
 		} catch (HibernateException hx) {	
 			if(tx!=null)
@@ -221,6 +223,7 @@ public class DietDAOImpl {
 	 * 
 	 * @return list of Meal types.
 	 */
+	@SuppressWarnings({ "unchecked"})
 	public ArrayList<String> getMealTypeList()
 	{
 		SessionFactory fx = null;
@@ -232,8 +235,9 @@ public class DietDAOImpl {
 			fx = getFactory();
 			sx = fx.openSession();
 			tx = sx.beginTransaction();
-			String sql = "SELECT distinct d.mealType FROM Diet d";
-			mealTypeList = (ArrayList<String>) sx.createQuery(sql).list();
+			//String sql = "SELECT distinct d.mealType FROM Diet d";
+			//mealTypeList = (ArrayList<String>) sx.createQuery(sql).list();
+			mealTypeList=(ArrayList<String>) sx.getNamedQuery("mealTypeListQuery").list();
 			mealTypeList.add(0,"None");
 			tx.commit();
 
@@ -264,8 +268,8 @@ public class DietDAOImpl {
 			fx = getFactory();
 			sx = fx.openSession();
 			tx = sx.beginTransaction();
-			String sql = "SELECT distinct d.foodType FROM Diet d";
-			foodTypeList = (ArrayList<String>) sx.createQuery(sql).list();
+			//String sql = "SELECT distinct d.foodType FROM Diet d";
+			foodTypeList = (ArrayList<String>) sx.getNamedQuery("foodTypeListQuery").list();
 			foodTypeList.add(0,"None");
 			tx.commit();
 
@@ -296,8 +300,8 @@ public class DietDAOImpl {
 			fx = getFactory();
 			sx = fx.openSession();
 			tx = sx.beginTransaction();
-			String sql = "SELECT distinct d.foodCategory FROM Diet d";
-			foodCategoryList = (ArrayList<String>) sx.createQuery(sql).list();
+			//String sql = "SELECT distinct d.foodCategory FROM Diet d";
+			foodCategoryList = (ArrayList<String>) sx.getNamedQuery("foodCategoryListQuery").list();
 			foodCategoryList.add(0,"None");
 			tx.commit();
 
@@ -328,8 +332,8 @@ public class DietDAOImpl {
 			fx = getFactory();
 			sx = fx.openSession();
 			tx = sx.beginTransaction();
-			String sql = "SELECT distinct d.author FROM Diet d";
-			authorList = (ArrayList<String>) sx.createQuery(sql).list();
+			//String sql = "SELECT distinct d.author FROM Diet d";
+			authorList = (ArrayList<String>) sx.getNamedQuery("getAuthorListQuery").list();
 			authorList.add(0,"None");
 			tx.commit();
 
@@ -350,8 +354,10 @@ public class DietDAOImpl {
 	 * 
 	 * @param clauses used in query.
 	 * @return list of Filtered List by clauses.
+	 * 
 	 */
-	public ArrayList<Diet> getFilteredList(String clauses)
+	
+	public ArrayList<Diet> getFilteredMealTypeList(String clauses)
 	{
 		SessionFactory fx = null;
 		Session sx = null;
@@ -362,8 +368,85 @@ public class DietDAOImpl {
 			fx = getFactory();
 			sx = fx.openSession();
 			tx = sx.beginTransaction();
-			String sql = "SELECT d FROM Diet d where "+clauses;
-			filteredList = (ArrayList<Diet>) sx.createQuery(sql).list();
+			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilteredMealTypeListQuery").setParameter("mealType", clauses).list();
+			tx.commit();
+
+		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
+			System.err.println(hx.getMessage());
+		} finally {
+			sx.close();
+			fx.close();
+		}
+		return filteredList;
+	}
+	public ArrayList<Diet> getFilterFoodCategoryList(String clauses)
+	{
+		SessionFactory fx = null;
+		Session sx = null;
+		Transaction tx = null;
+		ArrayList<Diet> filteredList = new ArrayList<Diet>();
+		try {
+
+			fx = getFactory();
+			sx = fx.openSession();
+			tx = sx.beginTransaction();
+			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilterFoodCategoryListQuery").setParameter("foodCategory", clauses).list();
+			tx.commit();
+
+		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
+			System.err.println(hx.getMessage());
+		} finally {
+			sx.close();
+			fx.close();
+		}
+		return filteredList;
+	}
+	public ArrayList<Diet> getFilteredauthorList(String clauses)
+	{
+		SessionFactory fx = null;
+		Session sx = null;
+		Transaction tx = null;
+		ArrayList<Diet> filteredList = new ArrayList<Diet>();
+		try {
+
+			fx = getFactory();
+			sx = fx.openSession();
+			tx = sx.beginTransaction();
+			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilteredauthorListQuery").setParameter("author", clauses).list();
+			tx.commit();
+
+		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
+			System.err.println(hx.getMessage());
+		} finally {
+			sx.close();
+			fx.close();
+		}
+		return filteredList;
+	}
+	public ArrayList<Diet> getFilteredFoodTypeList(String clauses)
+	{
+		SessionFactory fx = null;
+		Session sx = null;
+		Transaction tx = null;
+		ArrayList<Diet> filteredList = new ArrayList<Diet>();
+		try {
+
+			fx = getFactory();
+			sx = fx.openSession();
+			tx = sx.beginTransaction();
+			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilteredfoodTypeListQuery").setParameter("foodType", clauses).list();
 			tx.commit();
 
 		} catch (HibernateException hx) {

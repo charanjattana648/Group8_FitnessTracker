@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import com.csis3275.Controller.ValidateUser;
 import com.csis3275.Entities.User;
 
 import javax.swing.JTextField;
@@ -36,6 +37,8 @@ public class LoginRegisterGUI {
 	private JTextField sptextLastName;
 	private JPasswordField litxtpassword;
 	UserDAOImpl uD=new UserDAOImpl();
+	
+	ValidateUser vu=new ValidateUser();
 
 	/**
 	 * Launch the application.
@@ -59,6 +62,8 @@ public class LoginRegisterGUI {
 	 */
 	public LoginRegisterGUI() {
 		initialize();
+		//Manually 
+		//uD.admin();
 	}
 
 	/**
@@ -66,17 +71,28 @@ public class LoginRegisterGUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1238, 740);
+		frame.setBounds(100, 100, 1372, 830);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-
+		JPanel logInpanel = new JPanel();
+		logInpanel.setLayout(null);
 		
 		JPanel signUpPanel = new JPanel();
 		signUpPanel.setVisible(false);
+		signUpPanel.setBounds(116, 93, 1070, 665);
+		frame.getContentPane().add(signUpPanel);
+		signUpPanel.setLayout(null);
 		
-		JPanel logInpanel = new JPanel();
-		logInpanel.setLayout(null);
+		JLabel suTypelabel = new JLabel("Type :");
+		suTypelabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		suTypelabel.setBounds(305, 88, 129, 43);
+		signUpPanel.add(suTypelabel);
+		
+		JComboBox suTypeComboBox = new JComboBox();
+		suTypeComboBox.setModel(new DefaultComboBoxModel(new String[] {"User", "Instructor"}));
+		suTypeComboBox.setBounds(521, 88, 245, 43);
+		signUpPanel.add(suTypeComboBox);
 		
 		
 		
@@ -131,33 +147,49 @@ public class LoginRegisterGUI {
 		JButton liLogInbutton = new JButton("LogIn");
 		liLogInbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(liTypeComboBox.getSelectedItem()=="User")
-				{
-				String[] currEmail=new String[1];
+				String[] currEmail=new String[2];
 				currEmail[0]=litextUserName.getText();
+				currEmail[1]=liTypeComboBox.getSelectedItem().toString();
 				char[] pass=litxtpassword.getPassword();
 				String currPass=String.valueOf(pass);
+				
+				if(liTypeComboBox.getSelectedItem()=="User")
+				{
 				boolean isMatched=uD.checkUEPass(currEmail[0],currPass);
 				if(isMatched)
 				{
-					System.out.println("Login Successful");	
+					System.out.println("User Login Successful");	
 					UserGoals.main(currEmail);
 				}else {
 					JOptionPane.showMessageDialog(null, "Sorry,Please try Again");
 				}
+				}else if(liTypeComboBox.getSelectedItem()=="Instructor") {
+					boolean isMatched=uD.checkInstrucorEPass(currEmail[0],currPass);
+					if(isMatched)
+					{
+						System.out.println("Instructor Login Successful");	
+						UserGoals.main(currEmail);
+					}else {
+						JOptionPane.showMessageDialog(null, "Sorry,Please try Again");
+					}
+				}else {
+					boolean isMatched=uD.checkAdminEPass(currEmail[0],currPass);
+					if(isMatched)
+					{
+						System.out.println("Admin Login Successful");	
+						UserGoals.main(currEmail);
+					}else {
+						JOptionPane.showMessageDialog(null, "Sorry,Please try Again");
+					}
 				}
 				
 				
 			}
 		});
-		liLogInbutton.setFont(new Font("Tahoma", Font.BOLD, 20));
-		liLogInbutton.setBounds(357, 340, 123, 43);
-		logInpanel.add(liLogInbutton);
-		logInpanel.setBounds(0, 0, 1061, 608);
-		frame.getContentPane().add(logInpanel);
-		signUpPanel.setBounds(0, 0, 1070, 601);
-		frame.getContentPane().add(signUpPanel);
-		signUpPanel.setLayout(null);
+		
+
+		
+	
 		
 		JLabel splabelTitle = new JLabel("Welcome to SignUp");
 		splabelTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -168,131 +200,131 @@ public class LoginRegisterGUI {
 		
 		JLabel splabelFirstName = new JLabel("First Name");
 		splabelFirstName.setFont(new Font("Tahoma", Font.BOLD, 16));
-		splabelFirstName.setBounds(313, 122, 88, 16);
+		splabelFirstName.setBounds(313, 171, 88, 16);
 		signUpPanel.add(splabelFirstName);
 		
 		JLabel splabelLastName = new JLabel("Last Name");
 		splabelLastName.setFont(new Font("Tahoma", Font.BOLD, 16));
-		splabelLastName.setBounds(313, 182, 99, 16);
+		splabelLastName.setBounds(313, 231, 99, 16);
 		signUpPanel.add(splabelLastName);
 		
 		JLabel splabelGender = new JLabel("Gender");
 		splabelGender.setFont(new Font("Tahoma", Font.BOLD, 16));
-		splabelGender.setBounds(313, 234, 74, 16);
+		splabelGender.setBounds(313, 283, 74, 16);
 		signUpPanel.add(splabelGender);
 		
 		JLabel splabelAge = new JLabel("Age");
 		splabelAge.setFont(new Font("Tahoma", Font.BOLD, 16));
-		splabelAge.setBounds(313, 278, 68, 28);
+		splabelAge.setBounds(313, 327, 68, 28);
 		signUpPanel.add(splabelAge);
 		
 		JLabel splabelEmail = new JLabel("Email ");
 		splabelEmail.setFont(new Font("Tahoma", Font.BOLD, 16));
-		splabelEmail.setBounds(313, 344, 56, 16);
+		splabelEmail.setBounds(313, 393, 56, 16);
 		signUpPanel.add(splabelEmail);
 		
 		JLabel splabelPassword = new JLabel("Password ");
 		splabelPassword.setFont(new Font("Tahoma", Font.BOLD, 16));
-		splabelPassword.setBounds(313, 404, 88, 16);
+		splabelPassword.setBounds(313, 453, 88, 16);
 		signUpPanel.add(splabelPassword);
 		
 		JLabel splabelCPassword = new JLabel("Confirm Password");
 		splabelCPassword.setFont(new Font("Tahoma", Font.BOLD, 16));
-		splabelCPassword.setBounds(313, 464, 170, 16);
+		splabelCPassword.setBounds(313, 513, 170, 16);
 		signUpPanel.add(splabelCPassword);
 		
 		sptextPassword = new JPasswordField();
-		sptextPassword.setBounds(520, 392, 245, 43);
+		sptextPassword.setBounds(520, 441, 245, 43);
 		signUpPanel.add(sptextPassword);
 		
 		sptextConfPassword = new JPasswordField();
-		sptextConfPassword.setBounds(520, 452, 245, 43);
+		sptextConfPassword.setBounds(520, 501, 245, 43);
 		signUpPanel.add(sptextConfPassword);
 		
 		sptextEmail = new JTextField();
 		sptextEmail.setColumns(10);
-		sptextEmail.setBounds(520, 332, 245, 43);
+		sptextEmail.setBounds(520, 381, 245, 43);
 		signUpPanel.add(sptextEmail);
 		
 		JRadioButton spRbMale = new JRadioButton("Male");
 		spRbMale.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		spRbMale.setBounds(520, 230, 68, 25);
+		spRbMale.setBounds(520, 279, 68, 25);
 		signUpPanel.add(spRbMale);
 		
 		JRadioButton spRbFemale = new JRadioButton("Female");
 		spRbFemale.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		spRbFemale.setBounds(596, 230, 79, 25);
+		spRbFemale.setBounds(596, 279, 79, 25);
 		signUpPanel.add(spRbFemale);
 		
 		JRadioButton spRbOther = new JRadioButton("Other");
 		spRbOther.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		spRbOther.setBounds(696, 230, 68, 25);
+		spRbOther.setBounds(696, 279, 68, 25);
 		signUpPanel.add(spRbOther);
 		
 		sptextAge = new JTextField();
 		sptextAge.setColumns(10);
-		sptextAge.setBounds(520, 272, 245, 43);
+		sptextAge.setBounds(520, 321, 245, 43);
 		signUpPanel.add(sptextAge);
 		
 		sptextFirstName = new JTextField();
 		sptextFirstName.setColumns(10);
-		sptextFirstName.setBounds(520, 110, 245, 43);
+		sptextFirstName.setBounds(520, 159, 245, 43);
 		signUpPanel.add(sptextFirstName);
 		
 		sptextLastName = new JTextField();
 		sptextLastName.setColumns(10);
-		sptextLastName.setBounds(520, 170, 245, 43);
+		sptextLastName.setBounds(520, 219, 245, 43);
 		signUpPanel.add(sptextLastName);
 		
 		JButton spbtnSignup = new JButton("SignUp");
 		spbtnSignup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				logInpanel.setVisible(true);
-				signUpPanel.setVisible(false);
+			
 				boolean isCreated=false;
-				User u=new User();
-				u.setUserEmail(sptextEmail.getText());
-				u.setUserFirstName(sptextFirstName.getText());
-				if(spRbFemale.isSelected())
-				{
-					u.setUserGender("FeMale");					
-				}else if(spRbOther.isSelected()){
-					u.setUserGender("other");
-				}else {
-					u.setUserGender("Male");
-				}
-				u.setUserLastName(splabelLastName.getText());
 				
-				char[] pass=sptextPassword.getPassword();
-				char[] cpass=sptextConfPassword.getPassword();
-				String passT="";
-//				for(int i=0;i<pass.length;i++)
-//				{
-//					passT+=pass[i];
-//				}
-				u.setUserPassword(String.valueOf(pass));
-				u.setUserAge(Integer.parseInt(sptextAge.getText()));
-				if(!String.valueOf(pass).equalsIgnoreCase(String.valueOf(cpass)))
+				User u=new User();
+				u=vu.validate(sptextEmail.getText(),sptextFirstName.getText(),sptextLastName.getText(),sptextPassword.getPassword(),
+						sptextConfPassword.getPassword(),sptextAge.getText());
+
+				if(u!=null)
 				{
-					JOptionPane.showMessageDialog(null, "Password and confirm Password does not match");
-				}else {
-					String currEmail=uD.createUserAccount(u);
+					if(spRbFemale.isSelected())
+					{
+						u.setUserGender("FeMale");					
+					}else if(spRbOther.isSelected()){
+						u.setUserGender("other");
+					}else {
+						u.setUserGender("Male");
+					}
+					String currEmail="";
+					u.setInstructor(suTypeComboBox.getSelectedItem().toString());
+					if(suTypeComboBox.getSelectedIndex()==0)
+					{						
+						currEmail=uD.createUserAccount(u);
+						System.out.println("entering");
+					}else {
+						currEmail=uD.createInstructorAccount(u);
+					}
+										
 					if(currEmail.equalsIgnoreCase(sptextEmail.getText()))
 					{
 						isCreated=true;
 					}
+					logInpanel.setVisible(true);
+					signUpPanel.setVisible(false);
 				}
 				if(isCreated)
 				{
-					JOptionPane.showMessageDialog(null, "Congrats,Account Created");
+					JOptionPane.showMessageDialog(null, "Congrats,"+suTypeComboBox.getSelectedItem()+" Account Created");
 				}else {
+					System.out.println("----------------------------------------------------");
 					JOptionPane.showMessageDialog(null, "Sorry,Please try Again");
 				}
 			
 			}
 		});
 		spbtnSignup.setFont(new Font("Tahoma", Font.BOLD, 20));
-		spbtnSignup.setBounds(324, 527, 123, 43);
+		spbtnSignup.setBounds(324, 576, 123, 43);
 		signUpPanel.add(spbtnSignup);
 		
 		JButton spbtnLogIn = new JButton("LogIn");
@@ -304,7 +336,14 @@ public class LoginRegisterGUI {
 			}
 		});
 		spbtnLogIn.setFont(new Font("Tahoma", Font.BOLD, 20));
-		spbtnLogIn.setBounds(528, 527, 123, 43);
+		spbtnLogIn.setBounds(528, 576, 123, 43);
 		signUpPanel.add(spbtnLogIn);
+		
+	
+		liLogInbutton.setFont(new Font("Tahoma", Font.BOLD, 20));
+		liLogInbutton.setBounds(357, 340, 123, 43);
+		logInpanel.add(liLogInbutton);
+		logInpanel.setBounds(125, 86, 1061, 672);
+		frame.getContentPane().add(logInpanel);
 	}
 }

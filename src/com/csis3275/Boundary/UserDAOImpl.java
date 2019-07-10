@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import com.csis3275.Entities.Admin;
 import com.csis3275.Entities.User;
 
 /**
@@ -22,6 +23,7 @@ public class UserDAOImpl {
 	 * @param u New User 
 	 * @return key of user (Email).
 	 */
+	
 	public String createUserAccount(User u)
 	{
 		SessionFactory fx=null;
@@ -49,6 +51,35 @@ public class UserDAOImpl {
 		}		
 		return newUser;
 	}
+	//
+	
+	public String createInstructorAccount(User u)
+	{
+		SessionFactory fx=null;
+		Session sx=null;
+		Transaction tx=null;
+		
+		String newInstructor="";
+		
+		try {
+			
+          fx=dietIns.getFactory();
+          sx=fx.openSession();
+          tx=sx.beginTransaction();
+          newInstructor=(String) sx.save(u);
+          tx.commit();
+			
+		}catch(HibernateException ex) {
+			if(tx!=null) {
+				tx.rollback();
+			}			
+			System.err.println(ex.getMessage());			
+		}finally {
+			sx.close();
+			fx.close();			
+		}		
+		return newInstructor;
+	}
 	
 	public boolean checkUEPass(String currUserEmail,String currPass) {
 		
@@ -60,23 +91,12 @@ public class UserDAOImpl {
 			fx=dietIns.getFactory();
 			sx=fx.openSession();
 			tx=sx.beginTransaction();
-//			String sql="SELECT * FROM User u where u.userEmail=:uEmail and u.userPassword=:UPass";
-//			int x=sx.createQuery(sql).list().size();
-//			((javax.persistence.Query) sx).setParameter("uEmail", currUserEmail);
-//			((javax.persistence.Query) sx).setParameter("UPass", currPass);
-			//getPassQuery.executeUpdate().c;
-			String sql="SELECT u FROM User u where u.userEmail=:uEmail and u.userPassword=:UPass";
-			Query query=sx.createQuery(sql);
-			query.setParameter("uEmail", currUserEmail);
-			query.setParameter("UPass", currPass);
-			int x=query.list().size();
-			
-				if(x>0)
-				{
-					System.out.println("Entering .........................");
-					isUserFound=true;
-				}
-					tx.commit();
+			int x=sx.getNamedQuery("CheckUser").setParameter("uEmail", currUserEmail).setParameter("UPass", currPass).list().size();		
+			if(x>0)
+			{
+				isUserFound=true;
+			}	
+			tx.commit();
 		}catch(HibernateException ex) {
 			
 			if(tx!=null) {
@@ -92,4 +112,100 @@ public class UserDAOImpl {
 		return isUserFound;
 		
 	}
+	
+public boolean checkInstrucorEPass(String currUserEmail,String currPass) {
+		
+		SessionFactory fx=null;
+		Session sx=null;
+		Transaction tx=null;
+		boolean isInstructorFound=false;
+		try {
+			fx=dietIns.getFactory();
+			sx=fx.openSession();
+			tx=sx.beginTransaction();
+			int x=sx.getNamedQuery("CheckInstructor").setParameter("uEmail", currUserEmail).setParameter("UPass", currPass).list().size();		
+					
+					if(x>0)
+					{
+						isInstructorFound=true;
+					}
+					tx.commit();
+		}catch(HibernateException ex) {
+			
+			if(tx!=null) {
+				tx.rollback();
+			}
+			System.err.println(ex.getMessage());
+			
+		}finally {
+			sx.close();
+			fx.close();
+			
+		}
+		return isInstructorFound;
+		
+	}
+public void admin()
+{
+
+	SessionFactory fx=null;
+	Session sx=null;
+	Transaction tx=null;
+	try {
+		fx=dietIns.getFactory();
+		sx=fx.openSession();
+		tx=sx.beginTransaction();
+		Admin a=new Admin();
+		a.setAdminid("admin");
+		a.setAdminName("admin");
+		a.setAdminPassword("root");
+		sx.save(a);
+		tx.commit();
+	}catch(HibernateException ex) {
+		
+		if(tx!=null) {
+			tx.rollback();
+		}
+		System.err.println(ex.getMessage());
+		
+	}finally {
+		sx.close();
+		fx.close();
+		
+	}
+	
+}
+
+public boolean checkAdminEPass(String currUserEmail,String currPass) {
+	
+	SessionFactory fx=null;
+	Session sx=null;
+	Transaction tx=null;
+	boolean isAdminFound=false;
+	try {
+		fx=dietIns.getFactory();
+		sx=fx.openSession();
+		tx=sx.beginTransaction();
+		int x=sx.getNamedQuery("CheckAdmin").setParameter("adminid", currUserEmail).setParameter("adminPassword", currPass).list().size();		
+				
+				if(x>0)
+				{
+					isAdminFound=true;
+				}
+				tx.commit();
+	}catch(HibernateException ex) {
+		
+		if(tx!=null) {
+			tx.rollback();
+		}
+		System.err.println(ex.getMessage());
+		
+	}finally {
+		sx.close();
+		fx.close();
+		
+	}
+	return isAdminFound;
+	
+}
 }

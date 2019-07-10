@@ -2,6 +2,7 @@ package com.csis3275.Boundary;
 
 import java.util.ArrayList;
 
+import org.hibernate.CacheMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -34,11 +35,9 @@ public class UserDietDAOImpl {
 			sx=fx.openSession();
 			tx=sx.beginTransaction();
 			
-			String sql="SELECT ud FROM UserDiet ud where ud.userEmail=:uEmail and ud.date=:date";
-			Query query=sx.createQuery(sql);
-			query.setParameter("uEmail", email);
-			query.setParameter("date", date);
-			userDietList=(ArrayList<UserDiet>) query.list();
+		//	String sql="SELECT ud FROM UserDiet ud where ud.userEmail=:uEmail and ud.date=:date";
+			userDietList=(ArrayList<UserDiet>) sx.getNamedQuery("userDietListQuery").setParameter("uEmail", email).setParameter("date", date).list();
+			
 			tx.commit();
 		}catch(HibernateException hx)
 		{
@@ -68,10 +67,9 @@ public class UserDietDAOImpl {
 			fx=dI.getFactory();
 			sx=fx.openSession();
 			tx=sx.beginTransaction();
-			String sql="Select distinct ud.date from UserDiet ud where ud.userEmail=:uEmail order by ud.id desc";
-			Query query=sx.createQuery(sql);
-			query.setParameter("uEmail", email);
-			dateList=(ArrayList<String>) query.list();
+			//sx.setCacheMode(CacheMode.IGNORE);
+			//sx.clear();
+			dateList=(ArrayList<String>) sx.getNamedQuery("UserDietdateQuery").setParameter("uEmail", email).list();
 			tx.commit();
 		}catch(HibernateException hx)
 		{
