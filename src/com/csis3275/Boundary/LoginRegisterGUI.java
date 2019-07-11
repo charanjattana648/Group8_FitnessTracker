@@ -276,6 +276,10 @@ public class LoginRegisterGUI {
 		sptextLastName.setBounds(520, 219, 245, 43);
 		signUpPanel.add(sptextLastName);
 		
+		/**
+		 * signup for an account
+		 */
+		
 		JButton spbtnSignup = new JButton("SignUp");
 		spbtnSignup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -317,7 +321,6 @@ public class LoginRegisterGUI {
 				{
 					JOptionPane.showMessageDialog(null, "Congrats,"+suTypeComboBox.getSelectedItem()+" Account Created");
 				}else {
-					System.out.println("----------------------------------------------------");
 					JOptionPane.showMessageDialog(null, "Sorry,Please try Again");
 				}
 			
