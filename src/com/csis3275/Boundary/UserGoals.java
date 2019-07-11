@@ -142,7 +142,7 @@ public class UserGoals {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1372, 830);
+		frame.setBounds(100, 100, 1189, 705);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -255,6 +255,7 @@ public class UserGoals {
 		frame.getContentPane().add(chckbxChestPain);
 		
 		textAreaHealthProblems = new JTextArea();
+		textAreaHealthProblems.setLineWrap(true);
 		textAreaHealthProblems.setFont(new Font("Monospaced", Font.BOLD, 13));
 		textAreaHealthProblems.setBounds(150, 246, 109, 156);
 		frame.getContentPane().add(textAreaHealthProblems);
@@ -533,10 +534,6 @@ public class UserGoals {
 						txtrBmiOutput.setText("BMI output = " + String.valueOf(fmt.format(bmi.calculateBMI(userDetails))) + "\n" 
 						+ bmi.bmiResult());
 						
-						
-						boduydao.createBodydata(userDetails);
-						
-						
 					}
 				}
 				
@@ -551,22 +548,28 @@ public class UserGoals {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				if(chckboxDiabetes.isSelected()) {
-					healthProblems = chckboxDiabetes.getText().toString() + "\n";
+					healthProblems = chckboxDiabetes.getText().toString() + ",";
+					textAreaHealthProblems.setText("\n");
 				}
 				if(chckbxHypertension.isSelected()) {
-					healthProblems += chckbxHypertension.getText().toString() + "\n";
+					healthProblems += chckbxHypertension.getText().toString() + ",";
+					textAreaHealthProblems.setText("\n");
 				}
 				if(chckbxAsthma.isSelected()) {
-					healthProblems += chckbxAsthma.getText().toString() + "\n";
+					healthProblems += chckbxAsthma.getText().toString() + ",";
+					textAreaHealthProblems.setText("\n");
 				}
 				if(chckbxBoneOrJoint.isSelected()) {
-					healthProblems += chckbxBoneOrJoint.getText().toString() + "\n";
+					healthProblems += chckbxBoneOrJoint.getText().toString() + ",";
+					textAreaHealthProblems.setText("\n");
 				}
 				if(chckbxDizziness.isSelected()) {
-					healthProblems += chckbxDizziness.getText().toString() + "\n";
+					healthProblems += chckbxDizziness.getText().toString() + ",";
+					textAreaHealthProblems.setText("\n");
 				}
 				if(chckbxChestPain.isSelected()) {
-					healthProblems += chckbxChestPain.getText().toString() + "\n";
+					healthProblems += chckbxChestPain.getText().toString() + ",";
+					textAreaHealthProblems.setText("\n");
 				}
 				userDetails.setHealthProblem(healthProblems);
 				textAreaHealthProblems.setText(healthProblems);
@@ -583,6 +586,22 @@ public class UserGoals {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				JOptionPane.showMessageDialog(null, "Have paitence work in progress");
+				
+				if(rdbtnStayFitPlan.isSelected()) {
+					userDetails.setFitnessPlanType(rdbtnStayFitPlan.getText().toString());
+				}
+				else if(rdbtnWeightLossPlan.isSelected()) {
+					userDetails.setFitnessPlanType(rdbtnWeightLossPlan.getText().toString());
+				}
+				else if(rdbtnWeightGainPlan.isSelected()) {
+					userDetails.setFitnessPlanType(rdbtnWeightGainPlan.getText().toString());
+				}
+				else if(rdbtnExtremeWeightLoss.isSelected()) {
+					userDetails.setFitnessPlanType(rdbtnExtremeWeightLoss.getText().toString());
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Please select a fitness plan type");
+				}
 				
 				boduydao.createBodydata(userDetails);
 				
