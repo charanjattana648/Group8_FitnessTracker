@@ -5,6 +5,13 @@ import javax.swing.JOptionPane;
 import com.csis3275.Boundary.LoginRegisterGUI;
 import com.csis3275.Entities.User;
 
+/**
+ * 
+ * @author harpreet kaur
+ * student id 300288768
+ *
+ */
+
 public class ValidateUser {
 	User u=new User();
 	boolean isValidUser;
@@ -39,5 +46,10 @@ public class ValidateUser {
 		
 		return null;
 	}
+	
+	
+	
+
+	
 
 }
