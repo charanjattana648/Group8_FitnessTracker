@@ -34,8 +34,6 @@ public class UserDietDAOImpl {
 			fx=dI.getFactory();
 			sx=fx.openSession();
 			tx=sx.beginTransaction();
-			
-		//	String sql="SELECT ud FROM UserDiet ud where ud.userEmail=:uEmail and ud.date=:date";
 			userDietList=(ArrayList<UserDiet>) sx.getNamedQuery("userDietListQuery").setParameter("uEmail", email).setParameter("date", date).list();
 			
 			tx.commit();
@@ -67,8 +65,6 @@ public class UserDietDAOImpl {
 			fx=dI.getFactory();
 			sx=fx.openSession();
 			tx=sx.beginTransaction();
-			//sx.setCacheMode(CacheMode.IGNORE);
-			//sx.clear();
 			dateList=(ArrayList<String>) sx.getNamedQuery("UserDietdateQuery").setParameter("uEmail", email).list();
 			tx.commit();
 		}catch(HibernateException hx)
