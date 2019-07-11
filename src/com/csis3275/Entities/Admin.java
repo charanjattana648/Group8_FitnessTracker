@@ -9,7 +9,8 @@ import javax.persistence.Table;
 
 /**
  * 
- * @author charanpreet Singh
+ * @author Harpreet kaur
+ * student id 300288768
  *
  */
 @Entity
@@ -18,17 +19,23 @@ import javax.persistence.Table;
 public class Admin {
 @Id
 @Column(name="adminid",nullable=false)
+
+
 	private String adminid;
 	private String adminName;
 	private String adminPassword;
+	
+	/**
+	 * Empty constructor
+	 */
 	
 	public Admin() {
 	}
 	
 	/**
 	 * Constructor of Admin Class.
-	 * @param adminName String value.
-	 * @param adminPassword String passWord
+	 * @param adminName String value,Name of admin
+	 * @param adminPassword String passWord ,password of Admin
 	 */
 	public Admin(String adminName, String adminPassword) {
 		this.adminName = adminName;
