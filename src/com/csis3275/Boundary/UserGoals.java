@@ -650,7 +650,7 @@ public class UserGoals {
 				}
 				
 				userDetails.setBmiValues(bmiValue);
-				
+				userDetails.setUserEmail(currentUEmail[0]);
 				boduydao.createBodydata(userDetails);
 				
 			}
