@@ -21,6 +21,7 @@ public class BodyMeasurements {
 	@Id
 	@GeneratedValue
 	private int id;
+	private String userEmail;
 	private String unit;
 	private double heightFeets; //user height in feet
 	private double heightInches; // user height in inches
@@ -40,6 +41,14 @@ public class BodyMeasurements {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
 	public String getUnit() {
