@@ -34,6 +34,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+/**
+ * UserGoals class
+ * @author Gurinder Singh 300289450
+ *
+ */
 public class UserGoals {
 
 	private JFrame frame;
@@ -95,9 +100,6 @@ public class UserGoals {
 	private String healthProblems = "";
 	private double bmiValue;
 	
-	
-	
-	private DefaultTableModel tm = new DefaultTableModel();
 	private static BodyMeasurementsDAOImpl boduydao = new BodyMeasurementsDAOImpl();
 	
 	//DietGUI class instance

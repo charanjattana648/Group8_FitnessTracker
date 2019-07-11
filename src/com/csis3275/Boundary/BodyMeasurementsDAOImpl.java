@@ -13,32 +13,12 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import com.csis3275.Entities.BodyMeasurements;
 
+/**
+ * BodyMeasurementsDAOImpl class
+ * @author Gurinder Singh 300289450
+ *
+ */
 public class BodyMeasurementsDAOImpl {
-	
-	/**
-	 * method to get the session factory and connect to db
-	 * @return session factory
-	 */
-	
-	//private static DietDAOImpl sharedSession = new DietDAOImpl();
-	
-//	public static SessionFactory getFactory() {
-//		
-//		SessionFactory factory = null;
-//		Metadata meta = null;
-//		StandardServiceRegistry ssr = null;
-//		
-//		try {
-//			ssr = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
-//			meta = new MetadataSources(ssr).getMetadataBuilder().build();
-//			factory = meta.getSessionFactoryBuilder().build();
-//		}
-//		catch(Throwable ex) {
-//			System.err.println("Error: " + ex.getMessage());
-//		}
-//
-//		return factory;
-//	}
 	
 	/**
 	 * create new body data
