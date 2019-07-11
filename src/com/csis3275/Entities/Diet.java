@@ -25,6 +25,9 @@ import javax.persistence.Table;
 @Table(name = "Diet")
 public class Diet {
 
+	/**
+	 * Variables along with getters and setters. 
+	 */
 	@Id
 	@GeneratedValue
 	private int id;
@@ -172,6 +175,9 @@ public class Diet {
 		this.carbohydrates = carbohydrates;
 	}
 
+	/**
+	 * to String method.
+	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -189,6 +195,10 @@ public class Diet {
 		return sb.toString();
 	}
 
+	/**
+	 * Vector method for Diet table.
+	 * @return Vector object.
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Vector getVector() {
 		Vector v = new Vector();
