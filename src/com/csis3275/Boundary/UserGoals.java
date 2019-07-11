@@ -38,7 +38,7 @@ public class UserGoals {
 
 	private JFrame frame;
 	private static CalculateBMI bmi = new CalculateBMI();
-	private BodyMeasurements userDetails;
+	private BodyMeasurements userDetails = new BodyMeasurements();;
 	private DecimalFormat fmt;
 	private JTextArea txtrBmiOutput;
 	//CheckBoxes
@@ -91,6 +91,8 @@ public class UserGoals {
 	private JPanel panelStayFit;
 	private JLabel lblClickOnFind;
 	private static String[] currentUEmail=new String[2];
+	
+	private String healthProblems = "";
 	
 	
 	
@@ -258,19 +260,19 @@ public class UserGoals {
 		frame.getContentPane().add(textAreaHealthProblems);
 		
 		JRadioButton rdbtnStayFitPlan = new JRadioButton("Stay Fit Plan");
-		rdbtnStayFitPlan.setBounds(332, 242, 109, 23);
+		rdbtnStayFitPlan.setBounds(332, 242, 160, 23);
 		frame.getContentPane().add(rdbtnStayFitPlan);
 		
 		JRadioButton rdbtnWeightGainPlan = new JRadioButton("Weight Gain Plan");
-		rdbtnWeightGainPlan.setBounds(332, 308, 109, 23);
+		rdbtnWeightGainPlan.setBounds(332, 308, 167, 23);
 		frame.getContentPane().add(rdbtnWeightGainPlan);
 		
 		JRadioButton rdbtnWeightLossPlan = new JRadioButton("Weight Loss Plan");
-		rdbtnWeightLossPlan.setBounds(332, 276, 109, 23);
+		rdbtnWeightLossPlan.setBounds(332, 276, 167, 23);
 		frame.getContentPane().add(rdbtnWeightLossPlan);
 		
 		JRadioButton rdbtnExtremeWeightLoss = new JRadioButton("Extreme Weight Loss Plan");
-		rdbtnExtremeWeightLoss.setBounds(332, 343, 152, 23);
+		rdbtnExtremeWeightLoss.setBounds(332, 343, 193, 23);
 		frame.getContentPane().add(rdbtnExtremeWeightLoss);
 		
 		lblChooseUnit = new JLabel("Choose Unit");
@@ -479,7 +481,7 @@ public class UserGoals {
 		btnCalculateBmi.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnCalculateBmi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				userDetails = new BodyMeasurements();
+				//userDetails = new BodyMeasurements();
 				
 				if(rdbtnImperial.isSelected()) {
 					
@@ -508,7 +510,6 @@ public class UserGoals {
 						txtrBmiOutput.setText("BMI output = " + String.valueOf(fmt.format(bmi.calculateBMI(userDetails))) + "\n" 
 						+ bmi.bmiResult());
 						
-						boduydao.createBodydata(userDetails);
 					}
 				}
 				
@@ -545,11 +546,10 @@ public class UserGoals {
 		frame.getContentPane().add(btnCalculateBmi);
 		
 		
-		btnAddHealthProblems = new JButton("Add Health Problems");
+		btnAddHealthProblems = new JButton("Display Health Problems");
 		btnAddHealthProblems.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				String healthProblems = "";
 				if(chckboxDiabetes.isSelected()) {
 					healthProblems = chckboxDiabetes.getText().toString() + "\n";
 				}
@@ -568,11 +568,12 @@ public class UserGoals {
 				if(chckbxChestPain.isSelected()) {
 					healthProblems += chckbxChestPain.getText().toString() + "\n";
 				}
+				userDetails.setHealthProblem(healthProblems);
 				textAreaHealthProblems.setText(healthProblems);
 			}
 		});
 		btnAddHealthProblems.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnAddHealthProblems.setBounds(44, 416, 146, 35);
+		btnAddHealthProblems.setBounds(44, 416, 173, 35);
 		frame.getContentPane().add(btnAddHealthProblems);
 		
 		
@@ -582,6 +583,8 @@ public class UserGoals {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				JOptionPane.showMessageDialog(null, "Have paitence work in progress");
+				
+				boduydao.createBodydata(userDetails);
 				
 			}
 		});
