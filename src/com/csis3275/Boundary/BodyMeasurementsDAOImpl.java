@@ -19,23 +19,26 @@ public class BodyMeasurementsDAOImpl {
 	 * method to get the session factory and connect to db
 	 * @return session factory
 	 */
-	public static SessionFactory getFactory() {
-		
-		SessionFactory factory = null;
-		Metadata meta = null;
-		StandardServiceRegistry ssr = null;
-		
-		try {
-			ssr = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
-			meta = new MetadataSources(ssr).getMetadataBuilder().build();
-			factory = meta.getSessionFactoryBuilder().build();
-		}
-		catch(Throwable ex) {
-			System.err.println("Error: " + ex.getMessage());
-		}
-
-		return factory;
-	}
+	
+	//private static DietDAOImpl sharedSession = new DietDAOImpl();
+	
+//	public static SessionFactory getFactory() {
+//		
+//		SessionFactory factory = null;
+//		Metadata meta = null;
+//		StandardServiceRegistry ssr = null;
+//		
+//		try {
+//			ssr = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
+//			meta = new MetadataSources(ssr).getMetadataBuilder().build();
+//			factory = meta.getSessionFactoryBuilder().build();
+//		}
+//		catch(Throwable ex) {
+//			System.err.println("Error: " + ex.getMessage());
+//		}
+//
+//		return factory;
+//	}
 	
 	/**
 	 * create new body data
@@ -51,7 +54,7 @@ public class BodyMeasurementsDAOImpl {
 		Transaction transaction = null;
 		
 		try {
-			sf = getFactory();
+			sf = DietDAOImpl.getFactory();
 			session = sf.openSession();
 			transaction = session.beginTransaction();
 			
@@ -85,7 +88,7 @@ public class BodyMeasurementsDAOImpl {
 		List<BodyMeasurements> userBodyList = null;
 		
 		try {
-			factory = getFactory();
+			factory = DietDAOImpl.getFactory();
 			session = factory.openSession();
 			transaction = session.beginTransaction();
 			
