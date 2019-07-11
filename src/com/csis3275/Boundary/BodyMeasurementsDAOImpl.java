@@ -12,19 +12,16 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import com.csis3275.Entities.BodyMeasurements;
+import com.csis3275.Entities.Diet;
 
 /**
  * BodyMeasurementsDAOImpl class
  * @author Gurinder Singh 300289450
  *
  */
-public class BodyMeasurementsDAOImpl {
+public class BodyMeasurementsDAOImpl implements IBodyMeasurementsDAO {
 	
-	/**
-	 * create new body data
-	 * @param body
-	 * @return int newBodyId
-	 */
+	@Override
 	public int createBodydata(BodyMeasurements body) {
 		
 		int newBodyId = 0;
@@ -54,12 +51,9 @@ public class BodyMeasurementsDAOImpl {
 		return newBodyId;
 	}
 	
-	/**
-	 * get all the values from database in a list
-	 * @return lis of body data
-	 */
+	@Override
 	@SuppressWarnings("unchecked")
-	public List<BodyMeasurements> getBodyData(){
+	public List<BodyMeasurements> getBodyDataList(){
 		
 		Session session = null;
 		Transaction transaction = null;
@@ -96,6 +90,32 @@ public class BodyMeasurementsDAOImpl {
 			session.close();
 		}
 		return userBodyList;
+	}
+
+	@Override
+	public BodyMeasurements getBodyData(int id) {
+		SessionFactory fx = null;
+		Session sx = null;
+		Transaction tx = null;
+		BodyMeasurements b = new BodyMeasurements();
+		try {
+			fx = DietDAOImpl.getFactory();
+			sx = fx.openSession();
+			tx = sx.beginTransaction();
+			b = (BodyMeasurements) sx.get(BodyMeasurements.class, id);
+			tx.commit();
+		} catch (HibernateException hx) {	
+			if(tx!=null)
+		{
+			tx.rollback();
+		}
+		System.err.println(hx.getMessage());
+		} finally {
+			fx.close();
+			sx.close();
+		}
+
+		return b;
 	}
 	
 
