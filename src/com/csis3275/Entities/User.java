@@ -3,12 +3,24 @@ package com.csis3275.Entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.google.inject.internal.Nullable;
 
+/**
+ * 
+ * @author harpreet kaur
+ * student id 300288768
+ *
+ */
+
 @Entity
+@NamedQuery(name="CheckUser",query="FROM User u where u.userEmail=:uEmail and u.userPassword=:UPass and u.isInstructor='User'")
+@NamedQuery(name="CheckInstructor",query="FROM User u where u.userEmail=:uEmail and u.userPassword=:UPass and u.isInstructor='Instructor'")
 @Table(name="User")
+
+
 public class User {
 	@Id
 	@Column(name="USER_EMAIL",nullable=false)	
@@ -17,22 +29,46 @@ public class User {
 	private String userLastName;
 	private int userAge;
 	private String userGender;	
+	@Column(name="userPassword",nullable=false)	
 	private String userPassword;
+	@Column(name="isInstructor",nullable=false)	
+	private String isInstructor;
 	
-	
+	/**
+	 * 
+	 * @param userFirstName first name of user
+	 * @param userLastName Last Name of user
+	 * @param userAge    Age of user
+	 * @param userGender   Gender Of User
+	 * @param userEmail    EmailAddress of user
+	 * @param userPassword  Password of user
+	 * @param isInstructor   Type of user(user,Instructor or Admin)
+	 */
 	
 	public User(String userFirstName, String userLastName, int userAge, String userGender, String userEmail,
-			String userPassword) {
+			String userPassword,String isInstructor) {
 		this.userFirstName = userFirstName;
 		this.userLastName = userLastName;
 		this.userAge = userAge;
 		this.userGender = userGender;
 		this.userEmail = userEmail;
 		this.userPassword = userPassword;
+		this.isInstructor= isInstructor;
 	}
+	
+	/**
+	 * Empty Constructor
+	 */
 	public User() {
 	}
 	
+	
+	public String isInstructor() {
+		return isInstructor;
+	}
+	public void setInstructor(String isInstructor) {
+		this.isInstructor = isInstructor;
+	}
 	public String getUserFirstName() {
 		return userFirstName;
 	}

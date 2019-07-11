@@ -6,6 +6,7 @@ import java.util.Vector;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 /**
  * UserDiet Object.
@@ -13,11 +14,19 @@ import javax.persistence.Table;
  *
  */
 @Entity
+@NamedQuery(name="userDietListQuery",query="Select ud from UserDiet ud where ud.userEmail=:uEmail and ud.date=:date")
+@NamedQuery(name="UserDietdateQuery",query="Select distinct ud.date from UserDiet ud where ud.userEmail=:uEmail order by ud.id desc")
+@NamedQuery(name="getCaloriesConsumedQuery",query="Select SUM(ud.calories) from UserDiet ud where ud.userEmail=:uEmail Group by ud.date order by ud.date desc")
+
 @Table(name="UserDiet")
 public class UserDiet {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue	
+	/**
+	 * Variable for UserDiet Object.
+	 * Getters and setters Created for UserDiet.
+	 */
 	private int id;
 	private String userEmail;
 	private int dietId;
@@ -83,6 +92,10 @@ public class UserDiet {
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
+	/**
+	 * Vector method for Diet.
+	 * @return vector object.
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Vector getVector() {
 		Vector v = new Vector();
@@ -90,10 +103,23 @@ public class UserDiet {
 		v.add(String.valueOf(getDietId()));
 		v.add(getMealType());
 		v.add(getFoodName());
-		v.add(String.valueOf(getReadyTime()));
 		v.add(String.valueOf(getCalories()));
 		v.add(getDate());
 		v.add(getAuthor());
+		return v;
+	}
+	/**
+	 * Vector method for UserDiet.
+	 * @return vector object for UserDiet.
+	 */
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public Vector getDietVector() {
+		Vector v = new Vector();
+		v.add(getDate());
+		v.add(getMealType());
+		v.add(getFoodName());
+		v.add(String.valueOf(getCalories()));
 		return v;
 	}
 	

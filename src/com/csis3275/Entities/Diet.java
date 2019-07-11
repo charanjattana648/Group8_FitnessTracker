@@ -5,6 +5,7 @@ import java.util.Vector;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 /**
  * 
@@ -12,9 +13,21 @@ import javax.persistence.Table;
  *
  */
 @Entity
+@NamedQuery(name="mealTypeListQuery",query="select distinct d.mealType from Diet d")
+@NamedQuery(name="getFilteredMealTypeListQuery",query="select d from Diet d where d.mealType=:mealType")
+@NamedQuery(name="getFilterFoodCategoryListQuery",query="select d from Diet d where d.foodCategory=:foodCategory")
+@NamedQuery(name="getFilteredfoodTypeListQuery",query="select d from Diet d where d.foodType=:foodType")
+@NamedQuery(name="getFilteredauthorListQuery",query="select d from Diet d where d.author=:author")
+@NamedQuery(name="getAuthorListQuery",query="Select distinct d.author from Diet d")
+@NamedQuery(name="foodCategoryListQuery",query="Select distinct d.foodCategory from Diet d")
+@NamedQuery(name="foodTypeListQuery",query="Select distinct d.foodType from Diet d")
+@NamedQuery(name="getDietOrderedListQuery",query="select d from Diet d order by :orderby ASC")
 @Table(name = "Diet")
 public class Diet {
 
+	/**
+	 * Variables along with getters and setters. 
+	 */
 	@Id
 	@GeneratedValue
 	private int id;
@@ -162,6 +175,9 @@ public class Diet {
 		this.carbohydrates = carbohydrates;
 	}
 
+	/**
+	 * to String method.
+	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -179,6 +195,11 @@ public class Diet {
 		return sb.toString();
 	}
 
+	/**
+	 * Vector method for Diet table.
+	 * @return Vector object.
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Vector getVector() {
 		Vector v = new Vector();
 		v.add(getId());

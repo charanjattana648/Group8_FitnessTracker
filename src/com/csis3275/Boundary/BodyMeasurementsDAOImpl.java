@@ -12,36 +12,16 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import com.csis3275.Entities.BodyMeasurements;
+import com.csis3275.Entities.Diet;
 
-public class BodyMeasurementsDAOImpl {
+/**
+ * BodyMeasurementsDAOImpl class
+ * @author Gurinder Singh 300289450
+ *
+ */
+public class BodyMeasurementsDAOImpl implements IBodyMeasurementsDAO {
 	
-	/**
-	 * method to get the session factory and connect to db
-	 * @return session factory
-	 */
-	public static SessionFactory getFactory() {
-		
-		SessionFactory factory = null;
-		Metadata meta = null;
-		StandardServiceRegistry ssr = null;
-		
-		try {
-			ssr = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
-			meta = new MetadataSources(ssr).getMetadataBuilder().build();
-			factory = meta.getSessionFactoryBuilder().build();
-		}
-		catch(Throwable ex) {
-			System.err.println("Error: " + ex.getMessage());
-		}
-
-		return factory;
-	}
-	
-	/**
-	 * create new body data
-	 * @param body
-	 * @return int newBodyId
-	 */
+	@Override
 	public int createBodydata(BodyMeasurements body) {
 		
 		int newBodyId = 0;
@@ -51,7 +31,7 @@ public class BodyMeasurementsDAOImpl {
 		Transaction transaction = null;
 		
 		try {
-			sf = getFactory();
+			sf = DietDAOImpl.getFactory();
 			session = sf.openSession();
 			transaction = session.beginTransaction();
 			
@@ -71,12 +51,9 @@ public class BodyMeasurementsDAOImpl {
 		return newBodyId;
 	}
 	
-	/**
-	 * get all the values from database in a list
-	 * @return lis of body data
-	 */
+	@Override
 	@SuppressWarnings("unchecked")
-	public List<BodyMeasurements> getBodyData(){
+	public List<BodyMeasurements> getBodyDataList(){
 		
 		Session session = null;
 		Transaction transaction = null;
@@ -85,7 +62,7 @@ public class BodyMeasurementsDAOImpl {
 		List<BodyMeasurements> userBodyList = null;
 		
 		try {
-			factory = getFactory();
+			factory = DietDAOImpl.getFactory();
 			session = factory.openSession();
 			transaction = session.beginTransaction();
 			
@@ -113,6 +90,32 @@ public class BodyMeasurementsDAOImpl {
 			session.close();
 		}
 		return userBodyList;
+	}
+
+	@Override
+	public BodyMeasurements getBodyData(int id) {
+		SessionFactory fx = null;
+		Session sx = null;
+		Transaction tx = null;
+		BodyMeasurements b = new BodyMeasurements();
+		try {
+			fx = DietDAOImpl.getFactory();
+			sx = fx.openSession();
+			tx = sx.beginTransaction();
+			b = (BodyMeasurements) sx.get(BodyMeasurements.class, id);
+			tx.commit();
+		} catch (HibernateException hx) {	
+			if(tx!=null)
+		{
+			tx.rollback();
+		}
+		System.err.println(hx.getMessage());
+		} finally {
+			fx.close();
+			sx.close();
+		}
+
+		return b;
 	}
 	
 
