@@ -25,6 +25,12 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.DefaultComboBoxModel;
 
+/**
+ * 
+ * @author harpreet kaur
+ * student id 300288768
+ */
+
 public class LoginRegisterGUI {
 
 	private JFrame frame;
@@ -133,6 +139,10 @@ public class LoginRegisterGUI {
 		liTypeComboBox.setBounds(516, 140, 245, 43);
 		logInpanel.add(liTypeComboBox);
 		
+		/**
+		 * when signup button is clicked the Login panel hides and signup panel showup.
+		 */
+		
 		JButton liSignUpButton = new JButton("SignUp");
 		liSignUpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -143,6 +153,12 @@ public class LoginRegisterGUI {
 		liSignUpButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 		liSignUpButton.setBounds(549, 340, 123, 43);
 		logInpanel.add(liSignUpButton);
+		
+		
+		/**
+		 * when login button is clicked ,it checks whether user,Instructor or Admin is loging in
+		 * checks the EmailAddress and password 
+		 */
 		
 		JButton liLogInbutton = new JButton("LogIn");
 		liLogInbutton.addActionListener(new ActionListener() {
@@ -277,7 +293,9 @@ public class LoginRegisterGUI {
 		signUpPanel.add(sptextLastName);
 		
 		/**
-		 * signup for an account
+		 * create new account
+		 * before signing up for the new account ,validation on the information is also performed
+		 * only user or Instructor can signup for new account
 		 */
 		
 		JButton spbtnSignup = new JButton("SignUp");
@@ -300,17 +318,17 @@ public class LoginRegisterGUI {
 					}else {
 						u.setUserGender("Male");
 					}
-					String currEmail="";
+					String currentEmail="";
 					u.setInstructor(suTypeComboBox.getSelectedItem().toString());
 					if(suTypeComboBox.getSelectedIndex()==0)
 					{						
-						currEmail=uD.createUserAccount(u);
+						currentEmail=uD.createUserAccount(u);
 						System.out.println("entering");
 					}else {
-						currEmail=uD.createInstructorAccount(u);
+						currentEmail=uD.createInstructorAccount(u);
 					}
 										
-					if(currEmail.equalsIgnoreCase(sptextEmail.getText()))
+					if(currentEmail.equalsIgnoreCase(sptextEmail.getText()))
 					{
 						isCreated=true;
 					}
