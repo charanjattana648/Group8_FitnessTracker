@@ -17,12 +17,16 @@ import javax.persistence.Table;
 @NamedQuery(name="userDietListQuery",query="Select ud from UserDiet ud where ud.userEmail=:uEmail and ud.date=:date")
 @NamedQuery(name="UserDietdateQuery",query="Select distinct ud.date from UserDiet ud where ud.userEmail=:uEmail order by ud.id desc")
 @NamedQuery(name="getCaloriesConsumedQuery",query="Select SUM(ud.calories) from UserDiet ud where ud.userEmail=:uEmail Group by ud.date order by ud.date desc")
-//ud.date,
+
 @Table(name="UserDiet")
 public class UserDiet {
 
 	@Id
 	@GeneratedValue	
+	/**
+	 * Variable for UserDiet Object.
+	 * Getters and setters Created for UserDiet.
+	 */
 	private int id;
 	private String userEmail;
 	private int dietId;
@@ -88,6 +92,10 @@ public class UserDiet {
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
+	/**
+	 * Vector method for Diet.
+	 * @return vector object.
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Vector getVector() {
 		Vector v = new Vector();
@@ -100,6 +108,10 @@ public class UserDiet {
 		v.add(getAuthor());
 		return v;
 	}
+	/**
+	 * Vector method for UserDiet.
+	 * @return vector object for UserDiet.
+	 */
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Vector getDietVector() {
