@@ -18,13 +18,9 @@ import com.csis3275.Entities.BodyMeasurements;
  * @author Gurinder Singh 300289450
  *
  */
-public class BodyMeasurementsDAOImpl {
+public class BodyMeasurementsDAOImpl implements BodyMeasurementsDAO {
 	
-	/**
-	 * create new body data
-	 * @param body
-	 * @return int newBodyId
-	 */
+	@Override
 	public int createBodydata(BodyMeasurements body) {
 		
 		int newBodyId = 0;
@@ -54,10 +50,7 @@ public class BodyMeasurementsDAOImpl {
 		return newBodyId;
 	}
 	
-	/**
-	 * get all the values from database in a list
-	 * @return lis of body data
-	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<BodyMeasurements> getBodyData(){
 		
