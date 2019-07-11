@@ -14,6 +14,7 @@ import com.csis3275.Entities.User;
 /**
  * 
  * @author Harpreet Kaur
+ * student id 300288768
  *
  */
 public class UserDAOImpl {
@@ -23,7 +24,7 @@ public class UserDAOImpl {
 	/**
 	 * Create User
 	 * @param u New User 
-	 * @return key of user (Email).
+	 * @return newUser currently added new user's Email.
 	 */
 	
 	public String createUserAccount(User u)
@@ -58,7 +59,7 @@ public class UserDAOImpl {
 	/**
 	 * create instructor
 	 * @param u New instructor
-	 * @return key of instructor(Email)
+	 * @return newInstructor currently added new Instructor's Email
 	 */
 	
 	public String createInstructorAccount(User u)
@@ -204,6 +205,12 @@ public void admin()
 	
 }
 
+/**
+ * to validate Admin's id and password
+ * @param currUserEmail check current admin'id with id saved in Table Admin
+ * @param currPass   check current admin password with password saved in Table Admin
+ * @return isAdminFound  the boolean value whether Admin with same email and password is found or not.
+ */
 public boolean checkAdminEPass(String currUserEmail,String currPass) {
 	
 	SessionFactory fx=null;
