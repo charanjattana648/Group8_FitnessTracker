@@ -21,6 +21,7 @@ public class BodyMeasurements {
 	@Id
 	@GeneratedValue
 	private int id;
+	private String userEmail;
 	private String unit;
 	private double heightFeets; //user height in feet
 	private double heightInches; // user height in inches
@@ -28,6 +29,10 @@ public class BodyMeasurements {
 	private String heightType; // user height type inches or CM
 	private double weight; // user weight
 	private String weightType; //user weight type LB or KG
+	private double bmiValues; //user BMI values
+	private String healthProblem; //user selected health problems
+	private String fitnessPlanType; //user selected fitness plan type
+	private String userGoalType; // user selected goal type
 	
 	//generated getters and setters
 	public int getId() {
@@ -36,6 +41,14 @@ public class BodyMeasurements {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
 	public String getUnit() {
@@ -124,6 +137,38 @@ public class BodyMeasurements {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public double getBmiValues() {
+		return bmiValues;
+	}
+
+	public void setBmiValues(double bmiValues) {
+		this.bmiValues = bmiValues;
+	}
+
+	public String getHealthProblem() {
+		return healthProblem;
+	}
+
+	public void setHealthProblem(String healthProblem) {
+		this.healthProblem = healthProblem;
+	}
+
+	public String getFitnessPlanType() {
+		return fitnessPlanType;
+	}
+
+	public void setFitnessPlanType(String fitnessPlanType) {
+		this.fitnessPlanType = fitnessPlanType;
+	}
+
+	public String getUserGoalType() {
+		return userGoalType;
+	}
+
+	public void setUserGoalType(String userGoalType) {
+		this.userGoalType = userGoalType;
 	}
 
 	/**

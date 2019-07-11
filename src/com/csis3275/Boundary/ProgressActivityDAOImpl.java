@@ -67,6 +67,7 @@ public String saveProgress(ProgressActivity pa)
 	}
 	return key;
 }
+
 public ArrayList<ProgressActivity> getProgress(String userEmail)
 {
 	SessionFactory fx=null;
