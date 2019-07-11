@@ -118,9 +118,9 @@ public class DietDAOImpl {
 			fx = getFactory();
 			sx = fx.openSession();
 			tx = sx.beginTransaction();
-			String sql = "SELECT d FROM Diet d order by :orderby ASC ";
-			dietList = (ArrayList<Diet>) sx.createQuery(sql).setParameter("orderby", orderby).list();
-			//dietList = (ArrayList<Diet>) sx.getNamedQuery("getDietOrderedListQuery").setParameter("orderby", orderby).list();
+			//String sql = "SELECT d FROM Diet d order by :orderby ASC ";
+			//dietList = (ArrayList<Diet>) sx.createQuery(sql).setParameter("orderby", orderby).list();
+			dietList = (ArrayList<Diet>) sx.getNamedQuery("getDietOrderedListQuery").setParameter("orderby", orderby).list();
 			tx.commit();
 
 		} catch (HibernateException hx) {
@@ -136,7 +136,7 @@ public class DietDAOImpl {
 		return dietList;
 	}
 	/**
-	 * 
+	 * getDiet To get 1 Diet.
 	 * @param id Primary key.
 	 * @return Diet of entered id.
 	 */
@@ -220,7 +220,7 @@ public class DietDAOImpl {
 	}
 	}
 	/**
-	 * 
+	 * MealType List for Combo Box.
 	 * @return list of Meal types.
 	 */
 	@SuppressWarnings({ "unchecked"})
@@ -254,7 +254,7 @@ public class DietDAOImpl {
 		return mealTypeList;
 	}
 	/**
-	 * 
+	 * FoodType List for Combo Box.
 	 * @return list of Food types.
 	 */
 	public ArrayList<String> getFoodTypeList()
@@ -286,7 +286,7 @@ public class DietDAOImpl {
 		return foodTypeList;
 	}
 	/**
-	 * 
+	 * FoodCategory List for Combo Box.
 	 * @return list of Food Category.
 	 */
 	public ArrayList<String> getFoodCategoryList()
@@ -318,7 +318,7 @@ public class DietDAOImpl {
 		return foodCategoryList;
 	}
 	/**
-	 * 
+	 * Author List for Combo Box.
 	 * @return list of Author List.
 	 */
 	public ArrayList<String> getAuthorList()
@@ -351,13 +351,13 @@ public class DietDAOImpl {
 	}
 	
 	/**
-	 * 
-	 * @param clauses used in query.
-	 * @return list of Filtered List by clauses.
+	 * getFilteredMealTypeList Method to filter Diet list according to mealType.
+	 * @param mealType by which user want to filter.
+	 * @return list of Filtered List by mealType.
 	 * 
 	 */
 	
-	public ArrayList<Diet> getFilteredMealTypeList(String clauses)
+	public ArrayList<Diet> getFilteredMealTypeList(String mealType)
 	{
 		SessionFactory fx = null;
 		Session sx = null;
@@ -368,7 +368,7 @@ public class DietDAOImpl {
 			fx = getFactory();
 			sx = fx.openSession();
 			tx = sx.beginTransaction();
-			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilteredMealTypeListQuery").setParameter("mealType", clauses).list();
+			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilteredMealTypeListQuery").setParameter("mealType", mealType).list();
 			tx.commit();
 
 		} catch (HibernateException hx) {
@@ -383,7 +383,12 @@ public class DietDAOImpl {
 		}
 		return filteredList;
 	}
-	public ArrayList<Diet> getFilterFoodCategoryList(String clauses)
+	/**
+	 *  getFilterFoodCategoryList Method to filter Diet list according to foodCategory.
+	 * @param foodCategory by which user want to filter.
+	 * @return Filter List by FoodCategory.
+	 */
+	public ArrayList<Diet> getFilterFoodCategoryList(String foodCategory)
 	{
 		SessionFactory fx = null;
 		Session sx = null;
@@ -394,7 +399,7 @@ public class DietDAOImpl {
 			fx = getFactory();
 			sx = fx.openSession();
 			tx = sx.beginTransaction();
-			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilterFoodCategoryListQuery").setParameter("foodCategory", clauses).list();
+			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilterFoodCategoryListQuery").setParameter("foodCategory", foodCategory).list();
 			tx.commit();
 
 		} catch (HibernateException hx) {
@@ -409,7 +414,12 @@ public class DietDAOImpl {
 		}
 		return filteredList;
 	}
-	public ArrayList<Diet> getFilteredauthorList(String clauses)
+	/**
+	 * getFilteredauthorList Method to filter Diet list according to Author.
+	 * @param author name by which user want to filter.
+	 * @return Filtered list by author.
+	 */
+	public ArrayList<Diet> getFilteredauthorList(String author)
 	{
 		SessionFactory fx = null;
 		Session sx = null;
@@ -420,7 +430,7 @@ public class DietDAOImpl {
 			fx = getFactory();
 			sx = fx.openSession();
 			tx = sx.beginTransaction();
-			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilteredauthorListQuery").setParameter("author", clauses).list();
+			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilteredauthorListQuery").setParameter("author", author).list();
 			tx.commit();
 
 		} catch (HibernateException hx) {
@@ -435,7 +445,12 @@ public class DietDAOImpl {
 		}
 		return filteredList;
 	}
-	public ArrayList<Diet> getFilteredFoodTypeList(String clauses)
+	/**
+	 * getFilteredFoodTypeList Method to filter Diet list according to FoodType.
+	 * @param foodType by which user want to filter.
+	 * @return Filtered List by FoodType.
+	 */
+	public ArrayList<Diet> getFilteredFoodTypeList(String foodType)
 	{
 		SessionFactory fx = null;
 		Session sx = null;
@@ -446,7 +461,7 @@ public class DietDAOImpl {
 			fx = getFactory();
 			sx = fx.openSession();
 			tx = sx.beginTransaction();
-			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilteredfoodTypeListQuery").setParameter("foodType", clauses).list();
+			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilteredfoodTypeListQuery").setParameter("foodType", foodType).list();
 			tx.commit();
 
 		} catch (HibernateException hx) {

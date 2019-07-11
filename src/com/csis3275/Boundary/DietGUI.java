@@ -28,7 +28,11 @@ import javax.swing.JPanel;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-
+/**
+ * 
+ * @author charanpreet Singh
+ * DietGUI Class
+ */
 public class DietGUI {
 
 	private JFrame frame;
@@ -71,6 +75,7 @@ public class DietGUI {
 	private JTable tableCreatedDiet;
 	/**
 	 * Launch the application.
+	 * Stores the args from other frames in array currentUEmail.
 	 * @param args return email at 0 index.
 	 */
 	public static void main(String[] args) {
@@ -312,10 +317,6 @@ public class DietGUI {
 			public void actionPerformed(ActionEvent arg0) {
 				updateDateCb();
 				updateUserSelTable();
-//				SwingUtilities.updateComponentTreeUI(comboBoxDate);
-//				comboBoxDate.invalidate();
-//				comboBoxDate.validate();
-//				comboBoxDate.repaint();
 				
 			}
 		});
@@ -323,16 +324,19 @@ public class DietGUI {
 		UserPanel.add(btnRefresh_1);
 		
 		JLabel lblCaloriesNeeded = new JLabel("Calories Needed : ");
+		lblCaloriesNeeded.setVisible(false);
 		lblCaloriesNeeded.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		lblCaloriesNeeded.setBounds(41, 178, 153, 16);
 		UserPanel.add(lblCaloriesNeeded);
 		
 		txtCaloriesN = new JTextField();
+		txtCaloriesN.setVisible(false);
 		txtCaloriesN.setBounds(41, 207, 153, 30);
 		UserPanel.add(txtCaloriesN);
 		txtCaloriesN.setColumns(10);
 		
 		JButton btnCreateMeal = new JButton("Create Meal");
+		btnCreateMeal.setVisible(false);
 		btnCreateMeal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(txtCalories.getText().isEmpty() || Double.isNaN(Double.parseDouble(txtCalories.getText())))
@@ -590,7 +594,6 @@ public class DietGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("entering---"+comboBoxDate.getSelectedItem());
-				//updateDateCb();
 				updateUserSelTable();
 				
 			}
@@ -691,7 +694,9 @@ public class DietGUI {
 		table.getSelectionModel().addListSelectionListener(lsl);
 
 	}
-	
+	/**
+	 * Update Date Combo box for user.
+	 */
 	public void updateDateCb()
 	{
 		if(currentUEmail.length>0 )

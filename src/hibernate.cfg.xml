@@ -18,11 +18,7 @@
                <mapping class="com.csis3275.Entities.UserDiet"/>
                <mapping class="com.csis3275.Entities.DailyActivity"/>
                <mapping class="com.csis3275.Entities.ProgressActivity"/>
-                <mapping class="com.csis3275.Entities.Admin"/>              
-               
-
-
-               <mapping class="com.csis3275.Entities.ProgressActivity"/>
+                <mapping class="com.csis3275.Entities.Admin"/>       
 
         </session-factory>  
     </hibernate-configuration>
