@@ -28,6 +28,7 @@ public class BodyMeasurements {
 	private String heightType; // user height type inches or CM
 	private double weight; // user weight
 	private String weightType; //user weight type LB or KG
+	private double bmiValues; //user BMI values
 	private String healthProblem; //user selected health problems
 	private String fitnessPlanType; //user selected fitness plan type
 	private String userGoalType; // user selected goal type
@@ -127,6 +128,14 @@ public class BodyMeasurements {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public double getBmiValues() {
+		return bmiValues;
+	}
+
+	public void setBmiValues(double bmiValues) {
+		this.bmiValues = bmiValues;
 	}
 
 	public String getHealthProblem() {
