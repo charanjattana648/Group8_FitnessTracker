@@ -1,5 +1,7 @@
 package com.csis3275.Boundary;
 
+import java.util.ArrayList;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -53,6 +55,12 @@ public class UserDAOImpl {
 	}
 	//
 	
+	/**
+	 * create instructor
+	 * @param u New instructor
+	 * @return key of instructor(Email)
+	 */
+	
 	public String createInstructorAccount(User u)
 	{
 		SessionFactory fx=null;
@@ -80,6 +88,12 @@ public class UserDAOImpl {
 		}		
 		return newInstructor;
 	}
+	/**
+	 * to validate the user
+	 * @param currUserEmail it matches the current  Email with the Email saved in database.
+	 * @param currPass it matches the current Password with the password saved in database.
+	 * @return isUserFound the boolean value whether user with same email and password is found or not.
+	 */
 	
 	public boolean checkUEPass(String currUserEmail,String currPass) {
 		
@@ -91,7 +105,9 @@ public class UserDAOImpl {
 			fx=dietIns.getFactory();
 			sx=fx.openSession();
 			tx=sx.beginTransaction();
-			int x=sx.getNamedQuery("CheckUser").setParameter("uEmail", currUserEmail).setParameter("UPass", currPass).list().size();		
+			
+			ArrayList<User> userList=(ArrayList<User>) sx.getNamedQuery("CheckUser").setParameter("uEmail", currUserEmail).setParameter("UPass", currPass).list();
+					int x=userList.size();		
 			if(x>0)
 			{
 				isUserFound=true;
@@ -112,6 +128,13 @@ public class UserDAOImpl {
 		return isUserFound;
 		
 	}
+	
+	/**
+	 * to validate instructor
+	 * @param currUserEmail it matches the current instructor Email with the Email saved in database.
+	 * @param currPass it matches the instructor's current Password with the password saved in database.
+	 * @return isInstructorFound the boolean value whether user with same email and password is found or not.
+	 */
 	
 public boolean checkInstrucorEPass(String currUserEmail,String currPass) {
 		
@@ -145,6 +168,11 @@ public boolean checkInstrucorEPass(String currUserEmail,String currPass) {
 		return isInstructorFound;
 		
 	}
+
+/**
+ * method to create admin account as there is only one Admin so we set Admin_id,Admin_Name and Admin_Passsword manually.
+ * 
+ */
 public void admin()
 {
 
