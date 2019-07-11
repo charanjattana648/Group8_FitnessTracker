@@ -8,10 +8,19 @@ import javax.persistence.Table;
 
 import com.google.inject.internal.Nullable;
 
+/**
+ * 
+ * @author harpreet kaur
+ * student id 300288768
+ *
+ */
+
 @Entity
 @NamedQuery(name="CheckUser",query="FROM User u where u.userEmail=:uEmail and u.userPassword=:UPass and u.isInstructor='User'")
 @NamedQuery(name="CheckInstructor",query="FROM User u where u.userEmail=:uEmail and u.userPassword=:UPass and u.isInstructor='Instructor'")
 @Table(name="User")
+
+
 public class User {
 	@Id
 	@Column(name="USER_EMAIL",nullable=false)	
@@ -25,7 +34,16 @@ public class User {
 	@Column(name="isInstructor",nullable=false)	
 	private String isInstructor;
 	
-	
+	/**
+	 * 
+	 * @param userFirstName first name of user
+	 * @param userLastName Last Name of user
+	 * @param userAge    Age of user
+	 * @param userGender   Gender Of User
+	 * @param userEmail    EmailAddress of user
+	 * @param userPassword  Password of user
+	 * @param isInstructor   Type of user(user,Instructor or Admin)
+	 */
 	
 	public User(String userFirstName, String userLastName, int userAge, String userGender, String userEmail,
 			String userPassword,String isInstructor) {
@@ -37,6 +55,10 @@ public class User {
 		this.userPassword = userPassword;
 		this.isInstructor= isInstructor;
 	}
+	
+	/**
+	 * Empty Constructor
+	 */
 	public User() {
 	}
 	
