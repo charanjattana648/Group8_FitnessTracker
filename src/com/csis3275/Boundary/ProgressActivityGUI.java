@@ -207,7 +207,7 @@ public class ProgressActivityGUI {
 		frame.getContentPane().add(chartPanel);
 		chartPanel.setLayout(new BoxLayout(chartPanel, BoxLayout.X_AXIS));
 		
-		bmList=(ArrayList<BodyMeasurements>) bmI.getBodyData();
+		bmList=(ArrayList<BodyMeasurements>) bmI.getBodyDataList();
 		
 		txtUnit.setText(bmList.get(0).getWeightType());
 		txtInitialWeight.setText(bmList.get(0).getWeight()+"");
@@ -332,7 +332,7 @@ public class ProgressActivityGUI {
 				
             // daList=daI.getDailyActivitiesList(currUser);
 				ArrayList<BodyMeasurements> bmList=new ArrayList<BodyMeasurements>();
-				bmList=(ArrayList<BodyMeasurements>) bmI.getBodyData();
+				bmList=(ArrayList<BodyMeasurements>) bmI.getBodyDataList();
              
 	  		//getBodyData()	
 				
