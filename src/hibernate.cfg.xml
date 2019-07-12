@@ -10,13 +10,14 @@
             <property name="connection.url">jdbc:mysql://localhost:3306/FitnessTrackerdb</property>    
             <property name="connection.username">root</property>    
             <property name="connection.password"></property>  
-            <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>   
-        
+            <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>           
             <mapping class="com.csis3275.Entities.Diet"/>
             <mapping class="com.csis3275.Entities.BodyMeasurements"/>
             <mapping class="com.csis3275.Entities.User"/>
                <mapping class="com.csis3275.Entities.UserDiet"/>
                <mapping class="com.csis3275.Entities.DailyActivity"/>
                <mapping class="com.csis3275.Entities.ProgressActivity"/>
+                <mapping class="com.csis3275.Entities.Admin"/>       
+
         </session-factory>  
     </hibernate-configuration>

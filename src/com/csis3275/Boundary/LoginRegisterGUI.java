@@ -24,6 +24,13 @@ import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ButtonGroup;
+
+/**
+ * 
+ * @author harpreet kaur
+ * student id 300288768
+ */
 
 public class LoginRegisterGUI {
 
@@ -39,6 +46,7 @@ public class LoginRegisterGUI {
 	UserDAOImpl uD=new UserDAOImpl();
 	
 	ValidateUser vu=new ValidateUser();
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -78,23 +86,12 @@ public class LoginRegisterGUI {
 		JPanel logInpanel = new JPanel();
 		logInpanel.setLayout(null);
 		
+		
 		JPanel signUpPanel = new JPanel();
 		signUpPanel.setVisible(false);
 		signUpPanel.setBounds(116, 93, 1070, 665);
 		frame.getContentPane().add(signUpPanel);
 		signUpPanel.setLayout(null);
-		
-		JLabel suTypelabel = new JLabel("Type :");
-		suTypelabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		suTypelabel.setBounds(305, 88, 129, 43);
-		signUpPanel.add(suTypelabel);
-		
-		JComboBox suTypeComboBox = new JComboBox();
-		suTypeComboBox.setModel(new DefaultComboBoxModel(new String[] {"User", "Instructor"}));
-		suTypeComboBox.setBounds(521, 88, 245, 43);
-		signUpPanel.add(suTypeComboBox);
-		
-		
 		
 		JLabel lilabelTitle = new JLabel("Welcome to LogIn");
 		lilabelTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -186,6 +183,17 @@ public class LoginRegisterGUI {
 				
 			}
 		});
+	
+		
+		JLabel suTypelabel = new JLabel("Type :");
+		suTypelabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		suTypelabel.setBounds(305, 88, 129, 43);
+		signUpPanel.add(suTypelabel);
+		
+		JComboBox suTypeComboBox = new JComboBox();
+		suTypeComboBox.setModel(new DefaultComboBoxModel(new String[] {"User", "Instructor"}));
+		suTypeComboBox.setBounds(521, 88, 245, 43);
+		signUpPanel.add(suTypeComboBox);
 		
 
 		
@@ -247,16 +255,19 @@ public class LoginRegisterGUI {
 		signUpPanel.add(sptextEmail);
 		
 		JRadioButton spRbMale = new JRadioButton("Male");
+		buttonGroup.add(spRbMale);
 		spRbMale.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		spRbMale.setBounds(520, 279, 68, 25);
 		signUpPanel.add(spRbMale);
 		
 		JRadioButton spRbFemale = new JRadioButton("Female");
+		buttonGroup.add(spRbFemale);
 		spRbFemale.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		spRbFemale.setBounds(596, 279, 79, 25);
 		signUpPanel.add(spRbFemale);
 		
 		JRadioButton spRbOther = new JRadioButton("Other");
+		buttonGroup.add(spRbOther);
 		spRbOther.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		spRbOther.setBounds(696, 279, 68, 25);
 		signUpPanel.add(spRbOther);
@@ -296,17 +307,17 @@ public class LoginRegisterGUI {
 					}else {
 						u.setUserGender("Male");
 					}
-					String currEmail="";
+					String currentEmail="";
 					u.setInstructor(suTypeComboBox.getSelectedItem().toString());
 					if(suTypeComboBox.getSelectedIndex()==0)
 					{						
-						currEmail=uD.createUserAccount(u);
+						currentEmail=uD.createUserAccount(u);
 						System.out.println("entering");
 					}else {
-						currEmail=uD.createInstructorAccount(u);
+						currentEmail=uD.createInstructorAccount(u);
 					}
 										
-					if(currEmail.equalsIgnoreCase(sptextEmail.getText()))
+					if(currentEmail.equalsIgnoreCase(sptextEmail.getText()))
 					{
 						isCreated=true;
 					}
@@ -317,7 +328,6 @@ public class LoginRegisterGUI {
 				{
 					JOptionPane.showMessageDialog(null, "Congrats,"+suTypeComboBox.getSelectedItem()+" Account Created");
 				}else {
-					System.out.println("----------------------------------------------------");
 					JOptionPane.showMessageDialog(null, "Sorry,Please try Again");
 				}
 			
@@ -345,5 +355,21 @@ public class LoginRegisterGUI {
 		logInpanel.add(liLogInbutton);
 		logInpanel.setBounds(125, 86, 1061, 672);
 		frame.getContentPane().add(logInpanel);
+		
+		/**
+		 * when signup button is clicked the Login panel hides and signup panel showup.
+		 */
+		
+		
+		/**
+		 * when login button is clicked ,it checks whether user,Instructor or Admin is loging in
+		 * checks the EmailAddress and password 
+		 */
+		
+		/**
+		 * create new account
+		 * before signing up for the new account ,validation on the information is also performed
+		 * only user or Instructor can signup for new account
+		 */
 	}
 }
