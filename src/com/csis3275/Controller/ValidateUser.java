@@ -23,14 +23,17 @@ public class ValidateUser {
 		{
 			 JOptionPane.showMessageDialog(null, "One of the required field is empty!", "Error", JOptionPane.ERROR_MESSAGE);
 			 isValidUser= false;
+			 return null;
 		}else if(password.length<7)
 		{
 			 JOptionPane.showMessageDialog(null, "Password must be greater than 6 charaters", "Error", JOptionPane.ERROR_MESSAGE);
 			isValidUser=false;
+			return null;
 		}else if(!String.valueOf(password).equalsIgnoreCase(String.valueOf(Confirmpassword)))
 			{
 				JOptionPane.showMessageDialog(null, "Password and confirm Password does not match");
 				isValidUser=false;
+				return null;
 			}
 		
 		if(isValidUser)
@@ -47,9 +50,6 @@ public class ValidateUser {
 		return null;
 	}
 	
-	
-	
-
 	
 
 }
