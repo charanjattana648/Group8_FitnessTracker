@@ -24,6 +24,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ButtonGroup;
 
 /**
  * 
@@ -45,6 +46,7 @@ public class LoginRegisterGUI {
 	UserDAOImpl uD=new UserDAOImpl();
 	
 	ValidateUser vu=new ValidateUser();
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
 	 * Launch the application.
@@ -84,23 +86,12 @@ public class LoginRegisterGUI {
 		JPanel logInpanel = new JPanel();
 		logInpanel.setLayout(null);
 		
+		
 		JPanel signUpPanel = new JPanel();
 		signUpPanel.setVisible(false);
 		signUpPanel.setBounds(116, 93, 1070, 665);
 		frame.getContentPane().add(signUpPanel);
 		signUpPanel.setLayout(null);
-		
-		JLabel suTypelabel = new JLabel("Type :");
-		suTypelabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		suTypelabel.setBounds(305, 88, 129, 43);
-		signUpPanel.add(suTypelabel);
-		
-		JComboBox suTypeComboBox = new JComboBox();
-		suTypeComboBox.setModel(new DefaultComboBoxModel(new String[] {"User", "Instructor"}));
-		suTypeComboBox.setBounds(521, 88, 245, 43);
-		signUpPanel.add(suTypeComboBox);
-		
-		
 		
 		JLabel lilabelTitle = new JLabel("Welcome to LogIn");
 		lilabelTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -139,10 +130,6 @@ public class LoginRegisterGUI {
 		liTypeComboBox.setBounds(516, 140, 245, 43);
 		logInpanel.add(liTypeComboBox);
 		
-		/**
-		 * when signup button is clicked the Login panel hides and signup panel showup.
-		 */
-		
 		JButton liSignUpButton = new JButton("SignUp");
 		liSignUpButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -153,12 +140,6 @@ public class LoginRegisterGUI {
 		liSignUpButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 		liSignUpButton.setBounds(549, 340, 123, 43);
 		logInpanel.add(liSignUpButton);
-		
-		
-		/**
-		 * when login button is clicked ,it checks whether user,Instructor or Admin is loging in
-		 * checks the EmailAddress and password 
-		 */
 		
 		JButton liLogInbutton = new JButton("LogIn");
 		liLogInbutton.addActionListener(new ActionListener() {
@@ -202,6 +183,17 @@ public class LoginRegisterGUI {
 				
 			}
 		});
+	
+		
+		JLabel suTypelabel = new JLabel("Type :");
+		suTypelabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		suTypelabel.setBounds(305, 88, 129, 43);
+		signUpPanel.add(suTypelabel);
+		
+		JComboBox suTypeComboBox = new JComboBox();
+		suTypeComboBox.setModel(new DefaultComboBoxModel(new String[] {"User", "Instructor"}));
+		suTypeComboBox.setBounds(521, 88, 245, 43);
+		signUpPanel.add(suTypeComboBox);
 		
 
 		
@@ -263,16 +255,19 @@ public class LoginRegisterGUI {
 		signUpPanel.add(sptextEmail);
 		
 		JRadioButton spRbMale = new JRadioButton("Male");
+		buttonGroup.add(spRbMale);
 		spRbMale.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		spRbMale.setBounds(520, 279, 68, 25);
 		signUpPanel.add(spRbMale);
 		
 		JRadioButton spRbFemale = new JRadioButton("Female");
+		buttonGroup.add(spRbFemale);
 		spRbFemale.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		spRbFemale.setBounds(596, 279, 79, 25);
 		signUpPanel.add(spRbFemale);
 		
 		JRadioButton spRbOther = new JRadioButton("Other");
+		buttonGroup.add(spRbOther);
 		spRbOther.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		spRbOther.setBounds(696, 279, 68, 25);
 		signUpPanel.add(spRbOther);
@@ -291,12 +286,6 @@ public class LoginRegisterGUI {
 		sptextLastName.setColumns(10);
 		sptextLastName.setBounds(520, 219, 245, 43);
 		signUpPanel.add(sptextLastName);
-		
-		/**
-		 * create new account
-		 * before signing up for the new account ,validation on the information is also performed
-		 * only user or Instructor can signup for new account
-		 */
 		
 		JButton spbtnSignup = new JButton("SignUp");
 		spbtnSignup.addActionListener(new ActionListener() {
@@ -366,5 +355,21 @@ public class LoginRegisterGUI {
 		logInpanel.add(liLogInbutton);
 		logInpanel.setBounds(125, 86, 1061, 672);
 		frame.getContentPane().add(logInpanel);
+		
+		/**
+		 * when signup button is clicked the Login panel hides and signup panel showup.
+		 */
+		
+		
+		/**
+		 * when login button is clicked ,it checks whether user,Instructor or Admin is loging in
+		 * checks the EmailAddress and password 
+		 */
+		
+		/**
+		 * create new account
+		 * before signing up for the new account ,validation on the information is also performed
+		 * only user or Instructor can signup for new account
+		 */
 	}
 }
