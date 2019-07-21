@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @NamedQuery(name="getAuthorListQuery",query="Select distinct d.author from Diet d")
 @NamedQuery(name="foodCategoryListQuery",query="Select distinct d.foodCategory from Diet d")
 @NamedQuery(name="foodTypeListQuery",query="Select distinct d.foodType from Diet d")
-@NamedQuery(name="getDietOrderedListQuery",query="select d from Diet d order by :orderby ASC")
+@NamedQuery(name="getDietOrderedListQuery",query="from Diet order by :orderby ASC")
 @Table(name = "Diet")
 public class Diet {
 

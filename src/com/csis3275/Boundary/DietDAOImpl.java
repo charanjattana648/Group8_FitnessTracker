@@ -104,9 +104,10 @@ public class DietDAOImpl {
 		return dietList;
 	}
 
+	
 	/**
 	 * For Diet Ordered List
-	 * @param s query how to order the diet.
+	 * @param orderby query how to order the diet.
 	 * @return ArrayList of ordered diet.
 	 */
 	public ArrayList<Diet> getDietOrderedList(String orderby) {
@@ -120,6 +121,8 @@ public class DietDAOImpl {
 			tx = sx.beginTransaction();
 			//String sql = "SELECT d FROM Diet d order by :orderby ASC ";
 			//dietList = (ArrayList<Diet>) sx.createQuery(sql).setParameter("orderby", orderby).list();
+			
+			
 			dietList = (ArrayList<Diet>) sx.getNamedQuery("getDietOrderedListQuery").setParameter("orderby", orderby).list();
 			tx.commit();
 

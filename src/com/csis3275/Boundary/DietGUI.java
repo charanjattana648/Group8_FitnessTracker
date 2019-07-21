@@ -610,10 +610,11 @@ public class DietGUI {
 		lblDietPlan.setFont(new Font("Tahoma", Font.BOLD, 24));
 		frame.getContentPane().add(lblDietPlan);
 		
-		JButton btnExercise = new JButton("Exercise Activity");
+		JButton btnExercise = new JButton("UserGoals Activity");
 		btnExercise.setBounds(49, 707, 153, 40);
 		btnExercise.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				UserGoals.main(currentUEmail);
 			}
 		});
 		frame.getContentPane().add(btnExercise);
