@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import com.csis3275.Entities.ProgressActivity;
 
 /**
- * @author charan
+ * @author charanpreet Singh
  *
  */
 class ProgressActivityTest {
