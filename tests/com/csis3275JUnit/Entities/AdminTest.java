@@ -28,6 +28,30 @@ class AdminTest {
 	@AfterEach
 	void tearDown() throws Exception {
 	}
+	
+	@Test
+	void testAdminId() {
+		String expectedAdminId="Admin";
+		
+		a.setAdminid("Admin");
+		assertEquals(expectedAdminId, a.getAdminid());
+		
+	}
+	
+	@Test
+	void testAdminName() {
+		String expectedAdminName="Admin";
+		a.setAdminName("Admin");
+		assertEquals(expectedAdminName, a.getAdminName());
+	}
+	
+	@Test
+	void testAdminPassword() {
+		String expectedAdminPass="root";
+		a.setAdminPassword("root");
+		
+		assertEquals(expectedAdminPass, a.getAdminPassword());
+	}
 
 
 
