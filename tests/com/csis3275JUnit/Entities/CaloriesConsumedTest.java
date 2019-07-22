@@ -23,7 +23,24 @@ class CaloriesConsumedTest {
 	void setUp() throws Exception {
 		cc=new CaloriesConsumed();
 	}
-
+	@Test
+	void test_instance() {
+		assertNotNull(cc);
+	}
+	@Test
+	
+	void test_date() {
+		String expectedDate="22/07/2019";
+		cc.setDate(expectedDate);
+		assertTrue(expectedDate.equalsIgnoreCase(cc.getDate()));		
+	}
+	
+	@Test
+	void test_consumedCalories() {
+		double expected=1440.60;
+		cc.setConsumedCalories(expected);
+		assertEquals(expected, cc.getConsumedCalories());
+	}
 	
 
 }
