@@ -127,13 +127,5 @@ void setUp() throws Exception {
 		d.setAuthor(expected);
 		assertEquals(expected, d.getAuthor());
 	}
-	
-
-
-//	private double vitaminA;
-//	private double vitaminC;
-//	private double calcium;
-//	private double iron;
-//	private String author;
 
 }
