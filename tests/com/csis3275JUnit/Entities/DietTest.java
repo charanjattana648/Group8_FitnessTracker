@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import com.csis3275.Entities.Diet;
 
 /**
- * @author charan
+ * @author charanpreet singh
  *
  */
 class DietTest {
