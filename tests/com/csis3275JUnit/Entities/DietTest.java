@@ -62,7 +62,7 @@ void setUp() throws Exception {
 	void test_foodType() {
 		String expected="Fruit";
 		d.setFoodType(expected);
-		assertEquals(expected, d.getFoodType());
+		assertTrue(expected.equalsIgnoreCase(d.getFoodType()));
 	}
 	
 	@Test
@@ -70,6 +70,26 @@ void setUp() throws Exception {
 		double expected=160.20;
 		d.setCalories(expected);
 		assertEquals(expected, d.getCalories());
+	}
+	@Test
+	void test_protein() {
+		double expected=19.29;
+		d.setProtein(expected);
+		assertEquals(expected, d.getProtein());
+	}
+	
+	@Test
+	void test_fat() {
+		double expected=10.33;
+		d.setFat(expected);
+		assertEquals(expected, d.getFat());
+	}
+	
+	@Test
+	void test_carbohydrates() {
+		double expected=12.67;
+		d.setCarbohydrates(expected);
+		assertEquals(expected, d.getCarbohydrates());
 	}
 	
 
