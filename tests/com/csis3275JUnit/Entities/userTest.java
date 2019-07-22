@@ -38,11 +38,36 @@ class userTest {
 	}
 
 	@Test
-    void userName() {
-	 fail("Not yet implemented");
-	//	String expectedFirstName="harpreet";
+    void userFirstName() {
+	 //fail("Not yet implemented");
+	  String expectedFirstName="harpreet";
+	  u.setUserFirstName("harpreet");
+	assertEquals(expectedFirstName,u.getUserFirstName() );
+	}
+	
+	@Test
+    void userLastName() {
+	 //fail("Not yet implemented");
+	  String expectedFirstName="kaur";
+	  u.setUserLastName("kaur");
+	assertEquals(expectedFirstName,u.getUserLastName());
+	}
+	
+	@Test
+    void userEmail() {
 		
-	//	assertEquals(expectedFirstName,u.getUserFirstName() );
+	 //fail("Not yet implemented");
+	  String expectedEmail="harpreetkaurh8@gmail.com";
+	  u.setUserEmail("harpreetkaurh8@gmail.com");
+	assertEquals(expectedEmail,u.getUserEmail());
+	}
+	
+	@Test
+    void userAge() {
+	 //fail("Not yet implemented");
+	  int expectedAge=25;
+	  u.setUserAge(25);
+	assertEquals(expectedAge,u.getUserAge());
 	}
 
 }
