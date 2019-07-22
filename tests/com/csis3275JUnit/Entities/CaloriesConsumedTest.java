@@ -27,8 +27,8 @@ class CaloriesConsumedTest {
 	void test_instance() {
 		assertNotNull(cc);
 	}
-	@Test
 	
+	@Test	
 	void test_date() {
 		String expectedDate="22/07/2019";
 		cc.setDate(expectedDate);
