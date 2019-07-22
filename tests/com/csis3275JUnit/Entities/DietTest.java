@@ -26,6 +26,7 @@ void setUp() throws Exception {
 	void test_id() {
 		int expected=5;
 		d.setId(expected);
+		assertNotNull(d.getId());
 		assertEquals(expected, d.getId());
 	}
 	@Test
@@ -92,14 +93,43 @@ void setUp() throws Exception {
 		assertEquals(expected, d.getCarbohydrates());
 	}
 	
+	@Test
+	void test_vitaminA() {
+		double expected=4.62;
+		d.setVitaminA(expected);
+		assertEquals(expected, d.getVitaminA());
+	}
+	
+	@Test
+	void test_vitaminC() {
+		double expected=4.62;
+		d.setVitaminC(expected);
+		assertEquals(expected, d.getVitaminC());
+	}
+	
+	@Test
+	void test_calcium() {
+		double expected=4.62;
+		d.setCalcium(expected);
+		assertEquals(expected, d.getCalcium());
+	}
+	
+	@Test
+	void test_iron() {
+		double expected=4.62;
+		d.setIron(expected);
+		assertEquals(expected, d.getIron());
+	}
+	
+	@Test
+	void test_author() {
+		String expected="Charan";
+		d.setAuthor(expected);
+		assertEquals(expected, d.getAuthor());
+	}
+	
 
-//	private String foodType;
-//	private String foodCategory;
-//	private int readyTime;
-//	private double calories;
-//	private double protein;
-//	private double fat;
-//	private double carbohydrates;
+
 //	private double vitaminA;
 //	private double vitaminC;
 //	private double calcium;
