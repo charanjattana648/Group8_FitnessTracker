@@ -58,6 +58,19 @@ void setUp() throws Exception {
 		d.setFoodCategory(expected);
 		assertEquals(expected, d.getFoodCategory());
 	}
+	@Test
+	void test_foodType() {
+		String expected="Fruit";
+		d.setFoodType(expected);
+		assertEquals(expected, d.getFoodType());
+	}
+	
+	@Test
+	void test_calories() {
+		double expected=160.20;
+		d.setCalories(expected);
+		assertEquals(expected, d.getCalories());
+	}
 	
 
 //	private String foodType;
