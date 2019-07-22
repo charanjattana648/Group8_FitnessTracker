@@ -13,7 +13,7 @@ import com.csis3275.Entities.User;
 /**
  * 
  * @author harpreet Kaur
- *
+ * 
  */
 class userTest {
 	
@@ -36,7 +36,8 @@ class userTest {
 	@AfterEach
 	void tearDown() throws Exception {
 	}
-
+    
+	
 	@Test
     void userFirstName() {
 	 //fail("Not yet implemented");
@@ -69,5 +70,28 @@ class userTest {
 	  u.setUserAge(25);
 	assertEquals(expectedAge,u.getUserAge());
 	}
+	
+	@Test
+    void userGender() {
+	  String expectedGender="Female";
+	  u.setUserGender("Female");
+	assertEquals(expectedGender,u.getUserGender());
+	}
+	
+	@Test
+    void userPassword() {
+	  String expectedPassword="csis3275";
+	  u.setUserPassword("csis3275");
+	assertEquals(expectedPassword,u.getUserPassword());
+	}
+	
+	@Test
+    void typeOfUser() {
+	  String expectedType="user";
+	  u.setInstructor("user");
+	assertEquals(expectedType,u.isInstructor());
+	}
+	
+	
 
 }
