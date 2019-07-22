@@ -24,6 +24,13 @@ class UserDietTest {
 	void setUp() throws Exception {
 		ud=new UserDiet();
 	}
+	
+	@Test
+	void test_instance()
+	{
+		assertNotNull(ud);
+		
+	}
 
 	@Test
 	void test_id() {
@@ -54,7 +61,40 @@ class UserDietTest {
 		assertEquals(expected, ud.getMealType());
 	}
 
+	@Test
+	void test_foodName() {
+		String expected="Orange Juice";
+		ud.setFoodName(expected);
+		assertEquals(expected, ud.getFoodName());
+	}
+	@Test
+	void test_readyTime() {
+		int expected=15;
+		ud.setReadyTime(expected);
+		assertEquals(expected, ud.getReadyTime());
+	}
+
+	@Test
+	void test_calories() {
+		double expected=160.20;
+		ud.setCalories(expected);
+		assertEquals(expected, ud.getCalories());
+	}
+
 	
+	@Test
+	void test_author() {
+		String expected="Charan";
+		ud.setAuthor(expected);
+		assertEquals(expected, ud.getAuthor());
+	}
+
+	@Test	
+	void test_date() {
+		String expectedDate="22/07/2019";
+		ud.setDate(expectedDate);
+		assertTrue(expectedDate.equalsIgnoreCase(ud.getDate()));		
+	}
 
 
 }
