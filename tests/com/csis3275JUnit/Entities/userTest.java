@@ -38,11 +38,11 @@ class userTest {
 	}
 
 	@Test
-	void userName() {
-		//fail("Not yet implemented");
-		String expectedFirstName="harpreet";
+    void userName() {
+	 fail("Not yet implemented");
+	//	String expectedFirstName="harpreet";
 		
-		assertEquals(expectedName,u.getUserFirstName() );
+	//	assertEquals(expectedFirstName,u.getUserFirstName() );
 	}
 
 }
