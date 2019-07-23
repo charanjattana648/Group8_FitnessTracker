@@ -20,6 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.csis3275.Boundary.DietDAOImpl;
+import com.csis3275.Boundary.ProgressActivityDAOImpl;
 import com.csis3275.Boundary.UserDietDAOImpl;
 import com.csis3275.Entities.ProgressActivity;
 import com.csis3275.Entities.UserDiet;
@@ -31,6 +32,7 @@ import com.csis3275.Entities.UserDiet;
 class ProgressActivityDAOImplTest {
 
 	ProgressActivity pa;
+	ProgressActivityDAOImpl paI;
 	DietDAOImpl dI;
 	UserDiet ud;
 	UserDietDAOImpl udI;
@@ -45,6 +47,7 @@ class ProgressActivityDAOImplTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		 dI=new DietDAOImpl();
+		 paI=new ProgressActivityDAOImpl();
 		 factory=dI.getFactory();
 	}
 
@@ -75,20 +78,7 @@ class ProgressActivityDAOImplTest {
 	void test_caloriesConsumed() {
 
 		ArrayList<Double> udList=new ArrayList<Double>();
-		try {
-			sx=factory.openSession();
-			tx=sx.beginTransaction();
-			udList=(ArrayList<Double>) sx.getNamedQuery("getCaloriesConsumedQuery").setParameter("uEmail", userEmail).setMaxResults(7).list();			
-			tx.commit();
-			
-		}catch(HibernateException he)
-		{
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println(he.getMessage());
-		}
+		udList=paI.getCaloriesConsumed(userEmail);
 		assertNotNull(userEmail);
 		assertNotNull(udList);
 		assertFalse(udList.isEmpty());
@@ -98,20 +88,7 @@ class ProgressActivityDAOImplTest {
 	void test_SaveProgress() {
 		progress();
 		String key="";
-		try {
-			sx=factory.openSession();
-			tx=sx.beginTransaction();
-			key=(String) sx.save(pa);		
-			tx.commit();
-			
-		}catch(HibernateException he)
-		{
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println(he.getMessage());
-		}
+		key=paI.saveProgress(pa);
 		assertNotNull(pa);
 		assertNotNull(key);
 		assertFalse(key.isEmpty());
@@ -120,20 +97,7 @@ class ProgressActivityDAOImplTest {
 	@Test
 	void test_Progress() {
 		ArrayList<ProgressActivity> paList=new ArrayList<ProgressActivity>();
-		try {
-			sx=factory.openSession();
-			tx=sx.beginTransaction();
-			paList=(ArrayList<ProgressActivity>) sx.getNamedQuery("getProgressQuery").setParameter("uEmail", userEmail).list();			
-			tx.commit();
-			
-		}catch(HibernateException he)
-		{
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println(he.getMessage());
-		}
+		paList=paI.getProgress(userEmail);
 		assertNotNull(userEmail);
 		assertNotNull(paList);
 		assertFalse(paList.isEmpty());

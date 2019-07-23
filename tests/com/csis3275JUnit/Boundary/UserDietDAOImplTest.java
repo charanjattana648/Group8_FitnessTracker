@@ -99,7 +99,7 @@ class UserDietDAOImplTest {
 	void test_deleteUserDiet()
 	{ 
 	
-		ud=udI.getUserDiet(100);
+		ud=udI.getUserDiet(105);
 		udI.deleteUserDiet(ud);
 		assertNotNull(udI);
 		assertNotNull(dI);
