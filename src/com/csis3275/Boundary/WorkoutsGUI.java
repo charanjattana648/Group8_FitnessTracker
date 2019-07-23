@@ -14,6 +14,8 @@ import java.util.Vector;
 
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import org.json.JSONArray;
@@ -22,6 +24,7 @@ import org.json.JSONObject;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 
 public class WorkoutsGUI {
 
@@ -30,6 +33,8 @@ public class WorkoutsGUI {
 	private DefaultTableModel tm = new DefaultTableModel();
 	private JSONArray jArray = new JSONArray();
 	private JSONObject jsonObj;
+	private ListSelectionListener lsl;
+	private JTextArea textAreaExerciseDescription;
 
 	/**
 	 * Launch the application.
@@ -59,9 +64,34 @@ public class WorkoutsGUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 862, 474);
+		frame.setBounds(100, 100, 1027, 485);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		lsl = new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				int currentId = (int) table.getValueAt(table.getSelectedRow(), 0);
+				
+				try {
+					textAreaExerciseDescription.setText("");
+					for (int i = 0; i < jArray.length(); ++i)
+					{
+						jsonObj = jArray.getJSONObject(i);
+					int id = jsonObj.getInt("id");
+					
+						if(id == currentId) {
+							textAreaExerciseDescription.setText(jsonObj.getString("exerciseDescription"));
+						}
+					}
+					
+				} catch (JSONException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+		};
 		
 		JLabel lblWorkouts = new JLabel("Workouts");
 		lblWorkouts.setHorizontalAlignment(SwingConstants.CENTER);
@@ -70,12 +100,23 @@ public class WorkoutsGUI {
 		frame.getContentPane().add(lblWorkouts);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(44, 75, 778, 289);
+		scrollPane.setBounds(44, 75, 634, 297);
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		table.setModel(tm);
+		table.getSelectionModel().addListSelectionListener(lsl);
+		
+		JLabel lblExerciseDescription = new JLabel("Exercise Description");
+		lblExerciseDescription.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblExerciseDescription.setBounds(692, 76, 162, 22);
+		frame.getContentPane().add(lblExerciseDescription);
+		
+		textAreaExerciseDescription = new JTextArea();
+		textAreaExerciseDescription.setWrapStyleWord(true);
+		textAreaExerciseDescription.setBounds(688, 112, 300, 260);
+		frame.getContentPane().add(textAreaExerciseDescription);
 		
 		updateTable();
 		
@@ -84,14 +125,15 @@ public class WorkoutsGUI {
 	@SuppressWarnings("rawtypes")
 	public void updateTable() {
 		
+		table.getSelectionModel().removeListSelectionListener(lsl);
+		
 		tm = new DefaultTableModel();
 		
 		tm.addColumn("Id");
 		tm.addColumn("Exercise Name");
 		tm.addColumn("Exercise Type");
 		tm.addColumn("Calories Burnt");
-		tm.addColumn("Exercise Description");
-		tm.addColumn("Total Time");
+		tm.addColumn("Total Time(min)");
 		tm.addColumn("Workout Type");
 		
 		getExercises();
@@ -101,7 +143,7 @@ public class WorkoutsGUI {
 		}
 		
 		table.setModel(tm);
-		
+		table.getSelectionModel().addListSelectionListener(lsl);
 	}
 	
 	public void getExercises() {
@@ -115,9 +157,6 @@ public class WorkoutsGUI {
 			
 			int responseCode= conn.getResponseCode();
 			
-			System.out.println("Sending get request to url " + url);
-			System.out.println("Response Code " + responseCode);
-			
 			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			
 			String inputLine;
@@ -126,8 +165,6 @@ public class WorkoutsGUI {
 				response.append(inputLine);
 			}
 			in.close();
-			
-			//System.out.println(response.toString());
 
 			jArray = new JSONArray(response.toString());
 			
@@ -141,7 +178,6 @@ public class WorkoutsGUI {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public ArrayList<Vector> getVector() {
-		//
 		ArrayList<Vector> vl = new ArrayList<Vector>();
 		try {
 			for (int i = 0; i < jArray.length(); ++i)
@@ -152,7 +188,6 @@ public class WorkoutsGUI {
 			v.add(jsonObj.get("exerciseName"));
 			v.add(jsonObj.get("exerciseType"));
 			v.add(jsonObj.getDouble("caloriesBurnt"));
-			v.add(jsonObj.get("exerciseDescription"));
 			v.add(jsonObj.getInt("totalTime"));
 			v.add(jsonObj.get("workoutType"));
 			vl.add(v);
@@ -163,5 +198,4 @@ public class WorkoutsGUI {
 		}
 		return vl;
 	}
-	
 }
