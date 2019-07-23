@@ -9,12 +9,15 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.swing.JScrollPane;
@@ -25,6 +28,8 @@ public class WorkoutsGUI {
 	private JFrame frame;
 	private JTable table;
 	private DefaultTableModel tm = new DefaultTableModel();
+	private JSONArray jArray = new JSONArray();
+	private JSONObject jsonObj;
 
 	/**
 	 * Launch the application.
@@ -76,6 +81,7 @@ public class WorkoutsGUI {
 		
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public void updateTable() {
 		
 		tm = new DefaultTableModel();
@@ -88,7 +94,11 @@ public class WorkoutsGUI {
 		tm.addColumn("Total Time");
 		tm.addColumn("Workout Type");
 		
+		getExercises();
 		
+		for(int i = 0; i < jArray.length(); ++i) {
+			tm.addRow(getVector().get(i));
+		}
 		
 		table.setModel(tm);
 		
@@ -117,29 +127,41 @@ public class WorkoutsGUI {
 			}
 			in.close();
 			
-			System.out.println(response.toString());
+			//System.out.println(response.toString());
 
-			
-			//JSONObject jsonObj = new JSONObject(response.toString());
-			JSONArray jArray = new JSONArray(response.toString());
-			
-			for (int i=0;i<jArray.length();++i)
-			{
-				JSONObject jsonObj=jArray.getJSONObject(i);
-				System.out.println(jsonObj.get("id"));
-				System.out.println(jsonObj.get("exerciseName"));
-				System.out.println("");
-			}
-			
-		//	System.out.println(jArray);
+			jArray = new JSONArray(response.toString());
 			
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public ArrayList<Vector> getVector() {
+		//
+		ArrayList<Vector> vl = new ArrayList<Vector>();
+		try {
+			for (int i = 0; i < jArray.length(); ++i)
+			{
+				jsonObj = jArray.getJSONObject(i);
+				Vector v = new Vector();
+			v.add(jsonObj.getInt("id"));
+			v.add(jsonObj.get("exerciseName"));
+			v.add(jsonObj.get("exerciseType"));
+			v.add(jsonObj.getDouble("caloriesBurnt"));
+			v.add(jsonObj.get("exerciseDescription"));
+			v.add(jsonObj.getInt("totalTime"));
+			v.add(jsonObj.get("workoutType"));
+			vl.add(v);
+			}
+		}
+		catch(Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return vl;
 	}
 	
 }
