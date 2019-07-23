@@ -128,7 +128,7 @@ class DietDAOImplTest {
 		assertNotNull(d);
 	}
 	
-	//@Test
+	@Test
 	void test_deleteMeal()
 	{
 		d=dI.getDiet(81);		
@@ -172,6 +172,98 @@ class DietDAOImplTest {
 		assertNotNull(dI);
 	    assertNotNull(d);
 	    assertEquals(foodName, dI.getDiet(82).getFoodName());
+	}
+	
+	@Test
+	void test_mealTypeList()
+	{
+		ArrayList<String> mealTypeList = new ArrayList<String>();
+		try {
+			sx = factory.openSession();
+			tx = sx.beginTransaction();
+			mealTypeList=(ArrayList<String>) sx.getNamedQuery("mealTypeListQuery").list();			
+			mealTypeList.add(0,"None");
+			tx.commit();
+
+		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
+			System.err.println(hx.getMessage());
+		}
+		assertNotNull(mealTypeList);
+		assertFalse(mealTypeList.isEmpty());		
+		
+	}
+	@Test
+	void test_foodTypeList()
+	{
+		ArrayList<String> foodTypeList = new ArrayList<String>();
+		try {
+			sx = factory.openSession();
+			tx = sx.beginTransaction();
+			foodTypeList = (ArrayList<String>) sx.getNamedQuery("foodTypeListQuery").list();			
+			foodTypeList.add(0,"None");
+			tx.commit();
+
+		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
+			System.err.println(hx.getMessage());
+		}
+		assertNotNull(foodTypeList);
+		assertFalse(foodTypeList.isEmpty());
+		
+	}
+	@Test
+	void test_foodCategoryList()
+	{
+		ArrayList<String> foodCategoryList = new ArrayList<String>();
+		try {
+			sx = factory.openSession();
+			tx = sx.beginTransaction();
+			foodCategoryList=(ArrayList<String>) sx.getNamedQuery("foodCategoryListQuery").list();			
+			foodCategoryList.add(0,"None");
+			tx.commit();
+
+		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
+			System.err.println(hx.getMessage());
+		}
+		assertNotNull(foodCategoryList);
+		assertFalse(foodCategoryList.isEmpty());
+		
+		
+	}
+	@Test
+	void test_authorList()
+	{
+		ArrayList<String> authorList = new ArrayList<String>();
+		try {
+			sx = factory.openSession();
+			tx = sx.beginTransaction();
+			authorList=(ArrayList<String>) sx.getNamedQuery("getAuthorListQuery").list();
+			authorList.add(0,"None");
+			tx.commit();
+
+		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
+			System.err.println(hx.getMessage());
+		}
+
+		assertNotNull(authorList);
+		assertFalse(authorList.isEmpty());
+		
+		
 	}
 	
 
