@@ -32,19 +32,6 @@ class UserDietDAOImplTest {
 	SessionFactory factory = null;
 	Session sx = null;
 	Transaction tx = null;
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-	}
 
 	/**
 	 * @throws java.lang.Exception
@@ -174,7 +161,7 @@ class UserDietDAOImplTest {
 	void test_deleteUserDiet()
 	{ 
 		udI=new UserDietDAOImpl();
-		ud=udI.getUserDiet(97);
+		ud=udI.getUserDiet(98);
 		try {
 			factory=dI.getFactory();
 			sx=factory.openSession();
