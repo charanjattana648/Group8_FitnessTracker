@@ -60,5 +60,28 @@ class ValidateUserTest {
 		
 	}
 	
+	@Test
+	void UserInfoEmptyTest() {
+		
+		String expectedEmail="hk@gmail.com";
+		String expectedName="";
+		String expectedLname="Kaur";
+		String expectedPass="csis3275";
+		String expectedConfirm="csis3275";
+		int expectedage=24;
+		
+		char[] password=expectedPass.toCharArray();
+		char[] confirmPass=expectedConfirm.toCharArray();
+		User u=v.validate("hk@gmail.com", "", "Kaur", password, confirmPass, "24");
+		
+		assertAll("Validating User failed ",()->assertEquals(expectedEmail,u.getUserEmail()),
+				()->assertEquals(expectedName,u.getUserFirstName()),
+				()->assertEquals(expectedLname,u.getUserLastName()),
+				()->assertEquals(expectedPass,u.getUserPassword()),
+				()->assertEquals(expectedage, u.getUserAge())
+				);
+		
+	}
+	
 
 }
