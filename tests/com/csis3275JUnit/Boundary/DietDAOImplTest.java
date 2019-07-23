@@ -266,7 +266,93 @@ class DietDAOImplTest {
 		
 	}
 	
+	
+	@Test
+	void test_FilteredMealTypeList()
+	{
+		String mealType="";
+		ArrayList<Diet> filteredList = new ArrayList<Diet>();
+		try {
+			sx = factory.openSession();
+			tx = sx.beginTransaction();
+			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilteredMealTypeListQuery").setParameter("mealType", mealType).list();
+			tx.commit();
 
+		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
+			System.err.println(hx.getMessage());
+		} 
+		assertNotNull(filteredList);
+		assertFalse(filteredList.isEmpty());		
+	}
+	
+	@Test
+	void test_FilterFoodCategoryList()
+	{
+		String foodCategory="";
+		ArrayList<Diet> filteredList = new ArrayList<Diet>();
+		try {
+			sx = factory.openSession();
+			tx = sx.beginTransaction();
+			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilterFoodCategoryListQuery").setParameter("foodCategory", foodCategory).list();
+			tx.commit();
+
+		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
+			System.err.println(hx.getMessage());
+		}
+		assertNotNull(filteredList);
+		assertFalse(filteredList.isEmpty());
+	}
+	@Test
+	void test_FilteredauthorList()
+	{
+		String author="";
+		ArrayList<Diet> filteredList = new ArrayList<Diet>();
+		try {
+			sx = factory.openSession();
+			tx = sx.beginTransaction();
+			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilteredauthorListQuery").setParameter("author", author).list();
+			tx.commit();
+
+		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
+			System.err.println(hx.getMessage());
+		}
+		assertNotNull(filteredList);
+		assertFalse(filteredList.isEmpty());
+	}
+	@Test
+	void test_FilteredfoodTypeList()
+	{
+		String foodType="";
+		ArrayList<Diet> filteredList = new ArrayList<Diet>();
+		try {
+			sx = factory.openSession();
+			tx = sx.beginTransaction();
+			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilteredfoodTypeListQuery").setParameter("foodType", foodType).list();
+			tx.commit();
+
+		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
+			System.err.println(hx.getMessage());
+		}
+		assertNotNull(filteredList);		
+		assertFalse(filteredList.isEmpty());
+	}
+	
 	
 	
 
