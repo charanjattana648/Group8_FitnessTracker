@@ -106,6 +106,7 @@ public class UserGoals {
 	//DietGUI class instance
 	DietGUI dietGui = new DietGUI();
 	private JButton btnAddValues;
+	private JCheckBox chckbxNoProblems;
 	
 	
 	/**
@@ -259,10 +260,14 @@ public class UserGoals {
 		chckbxChestPain.setBounds(44, 379, 97, 23);
 		frame.getContentPane().add(chckbxChestPain);
 		
+		chckbxNoProblems = new JCheckBox("No Health Issue");
+		chckbxNoProblems.setBounds(42, 411, 101, 23);
+		frame.getContentPane().add(chckbxNoProblems);
+		
 		textAreaHealthProblems = new JTextArea();
 		textAreaHealthProblems.setLineWrap(true);
 		textAreaHealthProblems.setFont(new Font("Monospaced", Font.BOLD, 13));
-		textAreaHealthProblems.setBounds(150, 246, 109, 156);
+		textAreaHealthProblems.setBounds(150, 246, 109, 188);
 		frame.getContentPane().add(textAreaHealthProblems);
 		
 		JRadioButton rdbtnStayFitPlan = new JRadioButton("Stay Fit Plan");
@@ -582,12 +587,16 @@ public class UserGoals {
 					textAreaHealthProblems.setText("\n");
 					numberOfHealthProblems++;
 				}
+				else if(chckbxNoProblems.isSelected()) {
+					healthProblems = chckbxNoProblems.getText().toString();
+					numberOfHealthProblems = 0;
+				}
 				userDetails.setHealthProblem(healthProblems);
 				textAreaHealthProblems.setText(healthProblems);
 			}
 		});
 		btnAddHealthProblems.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnAddHealthProblems.setBounds(44, 416, 173, 35);
+		btnAddHealthProblems.setBounds(44, 456, 173, 35);
 		frame.getContentPane().add(btnAddHealthProblems);
 		
 		
