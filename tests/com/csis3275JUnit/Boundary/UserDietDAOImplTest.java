@@ -43,7 +43,6 @@ class UserDietDAOImplTest {
 		 factory=dI.getFactory();
 	}
 
-
 	@Test
 	void test_Session_factory() {	
 		
