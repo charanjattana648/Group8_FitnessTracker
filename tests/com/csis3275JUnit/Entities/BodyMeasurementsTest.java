@@ -8,7 +8,14 @@ import com.csis3275.Entities.BodyMeasurements;
 
 class BodyMeasurementsTest {
 	
-	private BodyMeasurements body = new BodyMeasurements();;
+	private BodyMeasurements body = new BodyMeasurements();
+	
+	@Test
+	void testEmail() {
+		String email = "guri@gmail.com";
+		body.setUserEmail(email);
+		assertEquals(email, body.getUserEmail());
+	}
 
 	@Test
 	void testUnit() {
@@ -68,5 +75,25 @@ class BodyMeasurementsTest {
 		assertEquals(bmi, body.getBmiValues());
 	}
 	
+	@Test
+	void testHealthProblems() {
+		String healthProblems = "Hypertension,Diabetes,Heart";
+		body.setHealthProblem(healthProblems);
+		assertEquals(healthProblems, body.getHealthProblem());
+	}
+	
+	@Test
+	void testfitnessPlanType() {
+		String testFitnessPlan = "Weight Loss Plan";
+		body.setFitnessPlanType(testFitnessPlan);
+		assertEquals(testFitnessPlan, body.getFitnessPlanType());
+	}
+	
+	@Test
+	void testUserGoal() {
+		String uGoal = "Loose 3 LB";
+		body.setUserGoalType(uGoal);
+		assertEquals(uGoal, body.getUserGoalType());
+	}
 
 }
