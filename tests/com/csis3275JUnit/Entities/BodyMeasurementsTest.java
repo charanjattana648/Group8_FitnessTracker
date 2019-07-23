@@ -31,5 +31,19 @@ class BodyMeasurementsTest {
 		assertEquals(inches, body.getHeightInches());
 	}
 	
+	@Test
+	void testHeightInCM() {
+		double cm = 168;
+		body.setHeightCm(cm);
+		assertEquals(cm, body.getHeightCm());
+	}
+	
+	@Test
+	void testHeightType() {
+		String heightType = "cm";
+		body.setHeightType(heightType);
+		assertEquals(heightType, body.getHeightType());
+	}
+	
 
 }
