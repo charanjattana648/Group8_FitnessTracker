@@ -85,16 +85,18 @@ public class UserDietDAOImpl {
 	 * Add the UserDiet to table.
 	 * @param ud is new UserDiet.
 	 */
-	public void addUserDiet(UserDiet ud)
+	public int addUserDiet(UserDiet ud)
 	{
 		SessionFactory fx=null;
 		Session sx=null;
 		Transaction tx=null;
+		int newUDiet=0;
+		
 		try {
 			fx=dI.getFactory();
 			sx=fx.openSession();
 			tx=sx.beginTransaction();
-			sx.save(ud);
+			newUDiet=(int) sx.save(ud);
 			tx.commit();
 		}catch(HibernateException hx)
 		{
@@ -107,6 +109,7 @@ public class UserDietDAOImpl {
 			sx.close();
 			fx.close();
 		}
+		return newUDiet;
 	}
 	/**
 	 * 
