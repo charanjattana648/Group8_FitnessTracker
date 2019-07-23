@@ -24,6 +24,7 @@ class BMICalculatorTest {
 		double weight = 74;
 		
 		body = new BodyMeasurements();
+		cBMI = new CalculateBMI();
 		
 		body.setHeightCm(heightInCm);
 		body.setUnit(unit);
@@ -33,12 +34,13 @@ class BMICalculatorTest {
 		
 		double heightInMeters = heightInCm / (double) 100;
 		
-		double bmi = weight / Math.pow(heightInMeters, 2);
+		double expected = weight / Math.pow(heightInMeters, 2);
 		
-		body.setBmiValues(bmi);
+		double actual = cBMI.calculateBMI(body);
 		
-		assertEquals(bmi, body.getBmiValues());
-		System.out.println("" + body.getBmiValues());
+		body.setBmiValues(actual);
+		
+		assertEquals(expected, body.getBmiValues());
 		
 	}
 	
@@ -85,8 +87,6 @@ class BMICalculatorTest {
 			result = "Based on the bmi results you are Obese." + "\n" + "You should choose Extreme Weight Loss plan";
 			assertEquals(result, cBMI.bmiResult());
 		}
-		System.out.println("" + body.getBmiValues());
-		System.out.println(cBMI.bmiResult());
 	}
 	
 	@Test
@@ -132,8 +132,40 @@ class BMICalculatorTest {
 			result = "Based on the bmi results you are Obese." + "\n" + "You should choose Extreme Weight Loss plan";
 			assertEquals(result, cBMI.bmiResult());
 		}
-		System.out.println("" + body.getBmiValues());
-		System.out.println(cBMI.bmiResult());
+	}
+	
+	@Test
+	void testCalculateBMIImperial() {
+		
+		String unit = "Imperial";
+		String heightType = "inches";
+		String weightType = "lb";
+		
+		double heightInFeets = 6;
+		double weight = 150;
+		double heightInches = 2;
+		
+		body = new BodyMeasurements();
+		cBMI = new CalculateBMI();
+		
+		body.setHeightFeets(heightInFeets);
+		body.setUnit(unit);
+		body.setHeightType(heightType);
+		body.setWeightType(weightType);
+		body.setWeight(weight);
+		
+		double convertedFeetsToInches = heightInFeets * (double) 12;
+		double totalHeightInInches = convertedFeetsToInches + heightInches;
+		
+		double bmi = (weight / (Math.pow(totalHeightInInches, 2))) * (double) 703;
+		
+		
+		body.setHeightInches(totalHeightInInches);
+			
+			body.setBmiValues(bmi);
+			
+			assertEquals(bmi, body.getBmiValues());
+		
 	}
 
 }
