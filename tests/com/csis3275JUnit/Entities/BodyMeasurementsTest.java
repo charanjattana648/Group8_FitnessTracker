@@ -4,11 +4,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import com.csis3275.Entities.BodyMeasurements;
+
 class BodyMeasurementsTest {
+	
+	private BodyMeasurements body = new BodyMeasurements();;
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testUnit() {
+		String unit = "Imperial";
+		body.setUnit(unit);
+		assertEquals(unit, body.getUnit());
 	}
+	
 
 }
