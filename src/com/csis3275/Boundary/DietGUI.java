@@ -69,7 +69,7 @@ public class DietGUI {
 	private String filteredClause="";
 	private static String[] currentUEmail=new String[2];
 	private UserDietDAOImpl udI=new UserDietDAOImpl();
-	private String mealtypeSel="",authorSel="",foodCategorySel="",foodtypeSel="",orderby="";
+	private String mealtypeSel="",authorSel="",foodCategorySel="",foodtypeSel="",orderby="",type="";
 	private static String usertype="";
 	private JTextField txtCaloriesN;
 	private JTable tableCreatedDiet;
@@ -270,13 +270,16 @@ public class DietGUI {
 				if(comboBoxAscDesc.getSelectedIndex()==1)
 				{	
 					isOrder=true;
+					type="asc";
 					if(comboBoxNutrients.getSelectedItem()!="None")	
 					{
 					orderby=comboBoxNutrients.getSelectedItem().toString();//+" DESC";
 					}
 				}else if(comboBoxAscDesc.getSelectedIndex()==2)
 				{
-					isOrder=true;									
+					
+					isOrder=true;					
+					type="desc";
 					if(comboBoxNutrients.getSelectedItem()!="None")	
 					{
 					orderby=(String) comboBoxNutrients.getSelectedItem().toString();//+" ASC";
@@ -645,9 +648,9 @@ public class DietGUI {
 		dtm.addColumn("Food Type");
 		dtm.addColumn("Food Category");
 		dtm.addColumn("Ready Time");
-		dtm.addColumn("Calories (g)");
+		dtm.addColumn("Calories (g)");		
+		dtm.addColumn("Protein (g)");
 		dtm.addColumn("Fat (g)");
-		dtm.addColumn("Protein (g)");		
 		dtm.addColumn("Carbohydrates");
 		dtm.addColumn("VitaminA");
 		dtm.addColumn("VitaminC");
@@ -658,7 +661,7 @@ public class DietGUI {
 		if(isOrder && orderby!="")
 		{			
 			System.out.println("entering ----------------"+orderby);
-			dietList=dI.getDietOrderedList(orderby);
+			dietList=dI.getDietOrderedList(type,orderby);
 			for (Diet d : dietList) {	
 				System.out.println(d.getId()+" ------ "+d.getCalories());
 			}

@@ -2,6 +2,11 @@ package com.csis3275.Boundary;
 
 import java.util.ArrayList;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -110,7 +115,7 @@ public class DietDAOImpl {
 	 * @param orderby query how to order the diet.
 	 * @return ArrayList of ordered diet.
 	 */
-	public ArrayList<Diet> getDietOrderedList(String orderby) {
+	public ArrayList<Diet> getDietOrderedList(String type,String orderby) {
 		SessionFactory fx = null;
 		Session sx = null;
 		Transaction tx = null;
@@ -119,11 +124,18 @@ public class DietDAOImpl {
 			fx = getFactory();
 			sx = fx.openSession();
 			tx = sx.beginTransaction();
-			//String sql = "SELECT d FROM Diet d order by :orderby ASC ";
-			//dietList = (ArrayList<Diet>) sx.createQuery(sql).setParameter("orderby", orderby).list();
-			
-			
-			dietList = (ArrayList<Diet>) sx.getNamedQuery("getDietOrderedListQuery").setParameter("orderby", orderby).list();
+			Diet d=new Diet();			
+			CriteriaBuilder cb=sx.getCriteriaBuilder();
+			CriteriaQuery<Diet> cqd=cb.createQuery(Diet.class);
+			Root<Diet> root=cqd.from(Diet.class);
+			orderby=orderby.toLowerCase();
+			if(type.equalsIgnoreCase("asc"))
+			{
+			cqd.orderBy(cb.asc(root.get(orderby)));
+			}else if(type.equalsIgnoreCase("desc")){
+				cqd.orderBy(cb.desc(root.get(orderby)));
+			}
+			dietList=(ArrayList<Diet>) sx.createQuery(cqd).getResultList();
 			tx.commit();
 
 		} catch (HibernateException hx) {
@@ -181,8 +193,7 @@ public class DietDAOImpl {
 			sx=fx.openSession();
 			tx=sx.beginTransaction();
 			sx.delete(d);
-			tx.commit();
-			
+			tx.commit();			
 		}catch(HibernateException hx)
 		{	if(tx!=null)
 		{

@@ -2,6 +2,7 @@ package com.csis3275.Entities;
 
 import java.util.Vector;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -21,7 +22,6 @@ import javax.persistence.Table;
 @NamedQuery(name="getAuthorListQuery",query="Select distinct d.author from Diet d")
 @NamedQuery(name="foodCategoryListQuery",query="Select distinct d.foodCategory from Diet d")
 @NamedQuery(name="foodTypeListQuery",query="Select distinct d.foodType from Diet d")
-@NamedQuery(name="getDietOrderedListQuery",query="from Diet order by :orderby ASC")
 @Table(name = "Diet")
 public class Diet {
 
@@ -32,11 +32,15 @@ public class Diet {
 	@GeneratedValue
 	private int id;
 	private int mealId;
+	@Column(name="mealType",nullable=false)	
 	private String mealType;
+	@Column(name="foodName",nullable=false)	
 	private String foodName;
+	@Column(name="foodType",nullable=false)	
 	private String foodType;
+	@Column(name="foodCategory",nullable=false)	
 	private String foodCategory;
-	private int readyTime;
+	private int readyTime;	
 	private double calories;
 	private double protein;
 	private double fat;
@@ -45,6 +49,7 @@ public class Diet {
 	private double vitaminC;
 	private double calcium;
 	private double iron;
+	@Column(name="author",nullable=false)	
 	private String author;
 
 	public String getMealType() {
