@@ -9,6 +9,11 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.awt.event.ActionEvent;
 
 public class PostWorkoutGUI {
@@ -20,6 +25,9 @@ public class PostWorkoutGUI {
 	private JTextField textFieldDescription;
 	private JTextField textFieldTotalTime;
 	private JTextField textFieldWorkoutType;
+	
+	private static final String USER_AGENT = "Mozilla/5.0";
+	
 
 	/**
 	 * Launch the application.
@@ -129,11 +137,52 @@ public class PostWorkoutGUI {
 		btnPostWorkout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				
+				try {
+					postWorkout();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnPostWorkout.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnPostWorkout.setBounds(242, 344, 151, 43);
 		frame.getContentPane().add(btnPostWorkout);
 	}
+	
+	public void postWorkout() throws IOException {
+		URL obj = new URL("http://localhost:8080/exercises");
+		HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
+		
+		conn.setRequestMethod("POST");
+		conn.setRequestProperty("User-Agent", USER_AGENT);
+		
+		conn.setDoOutput(true);
+		
+		String exerciseName = textFieldExerciseName.getText();
+		String exerciseType = textFieldExerciseType.getText();
+		double calB = Double.parseDouble(textFieldCaloriesBurnt.getText());
+		String exerciseDescription = textFieldDescription.getText();
+		int totalTime = Integer.parseInt(textFieldTotalTime.getText());
+		String workoutType = textFieldWorkoutType.getText();
+		
+		String exerciseString = "{\"exerciseName\":\""+exerciseName
+				+"\",\"exerciseType\":\""+exerciseType
+				+"\",\"caloriesBurnt\":"+calB
+				+",\"exerciseDescription\":\""+exerciseDescription
+				+"\",\"totalTime\":"+totalTime
+				+",\"workoutType\":\""+workoutType+"\"}";
+		
+		byte[] out = exerciseString.getBytes(StandardCharsets.UTF_8);
+		int	length = out.length;
+
+		conn.setFixedLengthStreamingMode(length);
+		conn.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+		conn.connect();
+		try(OutputStream os = conn.getOutputStream()) {
+			os.write(out);
+		}
+		
+		
+	}
+	
 }
