@@ -157,7 +157,7 @@ class DietDAOImplTest {
 	@Test
 	void test_deleteMeal()
 	{
-		d=dI.getDiet(87);		
+		d=dI.getDiet(86);		
 		assertNotNull(dI.getDiet(d.getId()));
 		try {
 			sx=factory.openSession();

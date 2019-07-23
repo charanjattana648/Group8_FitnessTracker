@@ -152,7 +152,7 @@ public class UserDietDAOImpl {
 			fx=dI.getFactory();
 			sx=fx.openSession();
 			tx=sx.beginTransaction();
-			sx.delete(ud);;
+			sx.delete(ud);
 			tx.commit();
 		}
 		catch(HibernateException hx)
