@@ -25,6 +25,9 @@ import org.json.JSONObject;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class WorkoutsGUI {
 
@@ -35,6 +38,7 @@ public class WorkoutsGUI {
 	private JSONObject jsonObj;
 	private ListSelectionListener lsl;
 	private JTextArea textAreaExerciseDescription;
+	static String[] currentUser = new String[2];
 
 	/**
 	 * Launch the application.
@@ -43,6 +47,7 @@ public class WorkoutsGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					currentUser[1] = args[1];
 					WorkoutsGUI window = new WorkoutsGUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -117,6 +122,16 @@ public class WorkoutsGUI {
 		textAreaExerciseDescription.setWrapStyleWord(true);
 		textAreaExerciseDescription.setBounds(688, 112, 300, 260);
 		frame.getContentPane().add(textAreaExerciseDescription);
+		
+		JButton btnPostWorkout = new JButton("Post Workout");
+		btnPostWorkout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PostWorkoutGUI.main(currentUser);
+			}
+		});
+		btnPostWorkout.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnPostWorkout.setBounds(42, 398, 135, 37);
+		frame.getContentPane().add(btnPostWorkout);
 		
 		updateTable();
 		
