@@ -168,7 +168,7 @@ public class WorkoutsGUI {
 					jsonObj = jArray.getJSONObject(i);
 					String workoutType = jsonObj.getString("workoutType");
 				
-					if(workoutType.equals("Heavy")) {
+					if(workoutType.equals("Light")) {
 						tm.addRow(getVector().get(i));
 					}
 				}
@@ -179,7 +179,7 @@ public class WorkoutsGUI {
 			
 		}
 		
-		else if(UserGoals.numberOfHealthProblems > 1 && UserGoals.numberOfHealthProblems <= 3) {
+		else if(UserGoals.numberOfHealthProblems >= 1 && UserGoals.numberOfHealthProblems <= 3) {
 			try {
 				for (int i = 0; i < jArray.length(); ++i)
 				{
@@ -189,6 +189,20 @@ public class WorkoutsGUI {
 					if(workoutType.equals("Medium")) {
 						tm.addRow(getVector().get(i));
 					}
+				}
+				
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+			}
+		}
+		else if(UserGoals.numberOfHealthProblems == 0) {
+			try {
+				for (int i = 0; i < jArray.length(); ++i)
+				{
+					jsonObj = jArray.getJSONObject(i);
+					//String workoutType = jsonObj.getString("workoutType");
+				
+						tm.addRow(getVector().get(i));
 				}
 				
 			} catch (JSONException e1) {
