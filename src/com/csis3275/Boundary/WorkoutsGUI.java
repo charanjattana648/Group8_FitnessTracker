@@ -179,9 +179,22 @@ public class WorkoutsGUI {
 			
 		}
 		
-//		for(int i = 0; i < jArray.length(); ++i) {
-//			tm.addRow(getVector().get(i));
-//		}
+		else if(UserGoals.numberOfHealthProblems > 1 && UserGoals.numberOfHealthProblems <= 3) {
+			try {
+				for (int i = 0; i < jArray.length(); ++i)
+				{
+					jsonObj = jArray.getJSONObject(i);
+					String workoutType = jsonObj.getString("workoutType");
+				
+					if(workoutType.equals("Medium")) {
+						tm.addRow(getVector().get(i));
+					}
+				}
+				
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+			}
+		}
 		
 		table.setModel(tm);
 		table.getSelectionModel().addListSelectionListener(lsl);
