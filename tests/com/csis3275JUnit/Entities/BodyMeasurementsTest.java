@@ -45,5 +45,28 @@ class BodyMeasurementsTest {
 		assertEquals(heightType, body.getHeightType());
 	}
 	
+	@Test
+	void testWeight() {
+		double weight = 155;
+		double weightKG = 78;
+		body.setWeight(weight);
+		assertEquals(weight, body.getWeight());
+		if(body.getWeight() == weight) {
+			body.setWeightType("lb");
+			assertEquals("lb", body.getWeightType());
+		}
+		else if(body.getWeight() == weightKG) {
+			body.setWeightType("kg");
+			assertEquals("kg", body.getWeightType());
+		}
+	}
+	
+	@Test
+	void testBmiValues() {
+		double bmi = 24.9;
+		body.setBmiValues(bmi);
+		assertEquals(bmi, body.getBmiValues());
+	}
+	
 
 }
