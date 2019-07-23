@@ -42,7 +42,16 @@ class DietDAOImplTest {
 		}
 	}
 
-
+	@Test
+	void test_Session_factory() {	
+		
+		assertAll("heading",
+				()->assertNotNull(ssr, "StandardServiceRegistry is null"),
+				()->assertNotNull(meta, "meta is null"),
+				()->assertNotNull(factory, "factory is null"));
+	}
+	
+	
 	
 
 }
