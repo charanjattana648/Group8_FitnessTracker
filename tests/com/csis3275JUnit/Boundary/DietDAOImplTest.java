@@ -7,6 +7,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -23,7 +27,7 @@ import com.csis3275.Boundary.DietDAOImpl;
 import com.csis3275.Entities.Diet;
 
 /**
- * @author charan
+ * @author Charanpreet Singh
  *
  */
 class DietDAOImplTest {
@@ -129,9 +133,31 @@ class DietDAOImplTest {
 	}
 	
 	@Test
+	void test_getMealList()
+	{
+		ArrayList<Diet> dietList = new ArrayList<Diet>();
+		try {
+			sx = factory.openSession();
+			tx = sx.beginTransaction();
+			String sql = "FROM Diet d";
+			dietList = (ArrayList<Diet>) sx.createQuery(sql).list();
+			tx.commit();
+
+		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
+			System.err.println(hx.getMessage());
+		}
+		assertNotNull(dietList);
+		assertFalse(dietList.isEmpty());
+	}
+	
+	@Test
 	void test_deleteMeal()
 	{
-		d=dI.getDiet(81);		
+		d=dI.getDiet(87);		
 		assertNotNull(dI.getDiet(d.getId()));
 		try {
 			sx=factory.openSession();
@@ -154,7 +180,7 @@ class DietDAOImplTest {
 	void test_UpdateDiet()
 	{
 		String foodName="Shahi Paneer";
-		d=dI.getDiet(82);
+		d=dI.getDiet(86);
 		d.setFoodName(foodName);
 		try {
 			sx=factory.openSession();
@@ -270,7 +296,7 @@ class DietDAOImplTest {
 	@Test
 	void test_FilteredMealTypeList()
 	{
-		String mealType="";
+		String mealType="Dinner";
 		ArrayList<Diet> filteredList = new ArrayList<Diet>();
 		try {
 			sx = factory.openSession();
@@ -292,7 +318,7 @@ class DietDAOImplTest {
 	@Test
 	void test_FilterFoodCategoryList()
 	{
-		String foodCategory="";
+		String foodCategory="Vegetarian";
 		ArrayList<Diet> filteredList = new ArrayList<Diet>();
 		try {
 			sx = factory.openSession();
@@ -313,7 +339,7 @@ class DietDAOImplTest {
 	@Test
 	void test_FilteredauthorList()
 	{
-		String author="";
+		String author="Admin";
 		ArrayList<Diet> filteredList = new ArrayList<Diet>();
 		try {
 			sx = factory.openSession();
@@ -334,7 +360,7 @@ class DietDAOImplTest {
 	@Test
 	void test_FilteredfoodTypeList()
 	{
-		String foodType="";
+		String foodType="Vegetable";
 		ArrayList<Diet> filteredList = new ArrayList<Diet>();
 		try {
 			sx = factory.openSession();
@@ -353,7 +379,39 @@ class DietDAOImplTest {
 		assertFalse(filteredList.isEmpty());
 	}
 	
-	
+	@Test
+	void test_DietOrderedList()
+	{
+		String orderby="fat";
+		String type="asc";
+		ArrayList<Diet> dietList = new ArrayList<Diet>();
+		try {
+			sx = factory.openSession();
+			tx = sx.beginTransaction();
+			Diet d=new Diet();			
+			CriteriaBuilder cb=sx.getCriteriaBuilder();
+			CriteriaQuery<Diet> cqd=cb.createQuery(Diet.class);
+			Root<Diet> root=cqd.from(Diet.class);
+			orderby=orderby.toLowerCase();
+			if(type.equalsIgnoreCase("asc"))
+			{
+			cqd.orderBy(cb.asc(root.get(orderby)));
+			}else if(type.equalsIgnoreCase("desc")){
+				cqd.orderBy(cb.desc(root.get(orderby)));
+			}
+			dietList=(ArrayList<Diet>) sx.createQuery(cqd).getResultList();
+			tx.commit();
+
+		} catch (HibernateException hx) {
+			if(tx!=null)
+			{
+				tx.rollback();
+			}
+			System.err.println(hx.getMessage());
+		} 
+		assertNotNull(dietList);
+		assertFalse(dietList.isEmpty());
+	}
 	
 
 }
