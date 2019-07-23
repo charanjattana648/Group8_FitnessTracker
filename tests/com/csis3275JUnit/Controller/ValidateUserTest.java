@@ -97,7 +97,26 @@ class ValidateUserTest {
 		
 	}
 	
+	@Test
+	void ValidateConfirmTest() {
+		
+		String expectedEmail="hk@gmail.com";
+		String expectedName="harpreet";
+		String expectedLname="Kaur";
+		String expectedPass="csisssssss";
+		String expectedConfirm="csis3275";
+		int expectedage=24;
+		
+		char[] password=expectedPass.toCharArray();
+		char[] confirmPass=expectedConfirm.toCharArray();
+		User u=v.validate("hk@gmail.com", "harpreet", "Kaur", password, confirmPass, "24");
+		
+		assertNull(u);
+		
+	}
 	
+	
+
 	
 
 }
