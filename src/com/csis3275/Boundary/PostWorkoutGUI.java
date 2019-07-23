@@ -15,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextArea;
 
 public class PostWorkoutGUI {
 
@@ -22,9 +23,9 @@ public class PostWorkoutGUI {
 	private JTextField textFieldExerciseName;
 	private JTextField textFieldExerciseType;
 	private JTextField textFieldCaloriesBurnt;
-	private JTextField textFieldDescription;
 	private JTextField textFieldTotalTime;
 	private JTextField textFieldWorkoutType;
+	private JTextArea textAreaDescription;
 	
 	private static final String USER_AGENT = "Mozilla/5.0";
 	
@@ -64,74 +65,73 @@ public class PostWorkoutGUI {
 		JLabel lblPostWorkout = new JLabel("Post Workout");
 		lblPostWorkout.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPostWorkout.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblPostWorkout.setBounds(221, 27, 160, 43);
+		lblPostWorkout.setBounds(221, 11, 160, 43);
 		frame.getContentPane().add(lblPostWorkout);
 		
 		JLabel lblExerciseName = new JLabel("Exercise Name");
 		lblExerciseName.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblExerciseName.setHorizontalAlignment(SwingConstants.LEFT);
-		lblExerciseName.setBounds(151, 82, 131, 32);
+		lblExerciseName.setBounds(151, 55, 131, 32);
 		frame.getContentPane().add(lblExerciseName);
 		
 		JLabel lblExerciseType = new JLabel("Exercise Type");
 		lblExerciseType.setHorizontalAlignment(SwingConstants.LEFT);
 		lblExerciseType.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblExerciseType.setBounds(151, 125, 131, 32);
+		lblExerciseType.setBounds(151, 94, 131, 32);
 		frame.getContentPane().add(lblExerciseType);
 		
 		JLabel lblCaloriesBurnt = new JLabel("Calories Burnt");
 		lblCaloriesBurnt.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCaloriesBurnt.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblCaloriesBurnt.setBounds(151, 168, 131, 32);
+		lblCaloriesBurnt.setBounds(151, 130, 131, 32);
 		frame.getContentPane().add(lblCaloriesBurnt);
 		
 		JLabel lblExerciseDescription = new JLabel("Exercise Description");
 		lblExerciseDescription.setHorizontalAlignment(SwingConstants.LEFT);
 		lblExerciseDescription.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblExerciseDescription.setBounds(151, 211, 160, 32);
+		lblExerciseDescription.setBounds(151, 164, 160, 32);
 		frame.getContentPane().add(lblExerciseDescription);
 		
 		JLabel lblWorkoutType = new JLabel("Workout Type");
 		lblWorkoutType.setHorizontalAlignment(SwingConstants.LEFT);
 		lblWorkoutType.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblWorkoutType.setBounds(151, 291, 160, 32);
+		lblWorkoutType.setBounds(151, 325, 160, 32);
 		frame.getContentPane().add(lblWorkoutType);
 		
 		JLabel lblTotalTime = new JLabel("Total Time");
 		lblTotalTime.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotalTime.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblTotalTime.setBounds(151, 254, 160, 32);
+		lblTotalTime.setBounds(151, 282, 160, 32);
 		frame.getContentPane().add(lblTotalTime);
 		
 		textFieldExerciseName = new JTextField();
-		textFieldExerciseName.setBounds(334, 90, 131, 24);
+		textFieldExerciseName.setBounds(334, 65, 131, 24);
 		frame.getContentPane().add(textFieldExerciseName);
 		textFieldExerciseName.setColumns(10);
 		
 		textFieldExerciseType = new JTextField();
 		textFieldExerciseType.setColumns(10);
-		textFieldExerciseType.setBounds(334, 133, 131, 24);
+		textFieldExerciseType.setBounds(334, 100, 131, 24);
 		frame.getContentPane().add(textFieldExerciseType);
 		
 		textFieldCaloriesBurnt = new JTextField();
 		textFieldCaloriesBurnt.setColumns(10);
-		textFieldCaloriesBurnt.setBounds(334, 176, 131, 24);
+		textFieldCaloriesBurnt.setBounds(334, 136, 131, 24);
 		frame.getContentPane().add(textFieldCaloriesBurnt);
-		
-		textFieldDescription = new JTextField();
-		textFieldDescription.setColumns(10);
-		textFieldDescription.setBounds(334, 219, 131, 24);
-		frame.getContentPane().add(textFieldDescription);
 		
 		textFieldTotalTime = new JTextField();
 		textFieldTotalTime.setColumns(10);
-		textFieldTotalTime.setBounds(334, 256, 131, 24);
+		textFieldTotalTime.setBounds(334, 288, 131, 24);
 		frame.getContentPane().add(textFieldTotalTime);
 		
 		textFieldWorkoutType = new JTextField();
 		textFieldWorkoutType.setColumns(10);
-		textFieldWorkoutType.setBounds(334, 299, 131, 24);
+		textFieldWorkoutType.setBounds(334, 331, 131, 24);
 		frame.getContentPane().add(textFieldWorkoutType);
+		
+		textAreaDescription = new JTextArea();
+		textAreaDescription.setBounds(334, 170, 238, 107);
+		frame.getContentPane().add(textAreaDescription);
 		
 		JButton btnPostWorkout = new JButton("Post Workout");
 		btnPostWorkout.addActionListener(new ActionListener() {
@@ -145,7 +145,7 @@ public class PostWorkoutGUI {
 			}
 		});
 		btnPostWorkout.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnPostWorkout.setBounds(242, 344, 151, 43);
+		btnPostWorkout.setBounds(236, 368, 151, 43);
 		frame.getContentPane().add(btnPostWorkout);
 	}
 	
@@ -161,16 +161,18 @@ public class PostWorkoutGUI {
 		String exerciseName = textFieldExerciseName.getText();
 		String exerciseType = textFieldExerciseType.getText();
 		double calB = Double.parseDouble(textFieldCaloriesBurnt.getText());
-		String exerciseDescription = textFieldDescription.getText();
+		String exerciseDescription = textAreaDescription.getText();
 		int totalTime = Integer.parseInt(textFieldTotalTime.getText());
 		String workoutType = textFieldWorkoutType.getText();
 		
-		String exerciseString = "{\"exerciseName\":\""+exerciseName
-				+"\",\"exerciseType\":\""+exerciseType
-				+"\",\"caloriesBurnt\":"+calB
-				+",\"exerciseDescription\":\""+exerciseDescription
-				+"\",\"totalTime\":"+totalTime
-				+",\"workoutType\":\""+workoutType+"\"}";
+		exerciseDescription = exerciseDescription.replace("\n", ",");
+
+		String exerciseString = "{\"exerciseName\":\"" + exerciseName
+				+ "\",\"exerciseType\":\"" + exerciseType
+				+ "\",\"caloriesBurnt\":" + calB
+				+ ",\"exerciseDescription\":\"" + exerciseDescription
+				+ "\",\"totalTime\":" + totalTime
+				+ ",\"workoutType\":\"" + workoutType+"\"}";
 		
 		byte[] out = exerciseString.getBytes(StandardCharsets.UTF_8);
 		int	length = out.length;
