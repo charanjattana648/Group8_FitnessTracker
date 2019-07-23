@@ -99,6 +99,7 @@ public class UserGoals {
 	
 	private String healthProblems = "";
 	private double bmiValue;
+	static int numberOfHealthProblems = 0;
 	
 	private static BodyMeasurementsDAOImpl boduydao = new BodyMeasurementsDAOImpl();
 	
@@ -554,26 +555,32 @@ public class UserGoals {
 				if(chckboxDiabetes.isSelected()) {
 					healthProblems = chckboxDiabetes.getText().toString() + ",";
 					textAreaHealthProblems.setText("\n");
+					numberOfHealthProblems++;
 				}
 				if(chckbxHypertension.isSelected()) {
 					healthProblems += chckbxHypertension.getText().toString() + ",";
 					textAreaHealthProblems.setText("\n");
+					numberOfHealthProblems++;
 				}
 				if(chckbxAsthma.isSelected()) {
 					healthProblems += chckbxAsthma.getText().toString() + ",";
 					textAreaHealthProblems.setText("\n");
+					numberOfHealthProblems++;
 				}
 				if(chckbxBoneOrJoint.isSelected()) {
 					healthProblems += chckbxBoneOrJoint.getText().toString() + ",";
 					textAreaHealthProblems.setText("\n");
+					numberOfHealthProblems++;
 				}
 				if(chckbxDizziness.isSelected()) {
 					healthProblems += chckbxDizziness.getText().toString() + ",";
 					textAreaHealthProblems.setText("\n");
+					numberOfHealthProblems++;
 				}
 				if(chckbxChestPain.isSelected()) {
 					healthProblems += chckbxChestPain.getText().toString() + ",";
 					textAreaHealthProblems.setText("\n");
+					numberOfHealthProblems++;
 				}
 				userDetails.setHealthProblem(healthProblems);
 				textAreaHealthProblems.setText(healthProblems);
