@@ -8,12 +8,18 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.csis3275.Controller.ValidateUser;
+import com.csis3275.Entities.User;
+
 /**
  * 
  * @author harpreet kaur
  *
  */
 class ValidateUserTest {
+	
+	User u=new User();
+	ValidateUser v=new ValidateUser();
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -32,8 +38,27 @@ class ValidateUserTest {
 	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void validateUserInfoTest() {
+		
+		String expectedEmail="hk@gmail.com";
+		String expectedName="happy";
+		String expectedLname="Kaur";
+		String expectedPass="csis3275";
+		String expectedConfirm="csis3275";
+		int expectedage=24;
+		
+		char[] password=expectedPass.toCharArray();
+		char[] confirmPass=expectedConfirm.toCharArray();
+		User u=v.validate("hk@gmail.com", "happy", "Kaur", password, confirmPass, "24");
+		
+		assertAll("Validating User failed ",()->assertEquals(expectedEmail,u.getUserEmail()),
+				()->assertEquals(expectedName,u.getUserFirstName()),
+				()->assertEquals(expectedLname,u.getUserLastName()),
+				()->assertEquals(expectedPass,u.getUserPassword()),
+				()->assertEquals(expectedage, u.getUserAge())
+				);
+		
 	}
+	
 
 }
