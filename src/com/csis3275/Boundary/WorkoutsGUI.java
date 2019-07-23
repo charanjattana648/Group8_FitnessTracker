@@ -22,6 +22,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.csis3275.Entities.BodyMeasurements;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -39,6 +41,7 @@ public class WorkoutsGUI {
 	private ListSelectionListener lsl;
 	private JTextArea textAreaExerciseDescription;
 	static String[] currentUser = new String[2];
+	private BodyMeasurements bodyMeasurements;
 
 	/**
 	 * Launch the application.
@@ -133,6 +136,10 @@ public class WorkoutsGUI {
 		btnPostWorkout.setBounds(42, 398, 135, 37);
 		frame.getContentPane().add(btnPostWorkout);
 		
+		
+		
+		
+		
 		updateTable();
 		
 	}
@@ -153,9 +160,28 @@ public class WorkoutsGUI {
 		
 		getExercises();
 		
-		for(int i = 0; i < jArray.length(); ++i) {
-			tm.addRow(getVector().get(i));
+		if(UserGoals.numberOfHealthProblems > 3) {
+			
+			try {
+				for (int i = 0; i < jArray.length(); ++i)
+				{
+					jsonObj = jArray.getJSONObject(i);
+					String workoutType = jsonObj.getString("workoutType");
+				
+					if(workoutType.equals("Heavy")) {
+						tm.addRow(getVector().get(i));
+					}
+				}
+				
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+			}
+			
 		}
+		
+//		for(int i = 0; i < jArray.length(); ++i) {
+//			tm.addRow(getVector().get(i));
+//		}
 		
 		table.setModel(tm);
 		table.getSelectionModel().addListSelectionListener(lsl);
