@@ -23,6 +23,7 @@ class ValidateUserTest {
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
+		
 	}
 
 	@AfterAll
@@ -74,14 +75,37 @@ class ValidateUserTest {
 		char[] confirmPass=expectedConfirm.toCharArray();
 		User u=v.validate("hk@gmail.com", "", "Kaur", password, confirmPass, "24");
 		
-		assertAll("Validating User failed ",()->assertEquals(expectedEmail,u.getUserEmail()),
-				()->assertEquals(expectedName,u.getUserFirstName()),
-				()->assertEquals(expectedLname,u.getUserLastName()),
-				()->assertEquals(expectedPass,u.getUserPassword()),
-				()->assertEquals(expectedage, u.getUserAge())
-				);
+		assertNull(u);
 		
 	}
 	
+	@Test
+	void ValidatePasswordTest() {
+		
+		String expectedEmail="hk@gmail.com";
+		String expectedName="harpreet";
+		String expectedLname="Kaur";
+		String expectedPass="csis";
+		String expectedConfirm="csis";
+		int expectedage=24;
+		
+		char[] password=expectedPass.toCharArray();
+		char[] confirmPass=expectedConfirm.toCharArray();
+		User u=v.validate("hk@gmail.com", "harpreet", "Kaur", password, confirmPass, "24");
+		
+		assertNull(u);
+		
+	}
+	
+	
+	
 
 }
+
+
+
+
+
+
+
+
