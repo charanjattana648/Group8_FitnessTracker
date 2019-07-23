@@ -99,11 +99,13 @@ public class UserGoals {
 	
 	private String healthProblems = "";
 	private double bmiValue;
+	static int numberOfHealthProblems = 0;
 	
 	private static BodyMeasurementsDAOImpl boduydao = new BodyMeasurementsDAOImpl();
 	
 	//DietGUI class instance
 	DietGUI dietGui = new DietGUI();
+	private JButton btnAddValues;
 	
 	
 	/**
@@ -553,26 +555,32 @@ public class UserGoals {
 				if(chckboxDiabetes.isSelected()) {
 					healthProblems = chckboxDiabetes.getText().toString() + ",";
 					textAreaHealthProblems.setText("\n");
+					numberOfHealthProblems++;
 				}
 				if(chckbxHypertension.isSelected()) {
 					healthProblems += chckbxHypertension.getText().toString() + ",";
 					textAreaHealthProblems.setText("\n");
+					numberOfHealthProblems++;
 				}
 				if(chckbxAsthma.isSelected()) {
 					healthProblems += chckbxAsthma.getText().toString() + ",";
 					textAreaHealthProblems.setText("\n");
+					numberOfHealthProblems++;
 				}
 				if(chckbxBoneOrJoint.isSelected()) {
 					healthProblems += chckbxBoneOrJoint.getText().toString() + ",";
 					textAreaHealthProblems.setText("\n");
+					numberOfHealthProblems++;
 				}
 				if(chckbxDizziness.isSelected()) {
 					healthProblems += chckbxDizziness.getText().toString() + ",";
 					textAreaHealthProblems.setText("\n");
+					numberOfHealthProblems++;
 				}
 				if(chckbxChestPain.isSelected()) {
 					healthProblems += chckbxChestPain.getText().toString() + ",";
 					textAreaHealthProblems.setText("\n");
+					numberOfHealthProblems++;
 				}
 				userDetails.setHealthProblem(healthProblems);
 				textAreaHealthProblems.setText(healthProblems);
@@ -588,7 +596,34 @@ public class UserGoals {
 		btnFindWorkouts.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				JOptionPane.showMessageDialog(null, "Have paitence work in progress");
+				WorkoutsGUI.main(currentUEmail);
+				
+			}
+		});
+		btnFindWorkouts.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnFindWorkouts.setBounds(500, 416, 137, 35);
+		frame.getContentPane().add(btnFindWorkouts);
+		
+		JButton btnViewDietPlan = new JButton("View Diet Plan");
+		btnViewDietPlan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				DietGUI.main(currentUEmail);
+				
+			}
+		});
+		btnViewDietPlan.setFont(new Font("Open Sans", Font.BOLD, 11));
+		btnViewDietPlan.setBounds(42, 17, 118, 33);
+		frame.getContentPane().add(btnViewDietPlan);
+		
+		JLabel lblUserGoals = new JLabel("User Goals");
+		lblUserGoals.setFont(new Font("Open Sans", Font.BOLD, 17));
+		lblUserGoals.setBounds(348, 15, 110, 38);
+		frame.getContentPane().add(lblUserGoals);
+		
+		btnAddValues = new JButton("Add Values");
+		btnAddValues.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				
 				if(rdbtnStayFitPlan.isSelected()) {
 					userDetails.setFitnessPlanType(rdbtnStayFitPlan.getText().toString());
@@ -657,26 +692,9 @@ public class UserGoals {
 				
 			}
 		});
-		btnFindWorkouts.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnFindWorkouts.setBounds(333, 416, 137, 35);
-		frame.getContentPane().add(btnFindWorkouts);
-		
-		JButton btnViewDietPlan = new JButton("View Diet Plan");
-		btnViewDietPlan.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				DietGUI.main(currentUEmail);
-				
-			}
-		});
-		btnViewDietPlan.setFont(new Font("Open Sans", Font.BOLD, 11));
-		btnViewDietPlan.setBounds(42, 17, 118, 33);
-		frame.getContentPane().add(btnViewDietPlan);
-		
-		JLabel lblUserGoals = new JLabel("User Goals");
-		lblUserGoals.setFont(new Font("Open Sans", Font.BOLD, 17));
-		lblUserGoals.setBounds(348, 15, 110, 38);
-		frame.getContentPane().add(lblUserGoals);
+		btnAddValues.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnAddValues.setBounds(331, 416, 137, 35);
+		frame.getContentPane().add(btnAddValues);
 		
 	}
 }
