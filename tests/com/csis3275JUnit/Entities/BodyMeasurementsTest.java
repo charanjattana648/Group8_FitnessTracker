@@ -17,5 +17,19 @@ class BodyMeasurementsTest {
 		assertEquals(unit, body.getUnit());
 	}
 	
+	@Test
+	void testHeightInFeets() {
+		double feets = 5;
+		body.setHeightFeets(feets);
+		assertEquals(feets, body.getHeightFeets());
+	}
+	
+	@Test
+	void testHeightInInches() {
+		double inches = 4;
+		body.setHeightInches(inches);
+		assertEquals(inches, body.getHeightInches());
+	}
+	
 
 }
