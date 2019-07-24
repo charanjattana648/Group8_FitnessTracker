@@ -82,12 +82,13 @@ public class UserMealWebImpl {
 					m.setServings(mealObj.getInt("servings"));
 					mealList.add(m);					
 				}
+				return mealList;
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			
 		}
-		return mealList;
+		return null;	
 	}
 	
 	public static Meals getNutrients(double caloriesReq)
@@ -105,12 +106,13 @@ public class UserMealWebImpl {
 					m.setCarbohydrates(nutrientsObj.getDouble("carbohydrates"));
 					m.setFat(nutrientsObj.getDouble("fat"));
 					m.setProtein(nutrientsObj.getDouble("protein"));
+					return m;
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			
 		}
-		return m;
+		return null;
 	}
 	
 	public static void main(String[] args) {

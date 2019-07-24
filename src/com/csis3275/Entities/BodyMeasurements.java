@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -15,7 +16,8 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="userBodyMeasurements")
+@NamedQuery(name="getBodyDatabyEmail",query="select b from BodyMeasurements b where b.userEmail=:userEmail")
+@Table(name="BodyMeasurements")
 
 public class BodyMeasurements {
 	
