@@ -71,7 +71,7 @@ public class LoginRegisterGUI {
 	public LoginRegisterGUI() {
 		initialize();
 		//Manually 
-		//uD.admin();
+		uD.admin();
 	}
 
 	/**
@@ -165,7 +165,8 @@ public class LoginRegisterGUI {
 					if(isMatched)
 					{
 						System.out.println("Instructor Login Successful");	
-						UserGoals.main(currEmail);
+						//UserGoals.main(currEmail);
+						WorkoutsGUI.main(currEmail);
 					}else {
 						JOptionPane.showMessageDialog(null, "Sorry,Please try Again");
 					}
@@ -174,7 +175,8 @@ public class LoginRegisterGUI {
 					if(isMatched)
 					{
 						System.out.println("Admin Login Successful");	
-						UserGoals.main(currEmail);
+						//UserGoals.main(currEmail);
+						WorkoutsGUI.main(currEmail);
 					}else {
 						JOptionPane.showMessageDialog(null, "Sorry,Please try Again");
 					}
