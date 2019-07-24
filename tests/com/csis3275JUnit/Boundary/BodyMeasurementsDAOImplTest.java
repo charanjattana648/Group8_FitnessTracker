@@ -2,6 +2,9 @@ package com.csis3275JUnit.Boundary;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -25,7 +28,6 @@ class BodyMeasurementsDAOImplTest {
 	SessionFactory factory = null;
 	Session sx = null;
 	Transaction tx = null;
-	int newId;
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -39,10 +41,67 @@ class BodyMeasurementsDAOImplTest {
 			System.err.println("Error : " + e.getMessage());
 		}
 	}
+	
+	@Test
+	void test_Session_factory() {	
+		
+		assertAll("heading",
+				()->assertNotNull(ssr, "StandardServiceRegistry is null"),
+				()->assertNotNull(meta, "meta is null"),
+				()->assertNotNull(factory, "factory is null"));
+		if(sx!=null)
+		{
+		sx.close();
+		}
+		factory.close();
+	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testCreateBodyData() {
+		
+		bodyData();
+		int bodyId = bodyDao.createBodydata(body);
+		assertNotEquals(0, bodyId);
+		
+	}
+	
+	@Test
+	void testGetBodyList()
+	{
+		List<BodyMeasurements> bodyList = new ArrayList<BodyMeasurements>();
+		bodyList = bodyDao.getBodyDataList();
+		assertNotNull(bodyList);
+		assertFalse(bodyList.isEmpty());
+	}
+	
+	@Test
+	void testGetBody()
+	{
+		int id = 16;
+	    body = bodyDao.getBodyData(id);
+		assertNotNull(body);
+	    assertEquals(id, body.getId());
+	
+	}
+	
+	public void bodyData() {
+		body.setUserEmail("guri@gmail.com");
+		body.setUnit("Metric");
+		body.setHeightFeets(0);
+		body.setHeightInches(0);
+		body.setHeightCm(168);
+		body.setHeightType("cm");
+		body.setWeight(77);
+		body.setWeightType("kg");
+		
+		double heightInMeters = body.getHeightCm() / (double) 100;
+		
+		double bmiValues = body.getWeight() / (heightInMeters * heightInMeters);
+		
+		body.setBmiValues(bmiValues);
+		body.setHealthProblem("Diabetes");
+		body.setFitnessPlanType("Weight Loss Plan");
+		body.setUserGoalType("Loose 0.3 LB");
 	}
 
 }
