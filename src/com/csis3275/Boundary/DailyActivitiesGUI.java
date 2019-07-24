@@ -22,6 +22,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.awt.event.ActionEvent;
+import javax.swing.JCheckBox;
+import javax.swing.UIManager;
 
 public class DailyActivitiesGUI {
 
@@ -55,6 +57,9 @@ public class DailyActivitiesGUI {
 	private int waterRed=5,waterGreen=15,waterYellow=20;
 	private final int MIN_PER_HOUR=60;
 	static String[] currUser=new String[2];
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
 	
 
 	/**
@@ -428,6 +433,39 @@ public class DailyActivitiesGUI {
 		});
 		btnNextPage.setBounds(766, 703, 115, 29);
 		frame.getContentPane().add(btnNextPage);
+		
+		textField = new JTextField();
+		textField.setBackground(Color.RED);
+		textField.setBounds(1215, 123, 36, 26);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblLow = new JLabel("Low");
+		lblLow.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblLow.setBounds(1266, 123, 69, 20);
+		frame.getContentPane().add(lblLow);
+		
+		textField_1 = new JTextField();
+		textField_1.setBackground(Color.GREEN);
+		textField_1.setBounds(1215, 165, 36, 26);
+		frame.getContentPane().add(textField_1);
+		textField_1.setColumns(10);
+		
+		JLabel lblGood = new JLabel("Normal");
+		lblGood.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblGood.setBounds(1266, 167, 69, 20);
+		frame.getContentPane().add(lblGood);
+		
+		textField_2 = new JTextField();
+		textField_2.setBackground(Color.YELLOW);
+		textField_2.setBounds(1215, 211, 36, 26);
+		frame.getContentPane().add(textField_2);
+		textField_2.setColumns(10);
+		
+		JLabel lblExcess = new JLabel("Excess");
+		lblExcess.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblExcess.setBounds(1266, 213, 69, 20);
+		frame.getContentPane().add(lblExcess);
 	}
 	
 	private void setProgress()
