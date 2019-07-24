@@ -106,5 +106,41 @@ class DailyActivityTest {
 		
 	}
 	
+	@Test
+	void testMeditationHour() {
+		int expectedMeditationHour=3;
+		
+		da.setMeditationHour(3);
+		assertEquals(expectedMeditationHour, da.getMeditationHour());
+		
+	}
+	
+	@Test
+	void testMeditationMinute() {
+		int expectedMeditationMinute=45;
+		
+		da.setMeditationMinute(45);
+		assertEquals(expectedMeditationMinute, da.getMeditationMinute());
+		
+	}
+	
+	@Test
+	void testWalkingHour() {
+		int expectedWalkingHour=2;
+		
+		da.setWalkingHour(2);
+		assertEquals(expectedWalkingHour, da.getWalkingHour());
+		
+	}
+	
+	@Test
+	void testWalkingMinute() {
+		int expectedWalkingMinute=33;
+		
+		da.setWalkingMinute(33);
+		assertEquals(expectedWalkingMinute, da.getWalkingMinute());
+		
+	}
+	
 
 }
