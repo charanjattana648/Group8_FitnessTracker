@@ -13,16 +13,17 @@ public class DailyActivityDAOImpl {
 	
 	DietDAOImpl dI=new DietDAOImpl();
 	
-	public void addDailyActivities(DailyActivity da) {
+	public int addDailyActivities(DailyActivity da) {
 		
 		SessionFactory fx=null;
 		Session sx=null;
 		Transaction tx=null;
+		int id=0;
 		try {
 		fx=dI.getFactory();
 		sx=fx.openSession();
 		tx=sx.beginTransaction();		
-		sx.save(da);
+	    id=(int) sx.save(da);
 		tx.commit();
 		
 		}catch(HibernateException ex) {
@@ -35,6 +36,7 @@ public class DailyActivityDAOImpl {
 			fx.close();
 			sx.close();
 		}
+		return id;
 		
 	}
 public DailyActivity getDailyActivities(String date,String email) {
