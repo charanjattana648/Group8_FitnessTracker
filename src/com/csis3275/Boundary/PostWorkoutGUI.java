@@ -165,7 +165,7 @@ public class PostWorkoutGUI {
 		int totalTime = Integer.parseInt(textFieldTotalTime.getText());
 		String workoutType = textFieldWorkoutType.getText();
 		
-		exerciseDescription = exerciseDescription.replace("\n", ",");
+		exerciseDescription = exerciseDescription.replace("\n", "@");
 
 		String exerciseString = "{\"exerciseName\":\"" + exerciseName
 				+ "\",\"exerciseType\":\"" + exerciseType
