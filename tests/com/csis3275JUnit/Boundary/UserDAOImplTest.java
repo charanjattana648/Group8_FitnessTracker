@@ -121,5 +121,14 @@ class UserDAOImplTest {
 		boolean isvalidUser=ud.checkUEPass(CurrentEmail, CurentPass);
 		assertEquals(true, isvalidUser);
 	}
+	
+	@Test
+	void testInstructorLogin()
+	{
+		String 	CurrentEmail="hkk@gmail.com";
+		String CurentPass="csis3275";
+		boolean isvalidInstructor=ud.checkInstrucorEPass(CurrentEmail, CurentPass);
+		assertEquals(true, isvalidInstructor);
+	}
 
 }
