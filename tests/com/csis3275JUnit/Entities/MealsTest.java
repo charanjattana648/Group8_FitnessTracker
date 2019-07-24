@@ -36,7 +36,57 @@ class MealsTest {
 		m=new Meals();
 	}
 
-
+	@Test
+	void test_intance() {
+		assertNotNull(m);
+	}
+	
+	@Test
+	void test_id() {
+		m.setId(id);
+		assertEquals(id, m.getId());		
+	}
+	
+	@Test
+	void test_title() {
+		m.setTitle(title);
+		assertTrue(title.equalsIgnoreCase(m.getTitle()));		
+	}
+	
+	@Test
+	void test_readyInMinutes() {
+		m.setReadyInMinutes(readyInMinutes);
+		assertEquals(readyInMinutes, m.getReadyInMinutes());		
+	}
+	
+	@Test
+	void test_servings() {
+		m.setServings(servings);
+		assertEquals(servings, m.getServings());		
+	}
+	
+	@Test
+	void test_calories() {
+		m.setCalories(calories);
+		assertEquals(calories, m.getCalories());		
+	}
+	
+	@Test
+	void test_protein() {
+		m.setProtein(protein);
+		assertEquals(protein, m.getProtein());		
+	}
+	@Test
+	void test_fat() {
+		m.setFat(fat);
+		assertEquals(fat, m.getFat());		
+	}
+	
+	@Test
+	void test_carbohydrates() {
+		m.setCarbohydrates(carbohydrates);
+		assertEquals(carbohydrates, m.getCarbohydrates());		
+	}
 	
 	
 
