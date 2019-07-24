@@ -130,5 +130,14 @@ class UserDAOImplTest {
 		boolean isvalidInstructor=ud.checkInstrucorEPass(CurrentEmail, CurentPass);
 		assertEquals(true, isvalidInstructor);
 	}
+	
+	@Test
+	void testAdminLogin()
+	{
+		String 	CurrentEmail="admin";
+		String CurentPass="root";
+		boolean isvalidAdmin=ud.checkAdminEPass(CurrentEmail, CurentPass);
+		assertEquals(true, isvalidAdmin);
+	}
 
 }
