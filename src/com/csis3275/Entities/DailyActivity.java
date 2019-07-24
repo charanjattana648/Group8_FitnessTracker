@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@NamedQuery(name="getDailyActivityQuery",query="from DailyActivity where date=:currdate and userEmail=:curremail")
+@NamedQuery(name="getDailyActivityQuery",query="select d from DailyActivity d where d.date=:currdate and d.userEmail=:curremail")
 @NamedQuery(name="getDailyActivityListQuery",query="from DailyActivity where userEmail=:curremail")
 @Table(name="DailyActivity")
 public class DailyActivity {
