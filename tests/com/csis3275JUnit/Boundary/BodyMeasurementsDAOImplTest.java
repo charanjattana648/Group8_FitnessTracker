@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 
 import com.csis3275.Boundary.BodyMeasurementsDAOImpl;
 import com.csis3275.Entities.BodyMeasurements;
-import com.csis3275.Entities.Diet;
 
 class BodyMeasurementsDAOImplTest {
 	
@@ -73,6 +72,16 @@ class BodyMeasurementsDAOImplTest {
 		bodyList = bodyDao.getBodyDataList();
 		assertNotNull(bodyList);
 		assertFalse(bodyList.isEmpty());
+	}
+	
+	@Test
+	void testGetBody()
+	{
+		int id = 16;
+	    body = bodyDao.getBodyData(id);
+		assertNotNull(body);
+	    assertEquals(id, body.getId());
+	
 	}
 	
 	public void bodyData() {
