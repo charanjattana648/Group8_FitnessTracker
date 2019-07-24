@@ -61,5 +61,50 @@ class DailyActivityTest {
 		
 	}
 	
+	@Test
+	void testsleepHours() {
+		int expectedSleepHours=7;
+		
+		da.setSleepHour(7);
+		assertEquals(expectedSleepHours, da.getSleepHour());
+		
+	}
+	
+	@Test
+	void testsleepMinute() {
+		int expectedSleepMinutes=7;
+		
+		da.setSleepMinute(7);
+		assertEquals(expectedSleepMinutes, da.getSleepMinute());
+		
+	}
+	
+	@Test
+	void testWaterGlass() {
+		int expectedWaterGlass=4;
+		
+		da.setWaterGlass(4);
+		assertEquals(expectedWaterGlass, da.getWaterGlass());
+		
+	}
+	
+	@Test
+	void testExerciseHour() {
+		int expectedExcerciseHours=7;
+		
+		da.setExerciseHour(7);
+		assertEquals(expectedExcerciseHours, da.getExerciseHour());
+		
+	}
+	
+	@Test
+	void testExerciseMinute() {
+		int expectedExerciseMinute=30;
+		
+		da.setExerciseMinute(30);
+		assertEquals(expectedExerciseMinute, da.getExerciseMinute());
+		
+	}
+	
 
 }
