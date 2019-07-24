@@ -42,7 +42,7 @@ public class ProgressActivityGUI {
 	private JFrame frame;
 	private JTextField txtInitialWeight;
 	private JTextField txtGoalWeight;
-	private JTextField txtCurrentWeight;
+	private JTextField txtCalBurned;
 	private JTextField txtPlanSelected;
 	private JTextField txtCaloriesDifference;
 	private JPanel chartPanel;
@@ -54,8 +54,6 @@ public class ProgressActivityGUI {
 	private JLabel lblProgressActivity;
 	private JPanel userplanPanel;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private JRadioButton rdbtnBargraph;
-	private JRadioButton rdbtnLinegraph;
 	private JTable table;
 	//private String currUser="csis@gmail.com";
 	private ArrayList<DailyActivity> daList=new ArrayList<DailyActivity>();
@@ -64,6 +62,11 @@ public class ProgressActivityGUI {
 	private BodyMeasurements bm=new BodyMeasurements();
 	private ArrayList<BodyMeasurements> bmList=new ArrayList<BodyMeasurements>();
 	private static String[] currUser=new String[2];
+	private JTextField txtCalConsumed;
+	private JTextField txtCalNeededConsm;
+	private JTextField txtCurrWeight;
+	private JRadioButton rdbtnBargraph;
+	private JLabel lblCurrentCalNeeded;
 
 	/**
 	 * Launch the application.
@@ -72,9 +75,17 @@ public class ProgressActivityGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					if(args.length>0)
+					{
+						currUser[0]=args[0];
+						currUser[1]=args[1];
+						
+					}
+					System.out.println("PA Email : "+currUser[0]);
+					System.out.println("PA Type : "+currUser[1]);
 					ProgressActivityGUI window = new ProgressActivityGUI();
 					window.frame.setVisible(true);
-					currUser=args;
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -104,9 +115,18 @@ public class ProgressActivityGUI {
 		frame.getContentPane().add(lblProgressActivity);
 		
 		userplanPanel = new JPanel();
-		userplanPanel.setBounds(93, 99, 1196, 128);
+		userplanPanel.setBounds(93, 99, 1196, 175);
 		frame.getContentPane().add(userplanPanel);
 		userplanPanel.setLayout(null);
+		
+		rdbtnBargraph = new JRadioButton("BarGraph");
+		rdbtnBargraph.setSelected(true);
+		rdbtnBargraph.setBounds(790, 283, 127, 25);
+		frame.getContentPane().add(rdbtnBargraph);
+		
+		JRadioButton radioButton_1 = new JRadioButton("LineGraph");
+		radioButton_1.setBounds(921, 283, 127, 25);
+		frame.getContentPane().add(radioButton_1);
 		
 		JLabel lblWeight = new JLabel("Initial Weight : ");
 		lblWeight.setBounds(29, 51, 96, 16);
@@ -118,24 +138,30 @@ public class ProgressActivityGUI {
 		userplanPanel.add(txtInitialWeight);
 		txtInitialWeight.setColumns(10);
 		
-		JLabel lblGoalWeight = new JLabel("Goal Weight :");
-		lblGoalWeight.setBounds(301, 54, 85, 16);
+		JLabel lblGoalWeight = new JLabel("Goal Type :");
+		lblGoalWeight.setBounds(29, 129, 85, 16);
 		userplanPanel.add(lblGoalWeight);
 		
 		txtGoalWeight = new JTextField();
 		txtGoalWeight.setEditable(false);
-		txtGoalWeight.setBounds(399, 51, 116, 22);
+		txtGoalWeight.setBounds(127, 126, 116, 22);
 		userplanPanel.add(txtGoalWeight);
 		txtGoalWeight.setColumns(10);
 		
-		JLabel lblUpdateWeight = new JLabel("Current Weight : ");
-		lblUpdateWeight.setBounds(605, 49, 104, 16);
+		JLabel lblUpdateWeight = new JLabel("Calories Burned :");
+		lblUpdateWeight.setBounds(295, 91, 109, 16);
 		userplanPanel.add(lblUpdateWeight);
 		
-		txtCurrentWeight = new JTextField();
-		txtCurrentWeight.setBounds(721, 46, 116, 22);
-		userplanPanel.add(txtCurrentWeight);
-		txtCurrentWeight.setColumns(10);
+		txtCalBurned = new JTextField();
+		txtCalBurned.setText("0");
+		txtCalBurned.setBounds(421, 88, 116, 22);
+		userplanPanel.add(txtCalBurned);
+		txtCalBurned.setColumns(10);
+		
+		lblCurrentCalNeeded = new JLabel("Calories Needed to Consumed : ");
+		lblCurrentCalNeeded.setBounds(549, 51, 185, 16);
+		userplanPanel.add(lblCurrentCalNeeded);
+		//
 		
 		JButton btnUpdate = new JButton("Update");
 		btnUpdate.addActionListener(new ActionListener() {
@@ -145,14 +171,29 @@ public class ProgressActivityGUI {
 				SimpleDateFormat sdf=new SimpleDateFormat();
 				pa.setDate(sdf.format(d));
 				pa.setUserEmail(currUser[0]);
-				pa.setCurrentWeight(Double.parseDouble(txtCurrentWeight.getText()));
+				pa.setCurrentWeight(Double.parseDouble(txtCalBurned.getText()));
 				pa.setCaloriesBurned(50);
 				pa.setCaloriesConsumed(220);				
 				paI.saveProgress(pa);
 				
+				 double calneeded=calNeeded();
+				 if(calneeded>0)
+				 {
+					 lblCurrentCalNeeded.setText("Calories Needed to Consumed : ");
+					 //calneeded=calneeded;
+					 txtCalNeededConsm.setText(calneeded+"");
+				 }else if(calneeded<0)
+				 {
+					 lblCurrentCalNeeded.setText("Calories Needed to Burned : ");
+					 txtCalNeededConsm.setText(Math.abs(calneeded)+"");
+				 }else {
+					 lblCurrentCalNeeded.setText("Calories Needed to Consumed : ");
+					 txtCalNeededConsm.setText(0+"");
+				 }
+				
 			}
 		});
-		btnUpdate.setBounds(871, 45, 97, 25);
+		btnUpdate.setBounds(619, 125, 97, 25);
 		userplanPanel.add(btnUpdate);
 		
 		JLabel lblDate = new JLabel("Date : ");
@@ -171,39 +212,29 @@ public class ProgressActivityGUI {
 		txtUnit.setBounds(127, 13, 56, 16);
 		userplanPanel.add(txtUnit);
 		
-		JLabel lblPlanSelected = new JLabel("Plan Selected ");
-		lblPlanSelected.setBounds(29, 99, 96, 16);
+		JLabel lblPlanSelected = new JLabel("Plan Selected :");
+		lblPlanSelected.setBounds(29, 91, 96, 16);
 		userplanPanel.add(lblPlanSelected);
 		
 		txtPlanSelected = new JTextField();
 		txtPlanSelected.setEditable(false);
 		txtPlanSelected.setColumns(10);
-		txtPlanSelected.setBounds(127, 96, 116, 22);
+		txtPlanSelected.setBounds(127, 88, 116, 22);
 		userplanPanel.add(txtPlanSelected);
 		
 		JLabel lblCaloriesToBe = new JLabel("Calories Difference :");
-		lblCaloriesToBe.setBounds(301, 99, 168, 16);
+		lblCaloriesToBe.setBounds(277, 48, 168, 16);
 		userplanPanel.add(lblCaloriesToBe);
 		
 		txtCaloriesDifference = new JTextField();
+		txtCaloriesDifference.setText("0");
 		txtCaloriesDifference.setEditable(false);
 		txtCaloriesDifference.setColumns(10);
-		txtCaloriesDifference.setBounds(479, 96, 116, 22);
+		txtCaloriesDifference.setBounds(421, 45, 116, 22);
 		userplanPanel.add(txtCaloriesDifference);
 		
-		rdbtnBargraph = new JRadioButton("BarGraph");
-		buttonGroup.add(rdbtnBargraph);
-		rdbtnBargraph.setSelected(true);
-		rdbtnBargraph.setBounds(677, 95, 127, 25);
-		userplanPanel.add(rdbtnBargraph);
-		
-		rdbtnLinegraph = new JRadioButton("LineGraph");
-		buttonGroup.add(rdbtnLinegraph);
-		rdbtnLinegraph.setBounds(808, 95, 127, 25);
-		userplanPanel.add(rdbtnLinegraph);
-		
 		chartPanel = new JPanel();
-		chartPanel.setBounds(584, 269, 707, 393);
+		chartPanel.setBounds(584, 317, 707, 345);
 		frame.getContentPane().add(chartPanel);
 		chartPanel.setLayout(new BoxLayout(chartPanel, BoxLayout.X_AXIS));
 		
@@ -211,9 +242,32 @@ public class ProgressActivityGUI {
 		
 		txtUnit.setText(bmList.get(0).getWeightType());
 		txtInitialWeight.setText(bmList.get(0).getWeight()+"");
-		txtPlanSelected.setText("yet to set");
-		txtCaloriesDifference.setText("yet to add");
-		txtGoalWeight.setText("Yet to add ");
+		
+		txtCalConsumed = new JTextField();
+		txtCalConsumed.setText("0");
+		txtCalConsumed.setColumns(10);
+		txtCalConsumed.setBounds(421, 126, 116, 22);
+		userplanPanel.add(txtCalConsumed);
+		
+		JLabel lblCaloriesConsumed = new JLabel("Calories Consumed : ");
+		lblCaloriesConsumed.setBounds(277, 129, 127, 16);
+		userplanPanel.add(lblCaloriesConsumed);
+		
+	
+		JLabel lblCurrentWeight_1 = new JLabel("Current Weight :");
+		lblCurrentWeight_1.setBounds(635, 91, 109, 16);
+		userplanPanel.add(lblCurrentWeight_1);
+		
+		txtCalNeededConsm = new JTextField();
+		txtCalNeededConsm.setText("0");
+		txtCalNeededConsm.setColumns(10);
+		txtCalNeededConsm.setBounds(736, 48, 116, 22);
+		userplanPanel.add(txtCalNeededConsm);
+		
+		txtCurrWeight = new JTextField();
+		txtCurrWeight.setColumns(10);
+		txtCurrWeight.setBounds(736, 88, 116, 22);
+		userplanPanel.add(txtCurrWeight);
 		
 		JButton btnPreviousActivity = new JButton("Previous Activity");
 		btnPreviousActivity.addActionListener(new ActionListener() {
@@ -275,6 +329,9 @@ public class ProgressActivityGUI {
 		});
 		frame.getContentPane().add(btnExerciseStatus);
 		
+		updateData();
+		
+		
 		JButton btnDietStatus = new JButton("Diet Status ");
 		btnDietStatus.setBounds(664, 712, 97, 25);
 		btnDietStatus.addActionListener(new ActionListener() {
@@ -300,7 +357,7 @@ public class ProgressActivityGUI {
 		frame.getContentPane().add(btnDietStatus);
 		
 		JButton btnSleepStatus = new JButton("Sleep Status");
-		btnSleepStatus.setBounds(844, 712, 97, 25);
+		btnSleepStatus.setBounds(825, 712, 116, 25);
 		btnSleepStatus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -326,7 +383,7 @@ public class ProgressActivityGUI {
 		frame.getContentPane().add(btnSleepStatus);
 		
 		JButton btnGoalProgress = new JButton("Goal Progress");
-		btnGoalProgress.setBounds(976, 712, 97, 25);
+		btnGoalProgress.setBounds(962, 712, 111, 25);
 		btnGoalProgress.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -356,23 +413,17 @@ public class ProgressActivityGUI {
 		frame.getContentPane().add(btnGoalProgress);
 		
 		JButton btnNextActivity = new JButton("Next Activity");
-		btnNextActivity.setBounds(1115, 712, 97, 25);
+		btnNextActivity.setBounds(1115, 712, 111, 25);
 		frame.getContentPane().add(btnNextActivity);
 		
-		JLabel lblLineChart = new JLabel("Line Chart");
-		lblLineChart.setBounds(266, 240, 73, 16);
-		frame.getContentPane().add(lblLineChart);
-		
-		JLabel lblChart = new JLabel("Bar Chart");
-		lblChart.setBounds(941, 240, 73, 16);
-		frame.getContentPane().add(lblChart);
-		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(93, 269, 438, 393);
+		scrollPane.setBounds(93, 317, 438, 345);
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
+		
+	
 		 updateTable();
 	}
 	public void updateBarChart(String title,String categoryAxisLabel,String valueAxisLabel,DefaultCategoryDataset dataset)
@@ -415,4 +466,75 @@ public class ProgressActivityGUI {
 		table.setModel(dtm);
 		
 		}
+	private void updateData()
+	{
+		BodyMeasurementsDAOImpl bmI=new BodyMeasurementsDAOImpl();
+		ArrayList<BodyMeasurements> bList=bmI.getBodyDatabyEmail(currUser[0]);
+		if(bList.size()>0)
+		{
+		txtPlanSelected.setText(bList.get(0).getFitnessPlanType());
+		txtGoalWeight.setText(bList.get(0).getUserGoalType());
+		if(bList.get(0).getFitnessPlanType().equalsIgnoreCase("Stay Fit Plan")){
+			
+		}else if(bList.get(0).getFitnessPlanType().equalsIgnoreCase("Weight Loss Plan"))
+		{
+			setCalDiff(bList);
+		}else if(bList.get(0).getFitnessPlanType().equalsIgnoreCase("Weight Gain Plan"))
+		{
+			setCalDiff(bList);
+		}else
+		{			
+			 if(bList.get(0).getUserGoalType().contains("3 LB"))
+			 {
+				 txtCaloriesDifference.setText(""+3000);
+			 }else if(bList.get(0).getUserGoalType().contains("5 LB"))
+			 {
+				 txtCaloriesDifference.setText(""+5000);
+			 }
+			 else if(bList.get(0).getUserGoalType().contains("7 LB"))
+			 {
+				 txtCaloriesDifference.setText(""+7000);
+			 }else {
+				 txtCaloriesDifference.setText(""+10000);
+			 }
+		}
+		}	
+		
+	}
+	
+	private void setCalDiff(ArrayList<BodyMeasurements> bList)
+	{
+		 if(bList.get(0).getUserGoalType().contains("0.5 LB"))
+		 {
+			 txtCaloriesDifference.setText(""+300);
+		 }else if(bList.get(0).getUserGoalType().contains("1 LB"))
+		 {
+			 txtCaloriesDifference.setText(""+500);
+		 }
+		 else if(bList.get(0).getUserGoalType().contains("1.5 LB"))
+		 {
+			 txtCaloriesDifference.setText(""+750);
+		 }else {
+			 txtCaloriesDifference.setText(""+1000);
+		 }		
+	}
+	
+	public double calNeeded()
+	{
+		BodyMeasurementsDAOImpl bmI=new BodyMeasurementsDAOImpl();
+		ArrayList<BodyMeasurements> bList=bmI.getBodyDatabyEmail(currUser[0]);
+	double calDiff=Double.parseDouble(txtCaloriesDifference.getText());
+	double calConsumed=Double.parseDouble(txtCalConsumed.getText());
+	double calBurned=Double.parseDouble(txtCalBurned.getText());
+	double calNeeded=0;
+	if(bList.get(0).getFitnessPlanType().equalsIgnoreCase("Stay Fit Plan")){
+		calNeeded=calConsumed-calBurned;
+			}
+	else if(bList.get(0).getFitnessPlanType().equalsIgnoreCase("Weight Gain Plan")){
+		calNeeded=calConsumed-calBurned+calDiff;
+	}else {
+		calNeeded=calConsumed-calBurned-calDiff;
+	} 		
+		return calNeeded;
+	}
 }

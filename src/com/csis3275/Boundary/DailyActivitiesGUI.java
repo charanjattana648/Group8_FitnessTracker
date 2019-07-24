@@ -71,9 +71,12 @@ public class DailyActivitiesGUI {
 				try {
 					if(args.length>0)
 					{
-						currUser=args;
+						currUser[0]=args[0];
+						currUser[1]=args[1];
 					userEmail=args[0];
 					}
+					System.out.println("DA Email : "+currUser[0]);
+					System.out.println("DA Type : "+currUser[1]);
 					DailyActivitiesGUI window = new DailyActivitiesGUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {

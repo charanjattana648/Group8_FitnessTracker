@@ -1,5 +1,6 @@
 package com.csis3275.Boundary;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -116,6 +117,36 @@ public class BodyMeasurementsDAOImpl implements IBodyMeasurementsDAO {
 		}
 
 		return b;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<BodyMeasurements> getBodyDatabyEmail(String userEmail) {
+		SessionFactory fx = null;
+		Session sx = null;
+		Transaction tx = null;
+		ArrayList<BodyMeasurements> bList=new ArrayList<BodyMeasurements>();
+		BodyMeasurements b;
+		try {
+			fx = DietDAOImpl.getFactory();
+			sx = fx.openSession();
+			tx = sx.beginTransaction();
+			//b=(BodyMeasurements) sx.getNamedQuery("getBodyDatabyEmail").setParameter("userEmail", userEmail).list().get(0);
+			bList = (ArrayList<BodyMeasurements>) sx.getNamedQuery("getBodyDatabyEmail").setParameter("userEmail", userEmail).list();
+
+			System.out.println(bList.size()+" ------------------------------------------------ ");
+			tx.commit();
+		} catch (HibernateException hx) {	
+			if(tx!=null)
+		{
+			tx.rollback();
+		}
+		System.err.println(hx.getMessage());
+		} finally {
+			fx.close();
+			sx.close();
+		}
+
+		return bList;
 	}
 	
 
