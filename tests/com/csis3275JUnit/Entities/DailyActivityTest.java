@@ -142,5 +142,23 @@ class DailyActivityTest {
 		
 	}
 	
+	@Test
+	void testExtraCalories() {
+		double expectedExtraCalories=120;
+		
+		da.setExtraCalories(120);
+		assertEquals(expectedExtraCalories, da.getExtraCalories());
+		
+	}
+	
+	@Test
+	void testExtraProtein() {
+		double expectedExtraProtein=60;
+		
+		da.setExtraProtein(60);
+		assertEquals(expectedExtraProtein, da.getExtraProtein());
+		
+	}
+	
 
 }
