@@ -39,30 +39,32 @@ public class DailyActivityDAOImpl {
 		return id;
 		
 	}
-public DailyActivity getDailyActivities(String date,String email) {
-		
-		SessionFactory fx=null;
-		Session sx=null;
-		Transaction tx=null;
-		DailyActivity da=new DailyActivity();
-		try {
-		fx=dI.getFactory();
-		sx=fx.openSession();
-		tx=sx.beginTransaction();		
-		da=(DailyActivity) sx.getNamedQuery("getDailyActivityQuery").setParameter("currdate", date).setParameter("curremail", email);
-		tx.commit();
-		
-		}catch(HibernateException ex) {
-			if(tx!=null) {
-				tx.rollback();
-			}
-			System.err.println(ex.getMessage());
-			
-		}finally {
-			fx.close();
-			sx.close();
+public ArrayList<DailyActivity> getDailyActivities(String date,String email) {
+	
+	SessionFactory fx=null;
+	Session sx=null;
+	Transaction tx=null;
+	ArrayList<DailyActivity> daList=new ArrayList<DailyActivity>();
+	
+	try {
+	fx=dI.getFactory();
+	sx=fx.openSession();
+	tx=sx.beginTransaction();		
+	daList=(ArrayList<DailyActivity>) sx.getNamedQuery("getDailyActivityQuery").setParameter("currdate", date).setParameter("curremail", email).list();
+	tx.commit();
+	
+	}catch(HibernateException ex) {
+		if(tx!=null) {
+			tx.rollback();
 		}
-		return da;
+		System.err.println(ex.getMessage());
+		
+	}finally {
+		fx.close();
+		sx.close();
+	}
+	return daList;
+	
 		
 	}
 	
