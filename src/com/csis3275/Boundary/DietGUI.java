@@ -362,8 +362,7 @@ public class DietGUI {
 					txtProteinReq.setText(m.getProtein()+"");
 					txtFatReq.setText(m.getFat()+"");
 					txtCarboReq.setText(m.getCarbohydrates()+"");
-					updateCreateMealTable(caloriesReq);
-					
+					updateCreateMealTable(caloriesReq);		
 					
 					
 				}
@@ -592,11 +591,23 @@ public class DietGUI {
 		
 		System.out.println("first");
 		
+		panelNutritions = new JPanel();
+		panelNutritions.setVisible(false);
+		panelNutritions.setBounds(556, 600, 648, 115);
+		frame.getContentPane().add(panelNutritions);
+		panelNutritions.setLayout(null);
+		
 		if(usertype.equalsIgnoreCase("User"))
 		{
 			UserPanel.setVisible(true);
+			scrollPaneUserT.setVisible(true);
+			panelNutritions.setVisible(false);
+			scrollPaneUserDietCT.setVisible(false);
 		}else {
 			DietPanel.setVisible(true);
+			scrollPaneUserT.setVisible(false);
+			panelNutritions.setVisible(false);
+			scrollPaneUserDietCT.setVisible(false);
 		}
 		
 	
@@ -645,11 +656,7 @@ public class DietGUI {
 		btnCheckProgress.setBounds(227, 707, 153, 40);
 		frame.getContentPane().add(btnCheckProgress);
 		
-		panelNutritions = new JPanel();
-		panelNutritions.setVisible(false);
-		panelNutritions.setBounds(556, 600, 648, 115);
-		frame.getContentPane().add(panelNutritions);
-		panelNutritions.setLayout(null);
+	
 		
 		JLabel lblCalories_1 = new JLabel("Calories :");
 		lblCalories_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
