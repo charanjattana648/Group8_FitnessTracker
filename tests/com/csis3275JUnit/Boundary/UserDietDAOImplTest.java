@@ -102,9 +102,5 @@ class UserDietDAOImplTest {
 		assertNotNull(udI);
 		assertNotNull(dI);
 		assertNull(udI.getUserDiet(14));
-	}
-
-	
-	
-	
+	}	
 }
