@@ -25,8 +25,6 @@ class UserDAOImplTest {
 	User u ;
 	UserDAOImpl ud;
 	SessionFactory factory = null;
-	Session sx = null;
-	Transaction tx = null;
 
 	
 
@@ -44,6 +42,26 @@ class UserDAOImplTest {
 	void test_Session_factory() {			
 		assertNotNull(dI);
 		assertNotNull(factory, "factory should be null");
+	}
+	
+	public void userInfo() {
+		u.setUserFirstName("harpreet");
+		u.setUserLastName("Kaur");
+		u.setUserEmail("harpreetkaurh8@gmail.com");
+		u.setUserGender("Female");
+		u.setUserPassword("happy");
+		u.setInstructor("User");
+		u.setUserAge(25);
+	}
+	
+	@Test
+	void testcreateUser() {
+		userInfo();
+		String createuser=ud.createUserAccount(u);
+		assertNotNull(ud);
+		assertNotNull(u);
+		assertNotNull(createuser);
+		assertNotEquals("", createuser);
 	}
 
 }
