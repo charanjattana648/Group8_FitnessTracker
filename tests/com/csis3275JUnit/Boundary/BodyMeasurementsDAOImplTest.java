@@ -2,6 +2,9 @@ package com.csis3275JUnit.Boundary;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -14,6 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import com.csis3275.Boundary.BodyMeasurementsDAOImpl;
 import com.csis3275.Entities.BodyMeasurements;
+import com.csis3275.Entities.Diet;
 
 class BodyMeasurementsDAOImplTest {
 	
@@ -57,12 +61,18 @@ class BodyMeasurementsDAOImplTest {
 	void testCreateBodyData() {
 		
 		bodyData();
-		
 		int bodyId = bodyDao.createBodydata(body);
-		
 		assertNotEquals(0, bodyId);
 		
-		
+	}
+	
+	@Test
+	void testGetBodyList()
+	{
+		List<BodyMeasurements> bodyList = new ArrayList<BodyMeasurements>();
+		bodyList = bodyDao.getBodyDataList();
+		assertNotNull(bodyList);
+		assertFalse(bodyList.isEmpty());
 	}
 	
 	public void bodyData() {
