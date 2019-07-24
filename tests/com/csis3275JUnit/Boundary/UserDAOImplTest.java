@@ -2,6 +2,8 @@ package com.csis3275JUnit.Boundary;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -15,6 +17,7 @@ import com.csis3275.Boundary.DietDAOImpl;
 import com.csis3275.Boundary.UserDAOImpl;
 import com.csis3275.Entities.Admin;
 import com.csis3275.Entities.User;
+import com.csis3275.Entities.UserDiet;
 
 /**
  * 
@@ -108,6 +111,15 @@ class UserDAOImplTest {
 				()->assertEquals(expecetedAdminName,a.getAdminName()),
 				()->assertEquals(expectedAdminPass,a.getAdminPassword())
 				);
+	}
+	
+	@Test
+	void testUserLogin()
+	{
+		String 	CurrentEmail="harpreetkaurh8@gmail.com";
+		String CurentPass="happy";
+		boolean isvalidUser=ud.checkUEPass(CurrentEmail, CurentPass);
+		assertEquals(true, isvalidUser);
 	}
 
 }
