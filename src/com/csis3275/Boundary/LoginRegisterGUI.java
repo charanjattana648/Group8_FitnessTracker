@@ -71,7 +71,7 @@ public class LoginRegisterGUI {
 	public LoginRegisterGUI() {
 		initialize();
 		//Manually 
-		uD.admin();
+		//uD.admin();
 	}
 
 	/**
