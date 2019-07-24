@@ -43,16 +43,16 @@ class DailyActivityDAOImplTest {
 
 	public void addDailyActivity() {
 		d.setId(5);
-		d.setDate("07/22/2019");
-		d.setUserEmail("pk@gmail.com");
+		d.setDate("07/21/2019");
+		d.setUserEmail("hkpk@gmail.com");
 		d.setSleepHour(6);
-		d.setSleepMinute(30);
+		d.setSleepMinute(35);
 		d.setWaterGlass(3);
-		d.setExerciseHour(2);
+		d.setExerciseHour(6);
 		d.setExerciseMinute(45);
 		d.setMeditationHour(2);
 		d.setMeditationMinute(23);
-		d.setWalkingHour(1);
+		d.setWalkingHour(3);
 		d.setWalkingMinute(20);
 		d.setExtraCalories(0);
 		d.setExtraProtein(0);
@@ -62,7 +62,7 @@ class DailyActivityDAOImplTest {
 		d.setWorkMinute(45);
 	}
 
-/*	@Test
+	@Test
 	void testDailyActivityAdd() {
 		addDailyActivity();
 		int record=dImp.addDailyActivities(d);
@@ -70,7 +70,7 @@ class DailyActivityDAOImplTest {
 		assertNotNull(d);
 		assertNotNull(record);
 		assertNotEquals(0, record);
-	}*/
+	}
 	
 	@Test
 	void testgetDailyActivity() {
@@ -83,6 +83,14 @@ class DailyActivityDAOImplTest {
 		
 	}
 	
-	
+	@Test
+	void testgetDailyActivityList() {
+		
+		String expectedUserEmail="user@gmail.com";
+		ArrayList<DailyActivity> daList = new ArrayList<DailyActivity>();
+		daList=dImp.getDailyActivitiesList(expectedUserEmail);
+		assertNotNull(daList);
+		assertFalse(daList.isEmpty());
+	}
 
 }
