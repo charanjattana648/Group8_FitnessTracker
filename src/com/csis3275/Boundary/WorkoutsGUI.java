@@ -90,7 +90,9 @@ public class WorkoutsGUI {
 					int id = jsonObj.getInt("id");
 					
 						if(id == currentId) {
+							
 							textAreaExerciseDescription.setText(jsonObj.getString("exerciseDescription"));
+								
 						}
 					}
 					
@@ -122,6 +124,7 @@ public class WorkoutsGUI {
 		frame.getContentPane().add(lblExerciseDescription);
 		
 		textAreaExerciseDescription = new JTextArea();
+		textAreaExerciseDescription.setLineWrap(true);
 		textAreaExerciseDescription.setWrapStyleWord(true);
 		textAreaExerciseDescription.setBounds(688, 112, 300, 260);
 		frame.getContentPane().add(textAreaExerciseDescription);
