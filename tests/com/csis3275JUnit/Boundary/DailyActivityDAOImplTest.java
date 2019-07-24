@@ -39,17 +39,17 @@ class DailyActivityDAOImplTest {
 	}
 
 	public void addDailyActivity() {
-		d.setId(4);
-		d.setDate("07/24/2019");
-		d.setUserEmail("hkaur@gmail.com");
-		d.setSleepHour(7);
+		d.setId(5);
+		d.setDate("07/22/2019");
+		d.setUserEmail("pk@gmail.com");
+		d.setSleepHour(6);
 		d.setSleepMinute(30);
 		d.setWaterGlass(3);
 		d.setExerciseHour(2);
 		d.setExerciseMinute(45);
-		d.setMeditationHour(1);
+		d.setMeditationHour(2);
 		d.setMeditationMinute(23);
-		d.setWalkingHour(2);
+		d.setWalkingHour(1);
 		d.setWalkingMinute(20);
 		d.setExtraCalories(0);
 		d.setExtraProtein(0);
