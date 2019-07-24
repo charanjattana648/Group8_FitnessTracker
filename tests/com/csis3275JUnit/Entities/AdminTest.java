@@ -10,6 +10,11 @@ import org.junit.jupiter.api.Test;
 
 import com.csis3275.Entities.Admin;
 
+/**
+ * 
+ * @author harpreet Kaur
+ *
+ */
 class AdminTest {
      Admin a;
 	@BeforeAll
@@ -32,7 +37,6 @@ class AdminTest {
 	@Test
 	void testAdminId() {
 		String expectedAdminId="Admin";
-		
 		a.setAdminid("Admin");
 		assertEquals(expectedAdminId, a.getAdminid());
 		
