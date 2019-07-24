@@ -91,7 +91,9 @@ public class WorkoutsGUI {
 					
 						if(id == currentId) {
 							
-							textAreaExerciseDescription.setText(jsonObj.getString("exerciseDescription"));
+							String txt=jsonObj.getString("exerciseDescription");
+							txt=txt.replace("@", "\n");
+							textAreaExerciseDescription.setText(txt);
 								
 						}
 					}
