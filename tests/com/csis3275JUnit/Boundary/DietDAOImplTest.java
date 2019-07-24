@@ -57,11 +57,7 @@ class DietDAOImplTest {
 
 	@AfterEach
 	void tearDown() throws Exception {
-		if(sx!=null)
-		{
-		sx.close();
-		}
-		factory.close();
+	
 	}
 	
 	@Test
@@ -71,6 +67,11 @@ class DietDAOImplTest {
 				()->assertNotNull(ssr, "StandardServiceRegistry is null"),
 				()->assertNotNull(meta, "meta is null"),
 				()->assertNotNull(factory, "factory is null"));
+		if(sx!=null)
+		{
+		sx.close();
+		}
+		factory.close();
 	}
 	
 	public void dietData()
@@ -95,61 +96,24 @@ class DietDAOImplTest {
 	void test_addMeal()
 	{
 		dietData();
-		int newDietId = 0;
-		try {
-			sx = factory.openSession();
-			tx = sx.beginTransaction();
-			for(int i=0;i<21;i++)
-			{
-				newDietId = (int) sx.save(d);
-			}
-			tx.commit();
-		} catch (HibernateException hx) {
-			if (tx != null) {
-				tx.rollback();
-			}
-			System.err.println(hx.getMessage());
-		}
-		newId=newDietId;
+		int newDietId=dI.addMeal(d);
 		assertNotEquals(0, newDietId);
 	}
 	@Test
 	void test_getMeal()
 	{
 		int id=7;
-		try {
-			sx = factory.openSession();
-			tx = sx.beginTransaction();
-			d = (Diet) sx.get(Diet.class, id);
-			tx.commit();
-		} catch (HibernateException hx) {	
-			if(tx!=null)
-		{
-			tx.rollback();
-		}
-		System.err.println(hx.getMessage());
-		}
+	    d=dI.getDiet(id);
 		assertNotNull(d);
+	    assertEquals(id, d.getId());
+	
 	}
 	
 	@Test
 	void test_getMealList()
 	{
 		ArrayList<Diet> dietList = new ArrayList<Diet>();
-		try {
-			sx = factory.openSession();
-			tx = sx.beginTransaction();
-			String sql = "FROM Diet d";
-			dietList = (ArrayList<Diet>) sx.createQuery(sql).list();
-			tx.commit();
-
-		} catch (HibernateException hx) {
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println(hx.getMessage());
-		}
+		dietList=dI.getDietList();
 		assertNotNull(dietList);
 		assertFalse(dietList.isEmpty());
 	}
@@ -157,20 +121,9 @@ class DietDAOImplTest {
 	@Test
 	void test_deleteMeal()
 	{
-		d=dI.getDiet(86);		
+		d=dI.getDiet(84);		
 		assertNotNull(dI.getDiet(d.getId()));
-		try {
-			sx=factory.openSession();
-			tx=sx.beginTransaction();
-			sx.delete(d);
-			tx.commit();			
-		}catch(HibernateException hx)
-		{	if(tx!=null)
-		{
-			tx.rollback();
-		}
-		System.err.println(hx.getMessage());
-		}
+		dI.deleteDiet(d);
 		assertNotNull(dI);
 	    assertNotNull(d);
 		assertNull(dI.getDiet(d.getId()));		
@@ -180,21 +133,9 @@ class DietDAOImplTest {
 	void test_UpdateDiet()
 	{
 		String foodName="Shahi Paneer";
-		d=dI.getDiet(86);
+		d=dI.getDiet(85);
 		d.setFoodName(foodName);
-		try {
-			sx=factory.openSession();
-			tx=sx.beginTransaction();
-			sx.update(d);
-			tx.commit();
-		}catch(HibernateException hx)
-		{	if(tx!=null)
-		{
-			tx.rollback();
-		}
-		System.err.println(hx.getMessage());
-			
-		}
+		dI.updateDiet(d);
 		assertNotNull(dI);
 	    assertNotNull(d);
 	    assertEquals(foodName, dI.getDiet(82).getFoodName());
@@ -204,20 +145,7 @@ class DietDAOImplTest {
 	void test_mealTypeList()
 	{
 		ArrayList<String> mealTypeList = new ArrayList<String>();
-		try {
-			sx = factory.openSession();
-			tx = sx.beginTransaction();
-			mealTypeList=(ArrayList<String>) sx.getNamedQuery("mealTypeListQuery").list();			
-			mealTypeList.add(0,"None");
-			tx.commit();
-
-		} catch (HibernateException hx) {
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println(hx.getMessage());
-		}
+		mealTypeList=dI.getMealTypeList();	
 		assertNotNull(mealTypeList);
 		assertFalse(mealTypeList.isEmpty());		
 		
@@ -226,20 +154,7 @@ class DietDAOImplTest {
 	void test_foodTypeList()
 	{
 		ArrayList<String> foodTypeList = new ArrayList<String>();
-		try {
-			sx = factory.openSession();
-			tx = sx.beginTransaction();
-			foodTypeList = (ArrayList<String>) sx.getNamedQuery("foodTypeListQuery").list();			
-			foodTypeList.add(0,"None");
-			tx.commit();
-
-		} catch (HibernateException hx) {
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println(hx.getMessage());
-		}
+		foodTypeList=dI.getFoodTypeList();
 		assertNotNull(foodTypeList);
 		assertFalse(foodTypeList.isEmpty());
 		
@@ -248,20 +163,7 @@ class DietDAOImplTest {
 	void test_foodCategoryList()
 	{
 		ArrayList<String> foodCategoryList = new ArrayList<String>();
-		try {
-			sx = factory.openSession();
-			tx = sx.beginTransaction();
-			foodCategoryList=(ArrayList<String>) sx.getNamedQuery("foodCategoryListQuery").list();			
-			foodCategoryList.add(0,"None");
-			tx.commit();
-
-		} catch (HibernateException hx) {
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println(hx.getMessage());
-		}
+	    foodCategoryList=dI.getFoodCategoryList();
 		assertNotNull(foodCategoryList);
 		assertFalse(foodCategoryList.isEmpty());
 		
@@ -271,25 +173,9 @@ class DietDAOImplTest {
 	void test_authorList()
 	{
 		ArrayList<String> authorList = new ArrayList<String>();
-		try {
-			sx = factory.openSession();
-			tx = sx.beginTransaction();
-			authorList=(ArrayList<String>) sx.getNamedQuery("getAuthorListQuery").list();
-			authorList.add(0,"None");
-			tx.commit();
-
-		} catch (HibernateException hx) {
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println(hx.getMessage());
-		}
-
+		authorList=dI.getAuthorList();
 		assertNotNull(authorList);
-		assertFalse(authorList.isEmpty());
-		
-		
+		assertFalse(authorList.isEmpty());		
 	}
 	
 	
@@ -298,19 +184,7 @@ class DietDAOImplTest {
 	{
 		String mealType="Dinner";
 		ArrayList<Diet> filteredList = new ArrayList<Diet>();
-		try {
-			sx = factory.openSession();
-			tx = sx.beginTransaction();
-			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilteredMealTypeListQuery").setParameter("mealType", mealType).list();
-			tx.commit();
-
-		} catch (HibernateException hx) {
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println(hx.getMessage());
-		} 
+		filteredList=dI.getFilteredMealTypeList(mealType);
 		assertNotNull(filteredList);
 		assertFalse(filteredList.isEmpty());		
 	}
@@ -320,19 +194,7 @@ class DietDAOImplTest {
 	{
 		String foodCategory="Vegetarian";
 		ArrayList<Diet> filteredList = new ArrayList<Diet>();
-		try {
-			sx = factory.openSession();
-			tx = sx.beginTransaction();
-			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilterFoodCategoryListQuery").setParameter("foodCategory", foodCategory).list();
-			tx.commit();
-
-		} catch (HibernateException hx) {
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println(hx.getMessage());
-		}
+		filteredList=dI.getFilterFoodCategoryList(foodCategory);
 		assertNotNull(filteredList);
 		assertFalse(filteredList.isEmpty());
 	}
@@ -341,19 +203,7 @@ class DietDAOImplTest {
 	{
 		String author="Admin";
 		ArrayList<Diet> filteredList = new ArrayList<Diet>();
-		try {
-			sx = factory.openSession();
-			tx = sx.beginTransaction();
-			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilteredauthorListQuery").setParameter("author", author).list();
-			tx.commit();
-
-		} catch (HibernateException hx) {
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println(hx.getMessage());
-		}
+		filteredList=dI.getFilteredauthorList(author);
 		assertNotNull(filteredList);
 		assertFalse(filteredList.isEmpty());
 	}
@@ -362,19 +212,7 @@ class DietDAOImplTest {
 	{
 		String foodType="Vegetable";
 		ArrayList<Diet> filteredList = new ArrayList<Diet>();
-		try {
-			sx = factory.openSession();
-			tx = sx.beginTransaction();
-			filteredList = (ArrayList<Diet>) sx.getNamedQuery("getFilteredfoodTypeListQuery").setParameter("foodType", foodType).list();
-			tx.commit();
-
-		} catch (HibernateException hx) {
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println(hx.getMessage());
-		}
+		filteredList=dI.getFilteredFoodTypeList(foodType);
 		assertNotNull(filteredList);		
 		assertFalse(filteredList.isEmpty());
 	}
@@ -385,30 +223,7 @@ class DietDAOImplTest {
 		String orderby="fat";
 		String type="asc";
 		ArrayList<Diet> dietList = new ArrayList<Diet>();
-		try {
-			sx = factory.openSession();
-			tx = sx.beginTransaction();
-			Diet d=new Diet();			
-			CriteriaBuilder cb=sx.getCriteriaBuilder();
-			CriteriaQuery<Diet> cqd=cb.createQuery(Diet.class);
-			Root<Diet> root=cqd.from(Diet.class);
-			orderby=orderby.toLowerCase();
-			if(type.equalsIgnoreCase("asc"))
-			{
-			cqd.orderBy(cb.asc(root.get(orderby)));
-			}else if(type.equalsIgnoreCase("desc")){
-				cqd.orderBy(cb.desc(root.get(orderby)));
-			}
-			dietList=(ArrayList<Diet>) sx.createQuery(cqd).getResultList();
-			tx.commit();
-
-		} catch (HibernateException hx) {
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println(hx.getMessage());
-		} 
+		dietList=dI.getDietOrderedList(type, orderby);
 		assertNotNull(dietList);
 		assertFalse(dietList.isEmpty());
 	}

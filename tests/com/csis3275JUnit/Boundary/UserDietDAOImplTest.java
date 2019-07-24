@@ -39,24 +39,15 @@ class UserDietDAOImplTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		 dI=new DietDAOImpl();
+		 udI=new UserDietDAOImpl();
 		 factory=dI.getFactory();
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterEach
-	void tearDown() throws Exception {
-		if(sx!=null)
-		sx.close();
-		factory.close();
 	}
 
 	@Test
 	void test_Session_factory() {	
 		
 		assertNotNull(dI);
-		assertNotNull(factory, "factory is null");
+		assertNotNull(factory, "factory should be null");
 	}
 	
 	@Test
@@ -65,21 +56,7 @@ class UserDietDAOImplTest {
 		String email="csis@gmail.com";
 		String date="06/29/2019";
 		ArrayList<UserDiet> userDietList=new ArrayList<UserDiet>();
-		try {
-			factory=dI.getFactory();
-			sx=factory.openSession();
-			tx=sx.beginTransaction();
-			userDietList=(ArrayList<UserDiet>) sx.getNamedQuery("userDietListQuery").setParameter("uEmail", email).setParameter("date", date).list();
-			
-			tx.commit();
-		}catch(HibernateException hx)
-		{
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println("Error "+hx.getMessage());
-		}
+		userDietList=udI.getUserDietList(email, date);
 		assertNotNull(dI);
 		assertFalse(userDietList.isEmpty());
 	}
@@ -88,20 +65,7 @@ class UserDietDAOImplTest {
 	{		
 		String email="csis@gmail.com";
 		ArrayList<String>  dateList=new ArrayList<String>();
-		try {
-			factory=dI.getFactory();
-			sx=factory.openSession();
-			tx=sx.beginTransaction();
-			dateList=(ArrayList<String>) sx.getNamedQuery("UserDietdateQuery").setParameter("uEmail", email).list();
-			tx.commit();
-		}catch(HibernateException hx)
-		{
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println("Error "+hx.getMessage());
-		}
+		dateList=udI.getLastDPDates(email);
 		assertNotNull(dI);
 		assertFalse(dateList.isEmpty());
 	}
@@ -113,20 +77,7 @@ class UserDietDAOImplTest {
 		udI=new UserDietDAOImpl();
 		ud=udI.getUserDiet(2);
 		int newuD=0;
-		try {
-			factory=dI.getFactory();
-			sx=factory.openSession();
-			tx=sx.beginTransaction();
-			newuD=(int) sx.save(ud);
-			tx.commit();
-		}catch(HibernateException hx)
-		{
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println("Error "+hx.getMessage());
-		}
+		newuD=udI.addUserDiet(ud);		
 		assertNotNull(dI);
 		assertNotNull(ud);
 		assertNotEquals(0, newuD);
@@ -138,45 +89,18 @@ class UserDietDAOImplTest {
 	{ 
 		int id=2;
 		ud=new UserDiet();
-		try {
-			factory=dI.getFactory();
-			sx=factory.openSession();
-			tx=sx.beginTransaction();
-			ud=sx.get(UserDiet.class, id);
-			tx.commit();
-		}
-		catch(HibernateException hx)
-		{
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println("Error "+hx.getMessage());
-		}	
+		ud=udI.getUserDiet(2);
 		assertNotNull(dI);
 		assertNotNull(ud);
+		assertEquals(id, ud.getId());
 	}
 	
 	@Test
 	void test_deleteUserDiet()
 	{ 
-		udI=new UserDietDAOImpl();
-		ud=udI.getUserDiet(98);
-		try {
-			factory=dI.getFactory();
-			sx=factory.openSession();
-			tx=sx.beginTransaction();
-			sx.delete(ud);
-			tx.commit();
-		}
-		catch(HibernateException hx)
-		{
-			if(tx!=null)
-			{
-				tx.rollback();
-			}
-			System.err.println("Error "+hx.getMessage());
-		}
+	
+		ud=udI.getUserDiet(105);
+		udI.deleteUserDiet(ud);
 		assertNotNull(udI);
 		assertNotNull(dI);
 		assertNull(udI.getUserDiet(14));
