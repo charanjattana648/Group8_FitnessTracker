@@ -2,6 +2,8 @@ package com.csis3275JUnit.Boundary;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -17,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import com.csis3275.Boundary.DailyActivityDAOImpl;
 import com.csis3275.Boundary.DietDAOImpl;
 import com.csis3275.Entities.DailyActivity;
+import com.csis3275.Entities.Diet;
 class DailyActivityDAOImplTest {
     
 	DietDAOImpl dI;
@@ -59,7 +62,7 @@ class DailyActivityDAOImplTest {
 		d.setWorkMinute(45);
 	}
 
-	@Test
+/*	@Test
 	void testDailyActivityAdd() {
 		addDailyActivity();
 		int record=dImp.addDailyActivities(d);
@@ -67,6 +70,19 @@ class DailyActivityDAOImplTest {
 		assertNotNull(d);
 		assertNotNull(record);
 		assertNotEquals(0, record);
+	}*/
+	
+	@Test
+	void testgetDailyActivity() {
+		String expectedDate="07/23/2019";
+		String expectedUserEmail="user@gmail.com";
+		ArrayList<DailyActivity> daList = new ArrayList<DailyActivity>();
+		daList=dImp.getDailyActivities(expectedDate, expectedUserEmail);
+		assertNotNull(daList);
+		assertEquals(expectedUserEmail, daList.get(0).getUserEmail());
+		
 	}
+	
+	
 
 }
