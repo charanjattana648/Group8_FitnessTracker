@@ -23,7 +23,7 @@ import com.csis3275.Entities.UserDiet;
 
 /**
  * @author Charanpreet Singh
- *
+ *  
  */
 class UserDietDAOImplTest {
 	DietDAOImpl dI;
@@ -44,8 +44,7 @@ class UserDietDAOImplTest {
 	}
 
 	@Test
-	void test_Session_factory() {	
-		
+	void test_Session_factory() {			
 		assertNotNull(dI);
 		assertNotNull(factory, "factory should be null");
 	}
@@ -97,16 +96,11 @@ class UserDietDAOImplTest {
 	
 	@Test
 	void test_deleteUserDiet()
-	{ 
-	
+	{ 	
 		ud=udI.getUserDiet(105);
 		udI.deleteUserDiet(ud);
 		assertNotNull(udI);
 		assertNotNull(dI);
 		assertNull(udI.getUserDiet(14));
-	}
-
-	
-	
-	
+	}	
 }
