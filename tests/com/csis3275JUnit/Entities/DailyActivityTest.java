@@ -160,5 +160,41 @@ class DailyActivityTest {
 		
 	}
 	
+	@Test
+	void testExtraFat() {
+		double expectedExtraProtein=60;
+		
+		da.setExtraProtein(60);
+		assertEquals(expectedExtraProtein, da.getExtraProtein());
+		
+	}
+	
+	@Test
+	void testWorkType() {
+		String expectedWorkType="Active";
+		
+		da.setWorkType("Active");
+		assertEquals(expectedWorkType, da.getWorkType());
+		
+	}
+	
+	@Test
+	void testWorkHour() {
+		int expectedWorkHour=8;
+		
+		da.setWorkHour(8);
+		assertEquals(expectedWorkHour, da.getWorkHour());
+		
+	}
+	
+	@Test
+	void testWorkMinute() {
+		int expectedWorkMinute=58;
+		
+		da.setWorkMinute(58);
+		assertEquals(expectedWorkMinute, da.getWorkMinute());
+		
+	}
+	
 
 }
