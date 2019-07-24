@@ -45,9 +45,9 @@ class UserDAOImplTest {
 	}
 	
 	public void userInfo() {
-		u.setUserFirstName("harpreet");
+		u.setUserFirstName("harprit");
 		u.setUserLastName("Kaur");
-		u.setUserEmail("harpreetkaurh8@gmail.com");
+		u.setUserEmail("hkkkk@gmail.com");
 		u.setUserGender("Female");
 		u.setUserPassword("happy");
 		u.setInstructor("User");
@@ -62,6 +62,26 @@ class UserDAOImplTest {
 		assertNotNull(u);
 		assertNotNull(createuser);
 		assertNotEquals("", createuser);
+	}
+	
+	public void InstructorInfo() {
+		u.setUserFirstName("happyInstruct");
+		u.setUserLastName("Kharoud");
+		u.setUserEmail("Kaur@gmail.com");
+		u.setUserGender("Female");
+		u.setUserPassword("instructor");
+		u.setInstructor("Instructor");
+		u.setUserAge(28);
+	}
+	
+	@Test
+	void testcreateInstructor() {
+		InstructorInfo();
+		String createInstructor=ud.createInstructorAccount(u);
+		assertNotNull(ud);
+		assertNotNull(u);
+		assertNotNull(createInstructor);
+		assertNotEquals("", createInstructor);
 	}
 
 }
