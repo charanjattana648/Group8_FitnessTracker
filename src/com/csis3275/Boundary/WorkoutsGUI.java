@@ -90,7 +90,11 @@ public class WorkoutsGUI {
 					int id = jsonObj.getInt("id");
 					
 						if(id == currentId) {
-							textAreaExerciseDescription.setText(jsonObj.getString("exerciseDescription"));
+							
+							String txt=jsonObj.getString("exerciseDescription");
+							txt=txt.replace("@", "\n");
+							textAreaExerciseDescription.setText(txt);
+								
 						}
 					}
 					
@@ -122,24 +126,21 @@ public class WorkoutsGUI {
 		frame.getContentPane().add(lblExerciseDescription);
 		
 		textAreaExerciseDescription = new JTextArea();
+		textAreaExerciseDescription.setLineWrap(true);
 		textAreaExerciseDescription.setWrapStyleWord(true);
 		textAreaExerciseDescription.setBounds(688, 112, 300, 260);
 		frame.getContentPane().add(textAreaExerciseDescription);
 		
-		JButton btnPostWorkout = new JButton("Post Workout");
-		btnPostWorkout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		JButton btnPostWorkouts = new JButton("Post Workouts");
+		btnPostWorkouts.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 				PostWorkoutGUI.main(currentUser);
 			}
 		});
-		btnPostWorkout.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnPostWorkout.setBounds(42, 398, 135, 37);
-		frame.getContentPane().add(btnPostWorkout);
-		
-		
-		
-		
-		
+		btnPostWorkouts.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnPostWorkouts.setBounds(44, 390, 123, 30);
+		frame.getContentPane().add(btnPostWorkouts);
+	
 		updateTable();
 		
 	}
@@ -200,7 +201,6 @@ public class WorkoutsGUI {
 				for (int i = 0; i < jArray.length(); ++i)
 				{
 					jsonObj = jArray.getJSONObject(i);
-					//String workoutType = jsonObj.getString("workoutType");
 				
 						tm.addRow(getVector().get(i));
 				}

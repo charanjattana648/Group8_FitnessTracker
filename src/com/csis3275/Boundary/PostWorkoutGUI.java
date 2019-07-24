@@ -26,6 +26,7 @@ public class PostWorkoutGUI {
 	private JTextField textFieldTotalTime;
 	private JTextField textFieldWorkoutType;
 	private JTextArea textAreaDescription;
+	static String[] currentUser = new String[2];
 	
 	private static final String USER_AGENT = "Mozilla/5.0";
 	
@@ -37,6 +38,7 @@ public class PostWorkoutGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					currentUser[1] = args[1];
 					PostWorkoutGUI window = new PostWorkoutGUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -58,7 +60,7 @@ public class PostWorkoutGUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 625, 461);
+		frame.setBounds(100, 100, 683, 527);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -95,13 +97,13 @@ public class PostWorkoutGUI {
 		JLabel lblWorkoutType = new JLabel("Workout Type");
 		lblWorkoutType.setHorizontalAlignment(SwingConstants.LEFT);
 		lblWorkoutType.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblWorkoutType.setBounds(151, 325, 160, 32);
+		lblWorkoutType.setBounds(151, 341, 160, 32);
 		frame.getContentPane().add(lblWorkoutType);
 		
 		JLabel lblTotalTime = new JLabel("Total Time");
 		lblTotalTime.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTotalTime.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblTotalTime.setBounds(151, 282, 160, 32);
+		lblTotalTime.setBounds(151, 306, 160, 32);
 		frame.getContentPane().add(lblTotalTime);
 		
 		textFieldExerciseName = new JTextField();
@@ -121,16 +123,16 @@ public class PostWorkoutGUI {
 		
 		textFieldTotalTime = new JTextField();
 		textFieldTotalTime.setColumns(10);
-		textFieldTotalTime.setBounds(334, 288, 131, 24);
+		textFieldTotalTime.setBounds(334, 312, 131, 24);
 		frame.getContentPane().add(textFieldTotalTime);
 		
 		textFieldWorkoutType = new JTextField();
 		textFieldWorkoutType.setColumns(10);
-		textFieldWorkoutType.setBounds(334, 331, 131, 24);
+		textFieldWorkoutType.setBounds(334, 347, 131, 24);
 		frame.getContentPane().add(textFieldWorkoutType);
 		
 		textAreaDescription = new JTextArea();
-		textAreaDescription.setBounds(334, 170, 238, 107);
+		textAreaDescription.setBounds(334, 170, 238, 131);
 		frame.getContentPane().add(textAreaDescription);
 		
 		JButton btnPostWorkout = new JButton("Post Workout");
@@ -145,8 +147,18 @@ public class PostWorkoutGUI {
 			}
 		});
 		btnPostWorkout.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnPostWorkout.setBounds(236, 368, 151, 43);
+		btnPostWorkout.setBounds(151, 398, 151, 43);
 		frame.getContentPane().add(btnPostWorkout);
+		
+		JButton btnViewWorkout = new JButton("View Workouts");
+		btnViewWorkout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				WorkoutsGUI.main(currentUser);
+			}
+		});
+		btnViewWorkout.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnViewWorkout.setBounds(421, 398, 151, 43);
+		frame.getContentPane().add(btnViewWorkout);
 	}
 	
 	public void postWorkout() throws IOException {
@@ -165,7 +177,7 @@ public class PostWorkoutGUI {
 		int totalTime = Integer.parseInt(textFieldTotalTime.getText());
 		String workoutType = textFieldWorkoutType.getText();
 		
-		exerciseDescription = exerciseDescription.replace("\n", ",");
+		exerciseDescription = exerciseDescription.replace("\n", "@");
 
 		String exerciseString = "{\"exerciseName\":\"" + exerciseName
 				+ "\",\"exerciseType\":\"" + exerciseType

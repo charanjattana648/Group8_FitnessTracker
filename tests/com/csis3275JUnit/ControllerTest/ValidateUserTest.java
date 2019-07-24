@@ -1,4 +1,4 @@
-package com.csis3275JUnit.Controller;
+package com.csis3275JUnit.ControllerTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 

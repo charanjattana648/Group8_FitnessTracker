@@ -143,7 +143,7 @@ class BMICalculatorTest {
 		
 		double heightInFeets = 6;
 		double weight = 150;
-		double heightInches = 2;
+		double heightInches = 0;
 		
 		body = new BodyMeasurements();
 		cBMI = new CalculateBMI();
@@ -157,14 +157,15 @@ class BMICalculatorTest {
 		double convertedFeetsToInches = heightInFeets * (double) 12;
 		double totalHeightInInches = convertedFeetsToInches + heightInches;
 		
-		double bmi = (weight / (Math.pow(totalHeightInInches, 2))) * (double) 703;
+		double expected = (weight / (Math.pow(totalHeightInInches, 2))) * (double) 703;
 		
+		double actual = cBMI.calculateBMI(body);
 		
-		body.setHeightInches(totalHeightInInches);
+		body.setHeightInches(heightInches);
 			
-			body.setBmiValues(bmi);
+			body.setBmiValues(actual);
 			
-			assertEquals(bmi, body.getBmiValues());
+			assertEquals(expected, body.getBmiValues());
 		
 	}
 
