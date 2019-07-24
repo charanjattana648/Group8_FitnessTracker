@@ -11,6 +11,12 @@ import org.junit.jupiter.api.Test;
 
 import com.csis3275.Entities.DailyActivity;
 
+/**
+ * 
+ * @author harpreet kaur
+ *
+ */
+
 class DailyActivityTest {
 	
 	DailyActivity da;
