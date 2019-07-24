@@ -125,21 +125,7 @@ public class WorkoutsGUI {
 		textAreaExerciseDescription.setWrapStyleWord(true);
 		textAreaExerciseDescription.setBounds(688, 112, 300, 260);
 		frame.getContentPane().add(textAreaExerciseDescription);
-		
-		JButton btnPostWorkout = new JButton("Post Workout");
-		btnPostWorkout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				PostWorkoutGUI.main(currentUser);
-			}
-		});
-		btnPostWorkout.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnPostWorkout.setBounds(42, 398, 135, 37);
-		frame.getContentPane().add(btnPostWorkout);
-		
-		
-		
-		
-		
+	
 		updateTable();
 		
 	}
