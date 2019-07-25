@@ -71,5 +71,14 @@ class ValidateDailyActivityTest {
 		
 		
 	}
+	
+	@Test
+	void validateEmptyInfotest() {
+		
+		DailyActivity da=vda.validate("7", "25", "", "3", "12", "2", "24", "2","34", "240", "150.0", "20.0", "8", "30");
+		
+		assertNull(da);	
+		
+	}
 
 }
