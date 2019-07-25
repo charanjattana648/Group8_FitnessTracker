@@ -28,8 +28,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.UIManager;
 import javax.swing.ButtonGroup;
-
+/**
+ * 
+ * @author harpreet kaur
+ * student id:300288768
+ */
 public class DailyActivitiesGUI {
+	
 
 	private JFrame frame;
 	private JTextField sleepHrstext;
@@ -53,6 +58,7 @@ public class DailyActivitiesGUI {
 	private JProgressBar MeditationprogressBar;
 	private DailyActivity da=new DailyActivity();
 	private DailyActivityDAOImpl daI=new DailyActivityDAOImpl();
+	
 	private static String userEmail="";
 	private int walkingRed=30,walkingGreen=120,walkingYellow=150;
 	private int exerciseRed=30,exerciseGreen=240,exerciseYellow=300;
@@ -60,6 +66,9 @@ public class DailyActivitiesGUI {
 	private int sleepRed=330,sleepGreen=540,sleepYellow=600;
 	private int waterRed=5,waterGreen=15,waterYellow=20;
 	private final int MIN_PER_HOUR=60;
+	/**
+	 * currUser Array containing 2 values
+	 */
 	static String[] currUser=new String[2];
 	private JTextField LowcolortextField;
 	private JTextField greenColortextField;
@@ -359,15 +368,22 @@ public class DailyActivitiesGUI {
 		label_7.setBounds(998, 622, 69, 20);
 		frame.getContentPane().add(label_7);
 		
-		JButton btnPreviousPage = new JButton("Exercise Activity");
+		JButton btnPreviousPage = new JButton("Diet Activity");
 		btnPreviousPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				DietGUI.main(currUser);
 				
 			}
 		});
 		btnPreviousPage.setBounds(294, 703, 153, 29);
 		frame.getContentPane().add(btnPreviousPage);
+		
+		/**
+		 * by clicking Add record button, all the data of Daily activities is recorded.
+		 * In this method the date format is also set, it will create current date
+		 * validation method is called checking all the information according to the constraints applied
+		 */
 		
 		JButton btnAddRecord = new JButton("Add Record");
 		btnAddRecord.addActionListener(new ActionListener() {
@@ -407,6 +423,9 @@ public class DailyActivitiesGUI {
 		btnAddRecord.setBounds(468, 703, 115, 29);
 		frame.getContentPane().add(btnAddRecord);
 		
+		/**
+		 * Refresh button refresh all data and set all progress bars to 0 and textFields to 00.
+		 */
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -434,7 +453,9 @@ public class DailyActivitiesGUI {
 		});
 		btnRefresh.setBounds(614, 703, 115, 29);
 		frame.getContentPane().add(btnRefresh);
-		
+		/**
+		 * by clicking Progress Activity button, it goes to  progress activity 
+		 */
 		JButton btnNextPage = new JButton("Progress Activity");
 		btnNextPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -477,8 +498,16 @@ public class DailyActivitiesGUI {
 		lblExcess.setBounds(1266, 213, 69, 20);
 		frame.getContentPane().add(lblExcess);
 	}
+<<<<<<< HEAD
 	
 
+=======
+	/**
+	 * in this method , the values of progress bar is set 
+	 * the value of progress bar is set according to the value in text_field * MIN_PER_HOUR
+	 * color of progress bar is changed according to range of value.
+	 */
+>>>>>>> 4a38d035fdd291feb4b8d9774ca25d38fef4b608
 	private void setProgress()
 	{
 		

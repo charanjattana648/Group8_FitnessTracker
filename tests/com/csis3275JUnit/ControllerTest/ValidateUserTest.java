@@ -14,6 +14,7 @@ import com.csis3275.Entities.User;
 /**
  * 
  * @author harpreet kaur
+ * student id:300288768
  *
  */
 class ValidateUserTest {
@@ -38,6 +39,11 @@ class ValidateUserTest {
 	void tearDown() throws Exception {
 	}
 
+	/**
+	 * Testing user Information while registering, when all information is filled correctly
+	 */
+	
+	
 	@Test
 	void validateUserInfoTest() {
 		
@@ -60,7 +66,9 @@ class ValidateUserTest {
 				);
 		
 	}
-	
+	/**
+	 * testing user information while registering , when one of the field is empty
+	 */
 	@Test
 	void UserInfoEmptyTest() {
 		
@@ -79,6 +87,10 @@ class ValidateUserTest {
 		
 	}
 	
+	/**
+	 * testing length of password
+	 */
+	
 	@Test
 	void ValidatePasswordTest() {
 		
@@ -96,6 +108,10 @@ class ValidateUserTest {
 		assertNull(u);
 		
 	}
+	
+	/**
+	 * testing password and confirm password is matching or not
+	 */
 	
 	@Test
 	void ValidateConfirmTest() {

@@ -3,9 +3,17 @@ package com.csis3275.Controller;
 import javax.swing.JOptionPane;
 
 import com.csis3275.Entities.DailyActivity;
+/**
+ * 
+ * @author harpreet kaur 
+ * student id:300288768
+ *
+ */
 
 
 public class ValidateDailyActivity {
+	
+	
 	private int sleepHour;
 	private int sleepMinute;
 	private int waterGlass;
@@ -25,6 +33,29 @@ public class ValidateDailyActivity {
 	
 	DailyActivity da=new DailyActivity();
 	boolean isValidInput;
+	
+	/**
+	 * Method used to validate the input user entered in DailyActivity
+	 * that is text field should not be empty ,hours should be less than or equal to 24,
+	 * minutes should be less than 60 and minutes and hours should not be in negative.
+	 * 
+	 * 
+	 * @param txtsleepHour , number of hours user sleep
+	 * @param txtsleepMinute , minutes user sleep
+	 * @param txtwaterGlass , number of glass of water user drink
+	 * @param txtexerciseHour  , hours user exercise
+	 * @param txtexerciseMinute  , minutes user exercise
+	 * @param txtmeditationHour  , hours user meditate
+	 * @param txtmeditationMinute  ,minutes user meditate
+	 * @param txtwalkingHour ,hours user walk daily
+	 * @param txtwalkingMinute  , minutes user walk daily
+	 * @param txtextraCalories  , extra calories user consumed
+	 * @param txtextraProtein  , extra proteins user consumed
+	 * @param txtextraFat  ,extra fats user consumed
+	 * @param txtworkHour  ,number of hours user work
+	 * @param txtworkMinute , minutes user work
+	 * @return  null
+	 */
 
 	public DailyActivity validate( String txtsleepHour, String txtsleepMinute, String txtwaterGlass,String txtexerciseHour,String txtexerciseMinute,String txtmeditationHour, String txtmeditationMinute,
 			String txtwalkingHour,String txtwalkingMinute,String txtextraCalories, String txtextraProtein ,String txtextraFat,String txtworkHour,String txtworkMinute) {
@@ -61,6 +92,9 @@ public class ValidateDailyActivity {
 				return null;
 		}
 		}
+		
+	
+		
 		if(sleepHour<0 || sleepMinute<0 || waterGlass<0 || exerciseHour<0 || exerciseMinute<0 || meditationHour<0 ||
 				meditationMinute<0 || walkingHour<0 || walkingMinute<0 || extraCalories<0 || exerciseMinute<0 || extraProtein<0 ||
 				extraProtein<0 || extraFat<0 || workHour<0 || workMinute<0)
@@ -81,6 +115,7 @@ public class ValidateDailyActivity {
 				return null;
 				
 		}		
+		
 		if(isValidInput)
 		{
 			da.setSleepHour(sleepHour);
