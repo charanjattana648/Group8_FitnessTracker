@@ -5,10 +5,13 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.transaction.Transactional.TxType;
 
+import com.csis3275.Controller.ValidateDailyActivity;
 import com.csis3275.Entities.DailyActivity;
 import com.csis3275.Entities.ProgressActivity;
 
@@ -24,6 +27,7 @@ import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.UIManager;
+import javax.swing.ButtonGroup;
 
 public class DailyActivitiesGUI {
 
@@ -60,6 +64,8 @@ public class DailyActivitiesGUI {
 	private JTextField LowcolortextField;
 	private JTextField greenColortextField;
 	private JTextField yellowColortextField;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	
 
 	/**
@@ -257,10 +263,12 @@ public class DailyActivitiesGUI {
 		frame.getContentPane().add(lblDidYouConsume);
 		
 		JRadioButton eatingRdbtnYes = new JRadioButton("Yes");
+		buttonGroup.add(eatingRdbtnYes);
 		eatingRdbtnYes.setBounds(287, 495, 69, 29);
 		frame.getContentPane().add(eatingRdbtnYes);
 		
 		JRadioButton eatingRdbtnNo = new JRadioButton("No");
+		buttonGroup.add(eatingRdbtnNo);
 		eatingRdbtnNo.setBounds(470, 495, 155, 29);
 		frame.getContentPane().add(eatingRdbtnNo);
 		
@@ -313,14 +321,17 @@ public class DailyActivitiesGUI {
 		frame.getContentPane().add(lblWhichTypeOf);
 		
 		JRadioButton rdbtnActiveWork = new JRadioButton("Active work");
+		buttonGroup_1.add(rdbtnActiveWork);
 		rdbtnActiveWork.setBounds(287, 618, 122, 29);
 		frame.getContentPane().add(rdbtnActiveWork);
 		
 		JRadioButton rdbtnOfficeWork = new JRadioButton("Office work");
+		buttonGroup_1.add(rdbtnOfficeWork);
 		rdbtnOfficeWork.setBounds(439, 618, 113, 29);
 		frame.getContentPane().add(rdbtnOfficeWork);
 		
 		JRadioButton rdbtnHeavy = new JRadioButton("Heavy");
+		buttonGroup_1.add(rdbtnHeavy);
 		rdbtnHeavy.setBounds(592, 618, 87, 29);
 		frame.getContentPane().add(rdbtnHeavy);
 		
@@ -362,7 +373,7 @@ public class DailyActivitiesGUI {
 		btnAddRecord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				 setProgress();
+				
 				String workTyp="";
 				if(rdbtnActiveWork.isSelected()) {
 					workTyp="Active Work";
@@ -375,25 +386,21 @@ public class DailyActivitiesGUI {
 				Date currDate=new Date();
 				da=new DailyActivity();
 				
-				da.setDate(df.format(currDate));
-				da.setUserEmail(currUser[0]);
-				da.setSleepHour(Integer.parseInt(sleepHrstext.getText()));
-				da.setSleepMinute(Integer.parseInt(sleepMinttext.getText()));
-				da.setWaterGlass(Integer.parseInt(waterGlasstext.getText()));
-				da.setExerciseHour(Integer.parseInt(excersiseHrstext.getText()));
-				da.setExerciseMinute(Integer.parseInt(ExcersiseMinttext.getText()));
-				da.setMeditationHour(Integer.parseInt(meditationHrstext.getText()));
-				da.setMeditationMinute(Integer.parseInt(meditationMinttext.getText()));
-				da.setWalkingHour(Integer.parseInt(walkingHrstext.getText()));
-				da.setWalkingMinute(Integer.parseInt(walkingMinttext.getText()));
-				da.setExtraCalories(Double.parseDouble(eatCaltext.getText()));
-				da.setExtraProtein(Double.parseDouble(eatProteintext.getText()));
-				da.setExtraFat(Double.parseDouble(eatFatstext.getText()));
-				da.setWorkType(workTyp);
-				da.setWorkHour(Integer.parseInt(workHrstext.getText()));
-				da.setWorkMinute(Integer.parseInt(workMinttext.getText()));
-				//daI=new DailyActivityDAOImpl();
-				daI.addDailyActivities(da);
+			
+				ValidateDailyActivity vda=new ValidateDailyActivity();
+				da=vda.validate(sleepHrstext.getText(), sleepMinttext.getText(), waterGlasstext.getText(), excersiseHrstext.getText(),
+						ExcersiseMinttext.getText(), meditationHrstext.getText(), meditationMinttext.getText(), walkingHrstext.getText(), 
+						walkingMinttext.getText(), eatCaltext.getText(), eatProteintext.getText(), eatFatstext.getText(), workHrstext.getText(), workMinttext.getText());
+
+				if(da!=null)
+				{
+					 setProgress();
+					da.setDate(df.format(currDate));
+					da.setUserEmail(currUser[0]);
+					daI.addDailyActivities(da);
+					JOptionPane.showMessageDialog(null, "Your data is added Successfully.");
+				}
+				
 				
 			}
 		});
