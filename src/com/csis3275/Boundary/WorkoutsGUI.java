@@ -147,6 +147,11 @@ public class WorkoutsGUI {
 		frame.getContentPane().add(btnPostWorkouts);
 		
 		btnDietPlan = new JButton("Diet Plan");
+		btnDietPlan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DietGUI.main(currentUser);
+			}
+		});
 		btnDietPlan.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnDietPlan.setBounds(272, 390, 139, 30);
 		frame.getContentPane().add(btnDietPlan);

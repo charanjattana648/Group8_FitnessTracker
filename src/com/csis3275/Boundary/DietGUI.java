@@ -374,20 +374,7 @@ public class DietGUI {
 		frame.getContentPane().add(panelNutritions);
 		panelNutritions.setLayout(null);
 		
-		if(usertype.equalsIgnoreCase("User"))
-		{
-			UserPanel.setVisible(true);
-			scrollPaneUserT.setVisible(true);
-			panelNutritions.setVisible(false);
-			scrollPaneUserDietCT.setVisible(false);
-			
-		}else {
-			DietPanel.setVisible(true);
-			scrollPaneUserT.setVisible(false);
-			panelNutritions.setVisible(false);
-			scrollPaneUserDietCT.setVisible(false);
-			btnDailyActivity.setVisible(false);
-		}
+		
 		
 	
 		JScrollPane scrollPaneData = new JScrollPane();
@@ -713,6 +700,23 @@ public class DietGUI {
 				DailyActivitiesGUI.main(currentUEmail);
 			}
 		});
+		
+		
+		if(usertype.equalsIgnoreCase("User"))
+		{
+			UserPanel.setVisible(true);
+			scrollPaneUserT.setVisible(true);
+			panelNutritions.setVisible(false);
+			scrollPaneUserDietCT.setVisible(false);
+			
+		}else {
+			DietPanel.setVisible(true);
+			scrollPaneUserT.setVisible(false);
+			panelNutritions.setVisible(false);
+			scrollPaneUserDietCT.setVisible(false);
+			btnDailyActivity.setVisible(false);
+		}
+		
 		updateTable();
 		updateUserSelTable();
 	}
