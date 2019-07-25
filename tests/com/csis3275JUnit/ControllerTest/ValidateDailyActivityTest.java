@@ -80,5 +80,14 @@ class ValidateDailyActivityTest {
 		assertNull(da);	
 		
 	}
+	
+	@Test
+	void validateHourandMintFormattest() {
+		
+		DailyActivity da=vda.validate("7", "67", "", "3", "12", "2", "24", "2","34", "240", "150.0", "20.0", "8", "30");
+		
+		assertNull(da);	
+		
+	}
 
 }
