@@ -40,7 +40,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
-
+/**
+ * 
+ * @author charanpreet Singh
+ * ProgressActivityGUI
+ */
 public class ProgressActivityGUI {
 
 	private JFrame frame;
@@ -74,6 +78,7 @@ public class ProgressActivityGUI {
 
 	/**
 	 * Launch the application.
+	 * @param args which is String array which contains userEmail and userType.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -167,7 +172,6 @@ public class ProgressActivityGUI {
 		lblCurrentCalNeeded = new JLabel("Calories Needed to Consumed : ");
 		lblCurrentCalNeeded.setBounds(549, 51, 185, 16);
 		userplanPanel.add(lblCurrentCalNeeded);
-		//
 		
 		JButton btnAdd = new JButton("Add");
 		btnAdd.addActionListener(new ActionListener() {
@@ -456,6 +460,13 @@ public class ProgressActivityGUI {
 	
 		 updateTable();
 	}
+	/**
+	 * updateBarChart() is method to create BarChart.
+	 * @param title is a String, Title of BarChart. 
+	 * @param categoryAxisLabel is a String, category Axis Label of BarChart.
+	 * @param valueAxisLabel is a String, value Axis Label of BarChart.
+	 * @param dataset contains data that is to be shown in Chart.
+	 */
 	public void updateBarChart(String title,String categoryAxisLabel,String valueAxisLabel,DefaultCategoryDataset dataset)
 	{		
 		JFreeChart jfc=ChartFactory.createBarChart(title, categoryAxisLabel, valueAxisLabel, dataset,PlotOrientation.VERTICAL,true,true,false);		
@@ -470,6 +481,13 @@ public class ProgressActivityGUI {
 		chartPanel.add(cPanel);
 		chartPanel.updateUI();		
 	}
+	/**
+	 * updateLineChart() is method to create LineChart.
+	 * @param title is a String, Title of LineChart. 
+	 * @param categoryAxisLabel is a String, category Axis Label of LineChart.
+	 * @param valueAxisLabel is a String, value Axis Label of LineChart.
+	 * @param dataset contains data that is to be shown in LineChart.
+	 */
 	public void updateLineChart(String title,String categoryAxisLabel,String valueAxisLabel,DefaultCategoryDataset dataset)
 	{		
 		JFreeChart jfc=ChartFactory.createLineChart(title, categoryAxisLabel, valueAxisLabel, dataset,PlotOrientation.VERTICAL,true,true,false);		
@@ -480,6 +498,9 @@ public class ProgressActivityGUI {
 		chartPanel.add(cPanel);
 		chartPanel.updateUI();		
 	}
+	/**
+	 * updateTable() used to update table.
+	 */
 	private void updateTable()
 	{
 		table.getSelectionModel();
@@ -497,6 +518,9 @@ public class ProgressActivityGUI {
 		table.setModel(dtm);
 		
 		}
+	/**
+	 * updateData() is used to update data in text fields as well as in labels.
+	 */
 	private void updateData()
 	{
 		BodyMeasurementsDAOImpl bmI=new BodyMeasurementsDAOImpl();
@@ -534,6 +558,10 @@ public class ProgressActivityGUI {
 		
 	}
 	
+	/**
+	 * sets the value for text field.
+	 * @param bList is a ArrayList<BodyMeasurements> of BodyMeasurements Object.
+	 */
 	private void setCalDiff(ArrayList<BodyMeasurements> bList)
 	{
 		 if(bList.get(0).getUserGoalType().contains("0.5 LB"))
@@ -551,6 +579,10 @@ public class ProgressActivityGUI {
 		 }		
 	}
 	
+	/**
+	 * getProgressData() is a method which sets the values for ProgressActivity object and return it. 
+	 * @return pa which is ProgressActivity.
+	 */
 	private ProgressActivity getProgressData()
 	{
 		double calCons=Double.parseDouble(txtCalConsumed.getText());
