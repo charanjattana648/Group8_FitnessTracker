@@ -80,6 +80,7 @@ public class DietGUI {
 	private JTextField txtCarboReq;
 	private JPanel panelNutritions;
 	private JScrollPane scrollPaneUserDietCT;
+	private JButton btnDailyActivity ;
 	/**
 	 * Launch the application.
 	 * Stores the args from other frames in array currentUEmail.
@@ -148,12 +149,6 @@ public class DietGUI {
 
 			}
 		};
-		
-		
-		
-		DietPanel = new JPanel();
-		DietPanel.setBounds(12, 337, 515, 366);
-		DietPanel.setVisible(false);
 		
 		UserPanel = new JPanel();
 		UserPanel.setBounds(12, 322, 469, 372);
@@ -370,6 +365,131 @@ public class DietGUI {
 		});
 		btnCreateMeal.setBounds(216, 201, 153, 40);
 		UserPanel.add(btnCreateMeal);
+		
+		System.out.println("first");
+		
+		panelNutritions = new JPanel();
+		panelNutritions.setVisible(false);
+		panelNutritions.setBounds(556, 600, 648, 115);
+		frame.getContentPane().add(panelNutritions);
+		panelNutritions.setLayout(null);
+		
+		if(usertype.equalsIgnoreCase("User"))
+		{
+			UserPanel.setVisible(true);
+			scrollPaneUserT.setVisible(true);
+			panelNutritions.setVisible(false);
+			scrollPaneUserDietCT.setVisible(false);
+			
+		}else {
+			DietPanel.setVisible(true);
+			scrollPaneUserT.setVisible(false);
+			panelNutritions.setVisible(false);
+			scrollPaneUserDietCT.setVisible(false);
+			btnDailyActivity.setVisible(false);
+		}
+		
+	
+		JScrollPane scrollPaneData = new JScrollPane();
+		scrollPaneData.setBounds(12, 68, 1293, 227);
+		frame.getContentPane().add(scrollPaneData);
+
+		table = new JTable();
+		scrollPaneData.setViewportView(table);
+	
+		comboBoxDate = new JComboBox();
+		comboBoxDate.setBounds(828, 322, 114, 22);
+		frame.getContentPane().add(comboBoxDate);
+		updateDateCb();
+		comboBoxDate.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("entering---"+comboBoxDate.getSelectedItem());
+				updateUserSelTable();
+				
+			}
+		});
+		
+		
+		JLabel lblDate = new JLabel("Date :");
+		lblDate.setBounds(750, 322, 64, 27);
+		lblDate.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		frame.getContentPane().add(lblDate);
+		
+		JLabel lblDietPlan = new JLabel("Diet Plan");
+		lblDietPlan.setBounds(646, 25, 116, 24);
+		lblDietPlan.setFont(new Font("Tahoma", Font.BOLD, 24));
+		frame.getContentPane().add(lblDietPlan);
+		
+		JButton btnWorkout = new JButton("Workouts Activity");
+		btnWorkout.setBounds(49, 707, 153, 40);
+		btnWorkout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				WorkoutsGUI.main(currentUEmail);
+			}
+		});
+		frame.getContentPane().add(btnWorkout);
+		
+		btnDailyActivity = new JButton("Daily Activities");
+		btnDailyActivity.setBounds(227, 707, 153, 40);
+		frame.getContentPane().add(btnDailyActivity);
+		
+	
+		
+		JLabel lblCalories_1 = new JLabel("Calories :");
+		lblCalories_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblCalories_1.setBounds(50, 13, 80, 20);
+		panelNutritions.add(lblCalories_1);
+		
+		txtCaloriesReq = new JTextField();
+		txtCaloriesReq.setEditable(false);
+		txtCaloriesReq.setBounds(153, 13, 116, 22);
+		panelNutritions.add(txtCaloriesReq);
+		txtCaloriesReq.setColumns(10);
+		
+		JLabel lblFat_1 = new JLabel("Fat :");
+		lblFat_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblFat_1.setBounds(50, 60, 80, 20);
+		panelNutritions.add(lblFat_1);
+		
+		JLabel lblProtein_1 = new JLabel("Protein :");
+		lblProtein_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblProtein_1.setBounds(363, 13, 72, 20);
+		panelNutritions.add(lblProtein_1);
+		
+		JLabel lblCarbo = new JLabel("Carbohydrates :");
+		lblCarbo.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblCarbo.setBounds(319, 63, 116, 20);
+		panelNutritions.add(lblCarbo);
+		
+		txtFatReq = new JTextField();
+		txtFatReq.setEditable(false);
+		txtFatReq.setBounds(153, 60, 116, 22);
+		panelNutritions.add(txtFatReq);
+		txtFatReq.setColumns(10);
+		
+		txtProteinReq = new JTextField();
+		txtProteinReq.setEditable(false);
+		txtProteinReq.setBounds(441, 13, 116, 22);
+		panelNutritions.add(txtProteinReq);
+		txtProteinReq.setColumns(10);
+		
+		txtCarboReq = new JTextField();
+		txtCarboReq.setEditable(false);
+		txtCarboReq.setBounds(441, 60, 116, 22);
+		panelNutritions.add(txtCarboReq);
+		txtCarboReq.setColumns(10);
+		
+		
+		tableCreatedDiet = new JTable();
+		scrollPaneUserDietCT.setViewportView(tableCreatedDiet);
+		
+		
+		
+		DietPanel = new JPanel();
+		DietPanel.setBounds(12, 337, 515, 366);
+		DietPanel.setVisible(false);
 		frame.getContentPane().add(DietPanel);
 		DietPanel.setLayout(null);
 		
@@ -588,124 +708,7 @@ public class DietGUI {
 			txtAuthor.setColumns(10);
 			txtAuthor.setBounds(204, 215, 144, 22);
 			DietPanel.add(txtAuthor);
-		
-		System.out.println("first");
-		
-		panelNutritions = new JPanel();
-		panelNutritions.setVisible(false);
-		panelNutritions.setBounds(556, 600, 648, 115);
-		frame.getContentPane().add(panelNutritions);
-		panelNutritions.setLayout(null);
-		
-		if(usertype.equalsIgnoreCase("User"))
-		{
-			UserPanel.setVisible(true);
-			scrollPaneUserT.setVisible(true);
-			panelNutritions.setVisible(false);
-			scrollPaneUserDietCT.setVisible(false);
-		}else {
-			DietPanel.setVisible(true);
-			scrollPaneUserT.setVisible(false);
-			panelNutritions.setVisible(false);
-			scrollPaneUserDietCT.setVisible(false);
-		}
-		
-	
-		JScrollPane scrollPaneData = new JScrollPane();
-		scrollPaneData.setBounds(12, 68, 1293, 227);
-		frame.getContentPane().add(scrollPaneData);
-
-		table = new JTable();
-		scrollPaneData.setViewportView(table);
-	
-		comboBoxDate = new JComboBox();
-		comboBoxDate.setBounds(828, 322, 114, 22);
-		frame.getContentPane().add(comboBoxDate);
-		updateDateCb();
-		comboBoxDate.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("entering---"+comboBoxDate.getSelectedItem());
-				updateUserSelTable();
-				
-			}
-		});
-		
-		
-		JLabel lblDate = new JLabel("Date :");
-		lblDate.setBounds(750, 322, 64, 27);
-		lblDate.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		frame.getContentPane().add(lblDate);
-		
-		JLabel lblDietPlan = new JLabel("Diet Plan");
-		lblDietPlan.setBounds(646, 25, 116, 24);
-		lblDietPlan.setFont(new Font("Tahoma", Font.BOLD, 24));
-		frame.getContentPane().add(lblDietPlan);
-		
-		JButton btnExercise = new JButton("UserGoals Activity");
-		btnExercise.setBounds(49, 707, 153, 40);
-		btnExercise.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				UserGoals.main(currentUEmail);
-			}
-		});
-		frame.getContentPane().add(btnExercise);
-		
-		JButton btnCheckProgress = new JButton("Daily Activities");
-		btnCheckProgress.setBounds(227, 707, 153, 40);
-		frame.getContentPane().add(btnCheckProgress);
-		
-	
-		
-		JLabel lblCalories_1 = new JLabel("Calories :");
-		lblCalories_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblCalories_1.setBounds(50, 13, 80, 20);
-		panelNutritions.add(lblCalories_1);
-		
-		txtCaloriesReq = new JTextField();
-		txtCaloriesReq.setEditable(false);
-		txtCaloriesReq.setBounds(153, 13, 116, 22);
-		panelNutritions.add(txtCaloriesReq);
-		txtCaloriesReq.setColumns(10);
-		
-		JLabel lblFat_1 = new JLabel("Fat :");
-		lblFat_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblFat_1.setBounds(50, 60, 80, 20);
-		panelNutritions.add(lblFat_1);
-		
-		JLabel lblProtein_1 = new JLabel("Protein :");
-		lblProtein_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblProtein_1.setBounds(363, 13, 72, 20);
-		panelNutritions.add(lblProtein_1);
-		
-		JLabel lblCarbo = new JLabel("Carbohydrates :");
-		lblCarbo.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblCarbo.setBounds(319, 63, 116, 20);
-		panelNutritions.add(lblCarbo);
-		
-		txtFatReq = new JTextField();
-		txtFatReq.setEditable(false);
-		txtFatReq.setBounds(153, 60, 116, 22);
-		panelNutritions.add(txtFatReq);
-		txtFatReq.setColumns(10);
-		
-		txtProteinReq = new JTextField();
-		txtProteinReq.setEditable(false);
-		txtProteinReq.setBounds(441, 13, 116, 22);
-		panelNutritions.add(txtProteinReq);
-		txtProteinReq.setColumns(10);
-		
-		txtCarboReq = new JTextField();
-		txtCarboReq.setEditable(false);
-		txtCarboReq.setBounds(441, 60, 116, 22);
-		panelNutritions.add(txtCarboReq);
-		txtCarboReq.setColumns(10);
-		
-		
-		tableCreatedDiet = new JTable();
-		scrollPaneUserDietCT.setViewportView(tableCreatedDiet);
-		btnCheckProgress.addActionListener(new ActionListener() {
+		btnDailyActivity.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				DailyActivitiesGUI.main(currentUEmail);
 			}
