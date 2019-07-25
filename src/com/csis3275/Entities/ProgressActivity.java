@@ -8,12 +8,19 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-
+/**
+ * 
+ * @author Charanpreet singh
+ * ProgressActivity object and table.
+ */
 @Entity
 @NamedQuery(name="getProgressQuery",query="from ProgressActivity pa where pa.userEmail=:uEmail order by pa.date desc")
 @Table(name="ProgressActivity")
 public class ProgressActivity {
 
+	/**
+	 * attributes along with getters and setters.
+	 */
 	@Id
 	private String date;
 	@Column(name="userEmail",nullable=false)
@@ -62,7 +69,10 @@ public class ProgressActivity {
 	public ProgressActivity() {
 	}
 	
-	
+	/**
+	 * getVector() to convert data to vector object.
+	 * @return vector object.
+	 */
 	public Vector getVector()
 	{
 		Vector v=new Vector();
