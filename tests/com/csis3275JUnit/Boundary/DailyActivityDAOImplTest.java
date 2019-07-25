@@ -20,6 +20,14 @@ import com.csis3275.Boundary.DailyActivityDAOImpl;
 import com.csis3275.Boundary.DietDAOImpl;
 import com.csis3275.Entities.DailyActivity;
 import com.csis3275.Entities.Diet;
+/**
+ * 
+ * @author harpreet Kaur
+ * student id :300288768
+ * 
+ * Testing DailyActivityDAOImpl class
+ */
+
 class DailyActivityDAOImplTest {
     
 	DietDAOImpl dI;
@@ -40,6 +48,10 @@ class DailyActivityDAOImplTest {
 		assertNotNull(dI);
 		assertNotNull(factory, "factory should be null");
 	}
+	
+	/**
+	 * setting value  all attributes 
+	 */
 
 	public void addDailyActivity() {
 		d.setId(5);
@@ -61,7 +73,10 @@ class DailyActivityDAOImplTest {
 		d.setWorkHour(3);
 		d.setWorkMinute(45);
 	}
-
+    
+	/**
+	 * testing daily Activity data is added
+	 */
 	@Test
 	void testDailyActivityAdd() {
 		addDailyActivity();
@@ -71,7 +86,9 @@ class DailyActivityDAOImplTest {
 		assertNotNull(record);
 		assertNotEquals(0, record);
 	}
-	
+	/**
+	 * testing ,getting list of DailyActivities by User Email and Date
+	 */
 	@Test
 	void testgetDailyActivity() {
 		String expectedDate="07/23/2019";
@@ -82,6 +99,10 @@ class DailyActivityDAOImplTest {
 		assertEquals(expectedUserEmail, daList.get(0).getUserEmail());
 		
 	}
+	
+	/**
+	 * testing ,getting list of DailyActivities by User Email only
+	 */
 	
 	@Test
 	void testgetDailyActivityList() {
