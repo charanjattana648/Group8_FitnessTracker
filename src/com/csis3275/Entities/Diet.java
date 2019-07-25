@@ -11,7 +11,7 @@ import javax.persistence.Table;
 /**
  * 
  * @author charanpreet Singh
- *
+ * Diet Object Also Table name created with hibernate.
  */
 @Entity
 @NamedQuery(name="mealTypeListQuery",query="select distinct d.mealType from Diet d")

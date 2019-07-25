@@ -478,6 +478,7 @@ public class DailyActivitiesGUI {
 		frame.getContentPane().add(lblExcess);
 	}
 	
+
 	private void setProgress()
 	{
 		

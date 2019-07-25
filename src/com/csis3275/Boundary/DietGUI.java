@@ -29,6 +29,8 @@ import javax.swing.JPanel;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 /**
  * 
  * @author charanpreet Singh
@@ -43,7 +45,6 @@ public class DietGUI {
 	private ListSelectionListener lsl = null;
 	private ListSelectionListener lsl_userT = null;
 	private DietDAOImpl dI = new DietDAOImpl();
-	//private UserDietDAOImpl udI=new UserDietDAOImpl();
 	private JTextField txtId;
 	private JTextField txtMealId;
 	private JTextField txtMealType;
@@ -81,10 +82,15 @@ public class DietGUI {
 	private JPanel panelNutritions;
 	private JScrollPane scrollPaneUserDietCT;
 	private JButton btnDailyActivity ;
+	private JComboBox comboBoxMealType;
+	private JComboBox comboBoxAuthor;
+	private JComboBox comboBoxFoodCategory;
+	private JComboBox comboBoxFoodType;
+	
 	/**
 	 * Launch the application.
 	 * Stores the args from other frames in array currentUEmail.
-	 * @param args return email at 0 index.
+	 * @param args return email at 0 index and user type at index 1 i.e User/Instructor/admin.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -182,27 +188,34 @@ public class DietGUI {
 		ArrayList<String> foodCategoryListCB=dI.getFoodCategoryList();		
 		ArrayList<String> authorListCB=dI.getAuthorList();
 			
-		JComboBox comboBoxMealType = new JComboBox(mealTypeListCB.toArray());
+		comboBoxMealType = new JComboBox(mealTypeListCB.toArray());
+		comboBoxMealType.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+			}
+		});
 		comboBoxMealType.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(comboBoxMealType.getSelectedIndex()!=0)
 				{
 				dI.getFilteredMealTypeList(comboBoxMealType.getSelectedItem().toString());
 				}
-				//updateTable();
+				
+				comboBoxMealType.setSelectedIndex(0);
+				comboBoxMealType.setSelectedIndex(0);
+				comboBoxMealType.setSelectedIndex(0);
 			}
 		});
 		comboBoxMealType.setBounds(80, 40, 114, 22);
 		UserPanel.add(comboBoxMealType);
 	  
-
-		JComboBox comboBoxFoodType = new JComboBox(foodTypeListCB.toArray());
+		
+		comboBoxFoodType = new JComboBox(foodTypeListCB.toArray());
 		comboBoxFoodType.setBounds(216, 40, 114, 22);
 		UserPanel.add(comboBoxFoodType);
-		JComboBox comboBoxFoodCategory = new JComboBox(foodCategoryListCB.toArray());
+		comboBoxFoodCategory = new JComboBox(foodCategoryListCB.toArray());
 		comboBoxFoodCategory.setBounds(216, 75, 114, 22);
 		UserPanel.add(comboBoxFoodCategory);
-		JComboBox comboBoxAuthor = new JComboBox(authorListCB.toArray());
+		comboBoxAuthor = new JComboBox(authorListCB.toArray());
 		comboBoxAuthor.setBounds(80, 77, 114, 22);
 		UserPanel.add(comboBoxAuthor);
 		
@@ -304,7 +317,7 @@ public class DietGUI {
 					
 				}
 				if(comboBoxMealType.getSelectedItem()!="None")
-				{
+				{					
 					isFiltered=true;
 					mealtypeSel=comboBoxMealType.getSelectedItem().toString();
 				}
@@ -701,7 +714,6 @@ public class DietGUI {
 			}
 		});
 		
-		
 		if(usertype.equalsIgnoreCase("User"))
 		{
 			UserPanel.setVisible(true);
@@ -721,6 +733,10 @@ public class DietGUI {
 		updateUserSelTable();
 	}
 	
+	/**
+	 * updateCreateMealTable method create Meal table for user which requires user to enter calories required.
+	 * @param caloriesReq Total Calories user want to consume in a day.
+	 */
 	public void updateCreateMealTable(double caloriesReq)
 	{
 		//tableCreatedDiet
@@ -829,18 +845,13 @@ public class DietGUI {
 		ArrayList<UserDiet> dietList=new ArrayList<UserDiet>();
 		if(currentUEmail.length>0)
 		{
-		//	ArrayList<String> dateListCB=udI.getLastDPDates(currentUEmail[0]);			
-		//String currDate=udI.getLastDPDates(currentUEmail[0]).get(0);
-			
 			String currDate=(String) comboBoxDate.getSelectedItem();			
 			System.out.println(currDate+" item count "+comboBoxDate.getItemCount());
 		dietList =udI.getUserDietList(currentUEmail[0],currDate);
 		}
 		for (UserDiet ud : dietList) {	
-			//System.out.println("entering ----  : " + ud.getFoodName());
 			dtm.addRow(ud.getVector());
 		}
-		System.out.println("data --------------------------------------------------------------------------------");
 		UserSelDietTable.setModel(dtm);
 
 		UserSelDietTable.getSelectionModel().addListSelectionListener(lsl_userT);
