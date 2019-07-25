@@ -498,11 +498,12 @@ public class DailyActivitiesGUI {
 		lblExcess.setBounds(1266, 213, 69, 20);
 		frame.getContentPane().add(lblExcess);
 	}
+
 	/**
-	* in this method , the values of progress bar is set 
-	* the value of progress bar is set according to the value in text_field * MIN_PER_HOUR
-	* color of progress bar is changed according to range of value.
-	*/
+	 * in this method , the values of progress bar is set 
+	 * the value of progress bar is set according to the value in text_field * MIN_PER_HOUR
+	 * color of progress bar is changed according to range of value.
+	 */
 	private void setProgress()
 	{
 		
