@@ -13,7 +13,9 @@ import com.csis3275.Entities.Admin;
 /**
  * 
  * @author harpreet Kaur
+ * student id:300288768
  *
+ *Testing Admin Class
  */
 class AdminTest {
      Admin a;
@@ -34,6 +36,10 @@ class AdminTest {
 	void tearDown() throws Exception {
 	}
 	
+	/**
+	 * Testing admin_id
+	 */
+	
 	@Test
 	void testAdminId() {
 		String expectedAdminId="Admin";
@@ -42,12 +48,20 @@ class AdminTest {
 		
 	}
 	
+	/**
+	 * Testing admin_Name
+	 */
+	
 	@Test
 	void testAdminName() {
 		String expectedAdminName="Admin";
 		a.setAdminName("Admin");
 		assertEquals(expectedAdminName, a.getAdminName());
 	}
+	
+	/**
+	 * Testing admin_Password
+	 */
 	
 	@Test
 	void testAdminPassword() {
