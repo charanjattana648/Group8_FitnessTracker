@@ -12,6 +12,11 @@ import com.csis3275.Controller.ValidateDailyActivity;
 import com.csis3275.Entities.DailyActivity;
 import com.csis3275.Entities.User;
 
+/**
+ * 
+ * @author harpreet kaur
+ *
+ */
 class ValidateDailyActivityTest {
 
 	DailyActivity da;
@@ -84,7 +89,16 @@ class ValidateDailyActivityTest {
 	@Test
 	void validateHourandMintFormattest() {
 		
-		DailyActivity da=vda.validate("7", "67", "", "3", "12", "2", "24", "2","34", "240", "150.0", "20.0", "8", "30");
+		DailyActivity da=vda.validate("7", "67", "6", "3", "12", "2", "24", "2","34", "240", "150.0", "20.0", "8", "30");
+		
+		assertNull(da);	
+		
+	}
+	
+	@Test
+	void validateHourandMintFormatNegativetest() {
+		
+		DailyActivity da=vda.validate("-7", "67", "6", "3", "12", "2", "24", "2","34", "240", "150.0", "20.0", "8", "30");
 		
 		assertNull(da);	
 		
