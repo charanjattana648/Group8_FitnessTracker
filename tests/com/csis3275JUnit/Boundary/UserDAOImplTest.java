@@ -61,7 +61,7 @@ class UserDAOImplTest {
 		u.setUserLastName("Kaur");
 		u.setUserEmail("hkp@gmail.com");
 		u.setUserGender("Female");
-		u.setUserPassword("happy");
+		u.setUserPassword("happy123");
 		u.setInstructor("User");
 		u.setUserAge(25);
 	}
@@ -140,8 +140,8 @@ class UserDAOImplTest {
 	@Test
 	void testUserLogin()
 	{
-		String 	CurrentEmail="harpreetkaurh8@gmail.com";
-		String CurentPass="happy";
+		String 	CurrentEmail="user@gmail.com";
+		String CurentPass="csis3275";
 		boolean isvalidUser=ud.checkUEPass(CurrentEmail, CurentPass);
 		assertEquals(true, isvalidUser);
 	}
@@ -153,7 +153,7 @@ class UserDAOImplTest {
 	@Test
 	void testInstructorLogin()
 	{
-		String 	CurrentEmail="hkk@gmail.com";
+		String 	CurrentEmail="instructor@gmail.com";
 		String CurentPass="csis3275";
 		boolean isvalidInstructor=ud.checkInstrucorEPass(CurrentEmail, CurentPass);
 		assertEquals(true, isvalidInstructor);
