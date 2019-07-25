@@ -15,6 +15,7 @@ import com.csis3275.Entities.User;
 /**
  * 
  * @author harpreet kaur
+ * student id:300288768
  *
  */
 class ValidateDailyActivityTest {
@@ -27,11 +28,6 @@ class ValidateDailyActivityTest {
 		da=new DailyActivity();
 		vda=new ValidateDailyActivity();
 	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-	}
-	
 
 		
 		int expectectsleepHour=7;
@@ -49,7 +45,9 @@ class ValidateDailyActivityTest {
 		int expectedworkHour=8;
 		int expectedtxtworkMinute=30;
 		
-	
+	/**
+	 * Testing DailyActivity,when user fills correct input without any exception 
+	 */
 
 	@Test
 	void validateInfotest() {
@@ -76,7 +74,9 @@ class ValidateDailyActivityTest {
 		
 		
 	}
-	
+	/**
+	 * Testing DailyActivity , when one of the field is empty
+	 */
 	@Test
 	void validateEmptyInfotest() {
 		
@@ -85,6 +85,9 @@ class ValidateDailyActivityTest {
 		assertNull(da);	
 		
 	}
+	/**
+	 * Testing DailyActivity , when Hours is greater than 24 or minutes are greater than 60.
+	 */
 	
 	@Test
 	void validateHourandMintFormattest() {
@@ -94,6 +97,10 @@ class ValidateDailyActivityTest {
 		assertNull(da);	
 		
 	}
+	
+	/**
+	 * Testing DailyActivity , when Hours is in negative or minutes are in negative.
+	 */
 	
 	@Test
 	void validateHourandMintFormatNegativetest() {
