@@ -112,7 +112,7 @@ class UserDietDAOImplTest {
 	@Test
 	void test_deleteUserDiet()
 	{ 	
-		ud=udI.getUserDiet(105);
+		ud=udI.getUserDiet(130);
 		udI.deleteUserDiet(ud);
 		assertNotNull(udI);
 		assertNotNull(dI);

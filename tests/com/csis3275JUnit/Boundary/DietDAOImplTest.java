@@ -131,7 +131,7 @@ class DietDAOImplTest {
 	@Test
 	void test_deleteMeal()
 	{
-		d=dI.getDiet(84);		
+		d=dI.getDiet(129);		
 		assertNotNull(dI.getDiet(d.getId()));
 		dI.deleteDiet(d);
 		assertNotNull(dI);

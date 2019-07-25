@@ -77,7 +77,7 @@ class BodyMeasurementsDAOImplTest {
 	@Test
 	void testGetBody()
 	{
-		int id = 16;
+		int id = 116;
 	    body = bodyDao.getBodyData(id);
 		assertNotNull(body);
 	    assertEquals(id, body.getId());
