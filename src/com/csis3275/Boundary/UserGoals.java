@@ -706,15 +706,5 @@ public class UserGoals {
 		btnAddValues.setBounds(331, 416, 137, 35);
 		frame.getContentPane().add(btnAddValues);
 		
-		btnPostWorkout = new JButton("Post Workout");
-		btnPostWorkout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				PostWorkoutGUI.main(currentUEmail);
-			}
-		});
-		btnPostWorkout.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnPostWorkout.setBounds(663, 416, 137, 35);
-		frame.getContentPane().add(btnPostWorkout);
-		
 	}
 }
