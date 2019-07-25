@@ -54,12 +54,10 @@ class DietDAOImplTest {
 			System.err.println("Error : " + e.getMessage());
 		}
 	}
-
-	@AfterEach
-	void tearDown() throws Exception {
 	
-	}
-	
+	/**
+	 * testing Session factory 
+	 */
 	@Test
 	void test_Session_factory() {	
 		
@@ -74,6 +72,9 @@ class DietDAOImplTest {
 		factory.close();
 	}
 	
+	/**
+	 * setting diet Data. 
+	 */
 	public void dietData()
 	{
 		d.setCalories(10);
@@ -92,6 +93,9 @@ class DietDAOImplTest {
 		d.setIron(2.4);
 		d.setAuthor("Charan");
 	}
+	/**
+	 * testing addMeal method.
+	 */
 	@Test
 	void test_addMeal()
 	{
@@ -99,16 +103,20 @@ class DietDAOImplTest {
 		int newDietId=dI.addMeal(d);
 		assertNotEquals(0, newDietId);
 	}
+	/**
+	 * testing getMeal method.
+	 */
 	@Test
 	void test_getMeal()
 	{
 		int id=7;
 	    d=dI.getDiet(id);
 		assertNotNull(d);
-	    assertEquals(id, d.getId());
-	
+	    assertEquals(id, d.getId());	
 	}
-	
+	/**
+	 * testing getMealList method.
+	 */	
 	@Test
 	void test_getMealList()
 	{
@@ -117,7 +125,9 @@ class DietDAOImplTest {
 		assertNotNull(dietList);
 		assertFalse(dietList.isEmpty());
 	}
-	
+	/**
+	 * testing deleteMeal method.
+	 */	
 	@Test
 	void test_deleteMeal()
 	{
@@ -128,7 +138,9 @@ class DietDAOImplTest {
 	    assertNotNull(d);
 		assertNull(dI.getDiet(d.getId()));		
 	}
-	
+	/**
+	 * testing UpdateDiet method.
+	 */	
 	@Test
 	void test_UpdateDiet()
 	{
@@ -140,35 +152,42 @@ class DietDAOImplTest {
 	    assertNotNull(d);
 	    assertEquals(foodName, dI.getDiet(82).getFoodName());
 	}
-	
+	/**
+	 * testing mealTypeList method.
+	 */	
 	@Test
 	void test_mealTypeList()
 	{
 		ArrayList<String> mealTypeList = new ArrayList<String>();
 		mealTypeList=dI.getMealTypeList();	
 		assertNotNull(mealTypeList);
-		assertFalse(mealTypeList.isEmpty());		
-		
+		assertFalse(mealTypeList.isEmpty());			
 	}
+	/**
+	 * testing deleteMeal method.
+	 */	
 	@Test
 	void test_foodTypeList()
 	{
 		ArrayList<String> foodTypeList = new ArrayList<String>();
 		foodTypeList=dI.getFoodTypeList();
 		assertNotNull(foodTypeList);
-		assertFalse(foodTypeList.isEmpty());
-		
+		assertFalse(foodTypeList.isEmpty());		
 	}
+	/**
+	 * testing foodCategoryList method.
+	 */	
 	@Test
 	void test_foodCategoryList()
 	{
 		ArrayList<String> foodCategoryList = new ArrayList<String>();
 	    foodCategoryList=dI.getFoodCategoryList();
 		assertNotNull(foodCategoryList);
-		assertFalse(foodCategoryList.isEmpty());
-		
-		
+		assertFalse(foodCategoryList.isEmpty());		
 	}
+	/**
+	 * testing authorList method.
+	 */	
 	@Test
 	void test_authorList()
 	{
@@ -178,7 +197,9 @@ class DietDAOImplTest {
 		assertFalse(authorList.isEmpty());		
 	}
 	
-	
+	/**
+	 * testing FilteredMealTypeList method.
+	 */	
 	@Test
 	void test_FilteredMealTypeList()
 	{
@@ -188,7 +209,9 @@ class DietDAOImplTest {
 		assertNotNull(filteredList);
 		assertFalse(filteredList.isEmpty());		
 	}
-	
+	/**
+	 * testing FilterFoodCategoryList method.
+	 */		
 	@Test
 	void test_FilterFoodCategoryList()
 	{
@@ -198,6 +221,9 @@ class DietDAOImplTest {
 		assertNotNull(filteredList);
 		assertFalse(filteredList.isEmpty());
 	}
+	/**
+	 * testing FilteredauthorList method.
+	 */	
 	@Test
 	void test_FilteredauthorList()
 	{
@@ -207,6 +233,9 @@ class DietDAOImplTest {
 		assertNotNull(filteredList);
 		assertFalse(filteredList.isEmpty());
 	}
+	/**
+	 * testing FilteredfoodTypeList method.
+	 */
 	@Test
 	void test_FilteredfoodTypeList()
 	{
@@ -216,7 +245,9 @@ class DietDAOImplTest {
 		assertNotNull(filteredList);		
 		assertFalse(filteredList.isEmpty());
 	}
-	
+	/**
+	 * testing DietOrderedList method.
+	 */
 	@Test
 	void test_DietOrderedList()
 	{

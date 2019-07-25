@@ -26,7 +26,9 @@ class DailyActivityDAOImplTest {
 	DailyActivity d;
 	DailyActivityDAOImpl dImp;
 	SessionFactory factory = null;
-
+	/**
+	 * @throws java.lang.Exception
+	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		dI=new DietDAOImpl();
@@ -35,12 +37,18 @@ class DailyActivityDAOImplTest {
 		factory=dI.getFactory();
 	}
 	
+	/**
+	 * testing Session factory.
+	 */
 	@Test
 	void test_Session_factory() {			
 		assertNotNull(dI);
 		assertNotNull(factory, "factory should be null");
 	}
 
+	/**
+	 * addDailyActivity sets DailyActivity
+	 */
 	public void addDailyActivity() {
 		d.setId(5);
 		d.setDate("07/21/2019");
@@ -62,6 +70,9 @@ class DailyActivityDAOImplTest {
 		d.setWorkMinute(45);
 	}
 
+	/**
+	 * testing addDailyActivities method.
+	 */
 	@Test
 	void testDailyActivityAdd() {
 		addDailyActivity();
@@ -71,7 +82,9 @@ class DailyActivityDAOImplTest {
 		assertNotNull(record);
 		assertNotEquals(0, record);
 	}
-	
+	/**
+	 * testing getDailyActivities method.
+	 */
 	@Test
 	void testgetDailyActivity() {
 		String expectedDate="07/23/2019";
@@ -82,7 +95,9 @@ class DailyActivityDAOImplTest {
 		assertEquals(expectedUserEmail, daList.get(0).getUserEmail());
 		
 	}
-	
+	/**
+	 * testing getDailyActivitiesList method.
+	 */
 	@Test
 	void testgetDailyActivityList() {
 		

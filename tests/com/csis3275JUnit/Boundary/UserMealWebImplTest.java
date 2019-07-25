@@ -15,7 +15,8 @@ import com.csis3275.Entities.Meals;
 
 /**
  * @author Charanpreet Singh
- *
+ * UserMealWebImplTest Test
+ * Test for UserMealWebImpl which Interacting with Rapid API.
  */
 class UserMealWebImplTest {
 	UserMealWebImpl umI;
@@ -27,11 +28,17 @@ class UserMealWebImplTest {
 	void setUp() throws Exception {
 		umI=new UserMealWebImpl();
 	}
+	/**
+	 * testing instance.
+	 */
 
 	@Test
 	void test_instance() {
 		assertNotNull(umI);
 	}
+	/**
+	 * testing JsonMealResult.
+	 */
 	
 	@Test
 	void test_JsonMealResult() {
@@ -39,6 +46,9 @@ class UserMealWebImplTest {
 		assertNotNull(umI);
 		assertNotNull(res);
 	}
+	/**
+	 * testing getmeals() method.
+	 */
 	
 	@Test
 	void test_getmeals() {
@@ -46,6 +56,9 @@ class UserMealWebImplTest {
 		assertNotNull(umI);
 		assertNotNull(mealsList);
 	}
+	/**
+	 * testing getNutrients() method.
+	 */
 	
 	@Test
 	void test_getNutrients() {

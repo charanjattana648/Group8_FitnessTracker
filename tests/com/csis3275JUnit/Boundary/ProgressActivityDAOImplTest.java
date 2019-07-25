@@ -27,7 +27,8 @@ import com.csis3275.Entities.UserDiet;
 
 /**
  * @author Charanpreet Singh
- *
+ * ProgressActivityDAOImplTest Test
+ * Testing ProgressActivityDAOImpl which interacts with FitnessTrackerdb Database.
  */
 class ProgressActivityDAOImplTest {
 
@@ -38,8 +39,6 @@ class ProgressActivityDAOImplTest {
 	UserDietDAOImpl udI;
 	String userEmail="csis@gmail.com";
 	SessionFactory factory = null;
-	Session sx = null;
-	Transaction tx = null;
 
 	/**
 	 * @throws java.lang.Exception
@@ -50,20 +49,12 @@ class ProgressActivityDAOImplTest {
 		 paI=new ProgressActivityDAOImpl();
 		 factory=dI.getFactory();
 	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterEach
-	void tearDown() throws Exception {
-		if(sx!=null)
-		 sx.close();
-		factory.close();
-	}
 	
+	/**
+	 * testing progress method.
+	 */	
 	public void progress()
 	{
-
 		pa=new ProgressActivity();		
 		Date d=new Date();
 		SimpleDateFormat sdf=new SimpleDateFormat();
@@ -73,7 +64,9 @@ class ProgressActivityDAOImplTest {
 		pa.setCaloriesBurned(50);
 		pa.setCaloriesConsumed(220);
 	}
-
+	/**
+	 * testing caloriesConsumed method.
+	 */	
 	@Test
 	void test_caloriesConsumed() {
 
@@ -83,7 +76,9 @@ class ProgressActivityDAOImplTest {
 		assertNotNull(udList);
 		assertFalse(udList.isEmpty());
 	}
-
+	/**
+	 * testing Save progress method.
+	 */	
 	@Test
 	void test_SaveProgress() {
 		progress();
@@ -93,7 +88,9 @@ class ProgressActivityDAOImplTest {
 		assertNotNull(key);
 		assertFalse(key.isEmpty());
 	}
-
+	/**
+	 * testing progress method.
+	 */	
 	@Test
 	void test_Progress() {
 		ArrayList<ProgressActivity> paList=new ArrayList<ProgressActivity>();

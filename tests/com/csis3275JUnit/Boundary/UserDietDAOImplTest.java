@@ -23,7 +23,8 @@ import com.csis3275.Entities.UserDiet;
 
 /**
  * @author Charanpreet Singh
- *  
+ * UserDietDAOImplTest Test
+ *  Testing UserDietDAOImpl which is interacting with FitnessTrackerdb database.
  */
 class UserDietDAOImplTest {
 	DietDAOImpl dI;
@@ -42,6 +43,9 @@ class UserDietDAOImplTest {
 		 udI=new UserDietDAOImpl();
 		 factory=dI.getFactory();
 	}
+	/**
+	 * testing Session factory.
+	 */
 
 	@Test
 	void test_Session_factory() {			
@@ -49,6 +53,9 @@ class UserDietDAOImplTest {
 		assertNotNull(factory, "factory should be null");
 	}
 	
+	/**
+	 * testing userDietList method.
+	 */
 	@Test
 	void test_userDietList()
 	{
@@ -59,6 +66,9 @@ class UserDietDAOImplTest {
 		assertNotNull(dI);
 		assertFalse(userDietList.isEmpty());
 	}
+	/**
+	 * testing UserDietdate method.
+	 */
 	@Test
 	void test_UserDietdate()
 	{		
@@ -68,8 +78,9 @@ class UserDietDAOImplTest {
 		assertNotNull(dI);
 		assertFalse(dateList.isEmpty());
 	}
-	
-	
+	/**
+	 * testing addUserDiet method.
+	 */	
 	@Test
 	void test_addUserDiet()
 	{
@@ -82,7 +93,9 @@ class UserDietDAOImplTest {
 		assertNotEquals(0, newuD);
 	}
 	
-	
+	/**
+	 * testing getUserDiet method.
+	 */	
 	@Test
 	void test_getUserDiet()
 	{ 
@@ -93,7 +106,9 @@ class UserDietDAOImplTest {
 		assertNotNull(ud);
 		assertEquals(id, ud.getId());
 	}
-	
+	/**
+	 * testing deleteUserDiet method.
+	 */	
 	@Test
 	void test_deleteUserDiet()
 	{ 	
