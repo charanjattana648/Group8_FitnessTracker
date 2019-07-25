@@ -10,10 +10,19 @@ import org.hibernate.Transaction;
 import com.csis3275.Entities.CaloriesConsumed;
 import com.csis3275.Entities.ProgressActivity;
 import com.csis3275.Entities.UserDiet;
-
+/**
+ * 
+ * @author Charanpreet Singh
+ * 
+ */
 public class ProgressActivityDAOImpl {
-private DietDAOImpl dI=new DietDAOImpl();
 	
+private DietDAOImpl dI=new DietDAOImpl();
+/**
+ * getCaloriesConsumed() method is used to get the calories consumed by passing email.
+ * @param userEmail is String and it is unique for every person. by passing userEmail we can get all data stored by that email.
+ * @return udList which is ArrayList<Double> of double values.
+ */
 public ArrayList<Double> getCaloriesConsumed(String userEmail)
 	{
 		SessionFactory fx=null;
@@ -41,6 +50,11 @@ public ArrayList<Double> getCaloriesConsumed(String userEmail)
 		return udList;
 	}
 
+/**
+ * saveProgress() is a method used to save progress of user.
+ * @param pa is the object of progressActivity.
+ * @return String
+ */
 public String saveProgress(ProgressActivity pa)
 {
 	SessionFactory fx=null;
@@ -67,7 +81,10 @@ public String saveProgress(ProgressActivity pa)
 	}
 	return key;
 }
-
+/**
+ * updateProgress() is a method used to update progress of user.
+ * @param pa is the object of progressActivity.
+ */
 public void updateProgress(ProgressActivity pa)
 {
 	SessionFactory fx=null;
@@ -91,6 +108,11 @@ public void updateProgress(ProgressActivity pa)
 		fx.close();
 	}
 }
+/**
+ * 
+ * @param userEmail is a String which is userId.
+ * @return paList  which is ArrayList<ProgressActivity> of ProgressActivity.
+ */
 
 public ArrayList<ProgressActivity> getProgress(String userEmail)
 {
