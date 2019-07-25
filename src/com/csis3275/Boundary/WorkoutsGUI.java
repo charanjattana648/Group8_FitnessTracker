@@ -44,6 +44,7 @@ public class WorkoutsGUI {
 	private BodyMeasurements bodyMeasurements;
 	private JButton btnPostWorkouts;
 	private JButton btnDietPlan;
+	private JButton btnUserGoals;
 
 	/**
 	 * Launch the application.
@@ -155,6 +156,16 @@ public class WorkoutsGUI {
 		btnDietPlan.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnDietPlan.setBounds(272, 390, 139, 30);
 		frame.getContentPane().add(btnDietPlan);
+		
+		btnUserGoals = new JButton("User Goals");
+		btnUserGoals.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				UserGoals.main(currentUser);
+			}
+		});
+		btnUserGoals.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnUserGoals.setBounds(446, 390, 139, 30);
+		frame.getContentPane().add(btnUserGoals);
 		
 		if(currentUser[1].equalsIgnoreCase("User"))
 		{
