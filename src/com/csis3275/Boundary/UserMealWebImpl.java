@@ -13,10 +13,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.csis3275.Entities.Meals;
-
+/**
+ * 
+ * @author Charanpreet Singh
+ * UserMealWebImpl is used to fetch data from Rapid API.
+ */
 public class UserMealWebImpl {
 	static JSONArray jsonArray;
 	static JSONObject jsonObj;
+	
+	/**
+	 * getJsonMealResult() is a method which interacts with Rapid API and gets required data which is user meal.
+	 * @param caloriesReq is a double value 
+	 * @return Json data in String format if successfully connected else will return null.
+	 */
 	
 	public static String getJsonMealResult(double caloriesReq)
 	{
@@ -60,7 +70,11 @@ public class UserMealWebImpl {
 		}
 		return null;
 	}
-	
+	/**
+	 * getmeals() method return mealList.
+	 * @param caloriesReq is calorie required of a double type, which user will enter according to his/her need.
+	 * @return mealList of ArrayList<Meals> of Meals object.
+	 */
 	public static ArrayList<Meals> getmeals(double caloriesReq)
 	{
 		String response=getJsonMealResult(caloriesReq);
@@ -90,7 +104,11 @@ public class UserMealWebImpl {
 		}
 		return null;	
 	}
-	
+	/**
+	 * getNutrients() method returns Nutrients.
+	 * @param caloriesReq is calorie required of a double type, which user will enter according to his/her need.
+	 * @return meals which is of Meals type Object and will have nutrients.
+	 */
 	public static Meals getNutrients(double caloriesReq)
 	{
 		String response=getJsonMealResult(caloriesReq);
@@ -113,24 +131,6 @@ public class UserMealWebImpl {
 			
 		}
 		return null;
-	}
-	
-	public static void main(String[] args) {
-		ArrayList<Meals> ml=getmeals(2000);
-		for(int i=0;i<ml.size();i++)
-		{
-			System.out.println(ml.get(i).getId());
-			System.out.println(ml.get(i).getTitle());
-			System.out.println(ml.get(i).getReadyInMinutes());
-			System.out.println(ml.get(i).getServings());
-			System.out.println("\n-------------------------------------------------------------\n");
-		}
-		
-		Meals m=getNutrients(2000);
-		System.out.println(m.getCalories()+"");
-		System.out.println(m.getCarbohydrates()+"");
-		System.out.println(m.getFat()+"");
-		System.out.println(m.getProtein()+"");
 	}
 	
 
