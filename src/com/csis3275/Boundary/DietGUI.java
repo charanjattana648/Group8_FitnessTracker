@@ -722,6 +722,8 @@ public class DietGUI {
 			scrollPaneUserDietCT.setVisible(false);
 			
 		}else {
+			lblDate.setVisible(false);
+			comboBoxDate.setVisible(false);
 			DietPanel.setVisible(true);
 			scrollPaneUserT.setVisible(false);
 			panelNutritions.setVisible(false);

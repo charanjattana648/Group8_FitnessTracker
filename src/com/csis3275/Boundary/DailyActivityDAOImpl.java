@@ -104,7 +104,7 @@ public ArrayList<DailyActivity> getDailyActivitiesList(String email) {
 		fx=dI.getFactory();
 		sx=fx.openSession();
 		tx=sx.beginTransaction();		
-		daList=(ArrayList<DailyActivity>) sx.getNamedQuery("getDailyActivityListQuery").setParameter("curremail", email).list();
+		daList=(ArrayList<DailyActivity>) sx.getNamedQuery("getDailyActivityListQuery").setParameter("curremail", email).setMaxResults(7).list();
 		tx.commit();
 		
 		}catch(HibernateException ex) {

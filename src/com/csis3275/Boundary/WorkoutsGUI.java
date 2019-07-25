@@ -171,8 +171,10 @@ public class WorkoutsGUI {
 		{
 			btnPostWorkouts.setVisible(false);
 			
+			
 		}else {
 			btnPostWorkouts.setVisible(true);
+			btnUserGoals.setVisible(false);
 		}
 	
 		updateTable();
