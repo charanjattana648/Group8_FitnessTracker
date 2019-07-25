@@ -68,6 +68,30 @@ public String saveProgress(ProgressActivity pa)
 	return key;
 }
 
+public void updateProgress(ProgressActivity pa)
+{
+	SessionFactory fx=null;
+	Session sx=null;
+	Transaction tx=null;
+	try {
+		fx=dI.getFactory();
+		sx=fx.openSession();
+		tx=sx.beginTransaction();
+		sx.update(pa);		
+		tx.commit();		
+	}catch(HibernateException he)
+	{
+		if(tx!=null)
+		{
+			tx.rollback();
+		}
+		System.err.println(he.getMessage());
+	}finally {
+		sx.close();
+		fx.close();
+	}
+}
+
 public ArrayList<ProgressActivity> getProgress(String userEmail)
 {
 	SessionFactory fx=null;

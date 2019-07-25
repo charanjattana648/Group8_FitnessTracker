@@ -2,6 +2,7 @@ package com.csis3275.Entities;
 
 import java.util.Vector;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
@@ -15,10 +16,19 @@ public class ProgressActivity {
 
 	@Id
 	private String date;
+	@Column(name="userEmail",nullable=false)
 	private String userEmail;
 	private double currentWeight;
 	private double caloriesConsumed;
 	private double caloriesBurned;
+	private double caloriesDifference;
+	
+	public double getCaloriesDifference() {
+		return caloriesDifference;
+	}
+	public void setCaloriesDifference(double caloriesDifference) {
+		this.caloriesDifference = caloriesDifference;
+	}
 	public String getDate() {
 		return date;
 	}
@@ -59,6 +69,7 @@ public class ProgressActivity {
 		v.add(getDate());
 		v.add(getCaloriesConsumed());
 		v.add(getCaloriesBurned());
+		v.add(getCaloriesDifference());
 		return v;
 	}
 	
