@@ -137,29 +137,4 @@ public class BodyMeasurementsDAOImpl implements IBodyMeasurementsDAO {
 		return bList;
 	}
 	
-public void updateBodydata(BodyMeasurements body) {
-	SessionFactory sf = null;
-		Session session = null;
-		Transaction transaction = null;
-		
-		try {
-			sf = DietDAOImpl.getFactory();
-			session = sf.openSession();
-			transaction = session.beginTransaction();
-			
-			session.update(body);
-			transaction.commit();
-		}
-		catch(HibernateException hx) {
-			if(transaction != null) {
-				transaction.rollback();
-				System.err.println("Error: " + hx.getMessage());
-			}
-		}
-		finally {
-			sf.close();
-			session.close();
-		}
-	}
-
 }
