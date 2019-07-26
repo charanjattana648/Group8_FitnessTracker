@@ -76,7 +76,7 @@ public class WorkoutsGUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1027, 485);
+		frame.setBounds(100, 100, 1183, 769);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -147,15 +147,6 @@ public class WorkoutsGUI {
 		btnPostWorkouts.setBounds(44, 390, 139, 30);
 		frame.getContentPane().add(btnPostWorkouts);
 		
-		JButton btnViewDietPlan = new JButton("View Diet Plan");
-		btnViewDietPlan.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DietGUI.main(currentUser);
-				
-			}
-		});
-		btnViewDietPlan.setBounds(186, 390, 106, 30);
-		frame.getContentPane().add(btnViewDietPlan);
 		btnDietPlan = new JButton("Diet Plan");
 		btnDietPlan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -163,7 +154,7 @@ public class WorkoutsGUI {
 			}
 		});
 		btnDietPlan.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnDietPlan.setBounds(272, 390, 139, 30);
+		btnDietPlan.setBounds(326, 390, 139, 30);
 		frame.getContentPane().add(btnDietPlan);
 		
 		btnUserGoals = new JButton("User Goals");
@@ -173,7 +164,7 @@ public class WorkoutsGUI {
 			}
 		});
 		btnUserGoals.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnUserGoals.setBounds(446, 390, 139, 30);
+		btnUserGoals.setBounds(526, 390, 139, 30);
 		frame.getContentPane().add(btnUserGoals);
 		
 		if(currentUser[1].equalsIgnoreCase("User"))

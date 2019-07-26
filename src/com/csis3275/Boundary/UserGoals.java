@@ -149,7 +149,7 @@ public class UserGoals {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1189, 705);
+		frame.setBounds(100, 100, 1183, 769);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
