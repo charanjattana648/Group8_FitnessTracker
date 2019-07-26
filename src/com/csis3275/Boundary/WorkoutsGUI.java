@@ -31,6 +31,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * WorkoutsGUI for getting and displaying workouts in the JTable
+ * @author Gurinder Singh 300289450
+ *
+ */
 public class WorkoutsGUI {
 
 	private JFrame frame;
@@ -181,6 +186,9 @@ public class WorkoutsGUI {
 		
 	}
 	
+	/**
+	 * update the JTable with list of workouts
+	 */
 	@SuppressWarnings("rawtypes")
 	public void updateTable() {
 		
@@ -250,6 +258,9 @@ public class WorkoutsGUI {
 		table.getSelectionModel().addListSelectionListener(lsl);
 	}
 	
+	/**
+	 * Get all the Workouts from the spring boot service
+	 */
 	public void getExercises() {
 		String url = "http://localhost:8080/exercises";
 		try {
@@ -279,6 +290,11 @@ public class WorkoutsGUI {
 		}
 		
 	}
+	
+	/**
+	 * Vector object for displaying in the JTable
+	 * @return vector object
+	 */
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public ArrayList<Vector> getVector() {
