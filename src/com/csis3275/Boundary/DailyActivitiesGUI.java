@@ -5,10 +5,13 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.transaction.Transactional.TxType;
 
+import com.csis3275.Controller.ValidateDailyActivity;
 import com.csis3275.Entities.DailyActivity;
 import com.csis3275.Entities.ProgressActivity;
 
@@ -24,8 +27,14 @@ import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.UIManager;
-
+import javax.swing.ButtonGroup;
+/**
+ * 
+ * @author harpreet kaur
+ * student id:300288768
+ */
 public class DailyActivitiesGUI {
+	
 
 	private JFrame frame;
 	private JTextField sleepHrstext;
@@ -49,6 +58,7 @@ public class DailyActivitiesGUI {
 	private JProgressBar MeditationprogressBar;
 	private DailyActivity da=new DailyActivity();
 	private DailyActivityDAOImpl daI=new DailyActivityDAOImpl();
+	
 	private static String userEmail="";
 	private int walkingRed=30,walkingGreen=120,walkingYellow=150;
 	private int exerciseRed=30,exerciseGreen=240,exerciseYellow=300;
@@ -56,10 +66,15 @@ public class DailyActivitiesGUI {
 	private int sleepRed=330,sleepGreen=540,sleepYellow=600;
 	private int waterRed=5,waterGreen=15,waterYellow=20;
 	private final int MIN_PER_HOUR=60;
+	/**
+	 * currUser Array containing 2 values
+	 */
 	static String[] currUser=new String[2];
 	private JTextField LowcolortextField;
 	private JTextField greenColortextField;
 	private JTextField yellowColortextField;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	
 
 	/**
@@ -257,10 +272,12 @@ public class DailyActivitiesGUI {
 		frame.getContentPane().add(lblDidYouConsume);
 		
 		JRadioButton eatingRdbtnYes = new JRadioButton("Yes");
+		buttonGroup.add(eatingRdbtnYes);
 		eatingRdbtnYes.setBounds(287, 495, 69, 29);
 		frame.getContentPane().add(eatingRdbtnYes);
 		
 		JRadioButton eatingRdbtnNo = new JRadioButton("No");
+		buttonGroup.add(eatingRdbtnNo);
 		eatingRdbtnNo.setBounds(470, 495, 155, 29);
 		frame.getContentPane().add(eatingRdbtnNo);
 		
@@ -313,14 +330,17 @@ public class DailyActivitiesGUI {
 		frame.getContentPane().add(lblWhichTypeOf);
 		
 		JRadioButton rdbtnActiveWork = new JRadioButton("Active work");
+		buttonGroup_1.add(rdbtnActiveWork);
 		rdbtnActiveWork.setBounds(287, 618, 122, 29);
 		frame.getContentPane().add(rdbtnActiveWork);
 		
 		JRadioButton rdbtnOfficeWork = new JRadioButton("Office work");
+		buttonGroup_1.add(rdbtnOfficeWork);
 		rdbtnOfficeWork.setBounds(439, 618, 113, 29);
 		frame.getContentPane().add(rdbtnOfficeWork);
 		
 		JRadioButton rdbtnHeavy = new JRadioButton("Heavy");
+		buttonGroup_1.add(rdbtnHeavy);
 		rdbtnHeavy.setBounds(592, 618, 87, 29);
 		frame.getContentPane().add(rdbtnHeavy);
 		
@@ -348,21 +368,28 @@ public class DailyActivitiesGUI {
 		label_7.setBounds(998, 622, 69, 20);
 		frame.getContentPane().add(label_7);
 		
-		JButton btnPreviousPage = new JButton("Exercise Activity");
+		JButton btnPreviousPage = new JButton("Diet Activity");
 		btnPreviousPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				DietGUI.main(currUser);
 				
 			}
 		});
 		btnPreviousPage.setBounds(294, 703, 153, 29);
 		frame.getContentPane().add(btnPreviousPage);
 		
+		/**
+		 * by clicking Add record button, all the data of Daily activities is recorded.
+		 * In this method the date format is also set, it will create current date
+		 * validation method is called checking all the information according to the constraints applied
+		 */
+		
 		JButton btnAddRecord = new JButton("Add Record");
 		btnAddRecord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				 setProgress();
+				
 				String workTyp="";
 				if(rdbtnActiveWork.isSelected()) {
 					workTyp="Active Work";
@@ -375,31 +402,30 @@ public class DailyActivitiesGUI {
 				Date currDate=new Date();
 				da=new DailyActivity();
 				
-				da.setDate(df.format(currDate));
-				da.setUserEmail(currUser[0]);
-				da.setSleepHour(Integer.parseInt(sleepHrstext.getText()));
-				da.setSleepMinute(Integer.parseInt(sleepMinttext.getText()));
-				da.setWaterGlass(Integer.parseInt(waterGlasstext.getText()));
-				da.setExerciseHour(Integer.parseInt(excersiseHrstext.getText()));
-				da.setExerciseMinute(Integer.parseInt(ExcersiseMinttext.getText()));
-				da.setMeditationHour(Integer.parseInt(meditationHrstext.getText()));
-				da.setMeditationMinute(Integer.parseInt(meditationMinttext.getText()));
-				da.setWalkingHour(Integer.parseInt(walkingHrstext.getText()));
-				da.setWalkingMinute(Integer.parseInt(walkingMinttext.getText()));
-				da.setExtraCalories(Double.parseDouble(eatCaltext.getText()));
-				da.setExtraProtein(Double.parseDouble(eatProteintext.getText()));
-				da.setExtraFat(Double.parseDouble(eatFatstext.getText()));
-				da.setWorkType(workTyp);
-				da.setWorkHour(Integer.parseInt(workHrstext.getText()));
-				da.setWorkMinute(Integer.parseInt(workMinttext.getText()));
-				//daI=new DailyActivityDAOImpl();
-				daI.addDailyActivities(da);
+			
+				ValidateDailyActivity vda=new ValidateDailyActivity();
+				da=vda.validate(sleepHrstext.getText(), sleepMinttext.getText(), waterGlasstext.getText(), excersiseHrstext.getText(),
+						ExcersiseMinttext.getText(), meditationHrstext.getText(), meditationMinttext.getText(), walkingHrstext.getText(), 
+						walkingMinttext.getText(), eatCaltext.getText(), eatProteintext.getText(), eatFatstext.getText(), workHrstext.getText(), workMinttext.getText());
+
+				if(da!=null)
+				{
+					 setProgress();
+					da.setDate(df.format(currDate));
+					da.setUserEmail(currUser[0]);
+					daI.addDailyActivities(da);
+					JOptionPane.showMessageDialog(null, "Your data is added Successfully.");
+				}
+				
 				
 			}
 		});
 		btnAddRecord.setBounds(468, 703, 115, 29);
 		frame.getContentPane().add(btnAddRecord);
 		
+		/**
+		 * Refresh button refresh all data and set all progress bars to 0 and textFields to 00.
+		 */
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -427,14 +453,16 @@ public class DailyActivitiesGUI {
 		});
 		btnRefresh.setBounds(614, 703, 115, 29);
 		frame.getContentPane().add(btnRefresh);
-		
+		/**
+		 * by clicking Progress Activity button, it goes to  progress activity 
+		 */
 		JButton btnNextPage = new JButton("Progress Activity");
 		btnNextPage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ProgressActivityGUI.main(currUser);
 			}
 		});
-		btnNextPage.setBounds(766, 703, 115, 29);
+		btnNextPage.setBounds(766, 703, 147, 29);
 		frame.getContentPane().add(btnNextPage);
 		
 		LowcolortextField = new JTextField();
@@ -470,7 +498,12 @@ public class DailyActivitiesGUI {
 		lblExcess.setBounds(1266, 213, 69, 20);
 		frame.getContentPane().add(lblExcess);
 	}
-	
+
+	/**
+	 * in this method , the values of progress bar is set 
+	 * the value of progress bar is set according to the value in text_field * MIN_PER_HOUR
+	 * color of progress bar is changed according to range of value.
+	 */
 	private void setProgress()
 	{
 		

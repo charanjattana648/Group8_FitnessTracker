@@ -1,6 +1,7 @@
 package com.csis3275.Entities;
 
 import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -8,11 +9,22 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+/**
+ * 
+ * @author harpreet kaur
+ * student id :300288768
+ *
+ */
+
 @Entity
 @NamedQuery(name="getDailyActivityQuery",query="select d from DailyActivity d where d.date=:currdate and d.userEmail=:curremail")
-@NamedQuery(name="getDailyActivityListQuery",query="from DailyActivity where userEmail=:curremail")
+@NamedQuery(name="getDailyActivityListQuery",query="from DailyActivity where userEmail=:curremail order by date desc")
 @Table(name="DailyActivity")
 public class DailyActivity {
+	
+	/**
+	 * Getter setter methods of DailyActivity
+	 */
 	
 	@Id
 	@GeneratedValue
@@ -35,6 +47,9 @@ public class DailyActivity {
 	private String workType;
 	private int workHour;
 	private int workMinute;
+	
+	
+	
 	public int getId() {
 		return id;
 	}

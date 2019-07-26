@@ -13,6 +13,9 @@ import com.csis3275.Entities.User;
 /**
  * 
  * @author harpreet Kaur
+ * student id:300288768
+ * 
+ * Testing User Class
  * 
  */
 class userTest {
@@ -36,41 +39,56 @@ class userTest {
 	@AfterEach
 	void tearDown() throws Exception {
 	}
-    
+    /**
+     * testing firstName
+     */
 	
 	@Test
     void userFirstName() {
-	 //fail("Not yet implemented");
 	  String expectedFirstName="harpreet";
 	  u.setUserFirstName("harpreet");
 	assertEquals(expectedFirstName,u.getUserFirstName() );
 	}
 	
+	/**
+     * testing LastName
+     */
+	
 	@Test
     void userLastName() {
-	 //fail("Not yet implemented");
 	  String expectedFirstName="kaur";
 	  u.setUserLastName("kaur");
 	assertEquals(expectedFirstName,u.getUserLastName());
 	}
 	
+	/**
+     * testing UserEmail
+     */
+	
 	@Test
     void userEmail() {
 		
-	 //fail("Not yet implemented");
 	  String expectedEmail="harpreetkaurh8@gmail.com";
 	  u.setUserEmail("harpreetkaurh8@gmail.com");
 	assertEquals(expectedEmail,u.getUserEmail());
 	}
 	
+	/**
+     * testing userAge
+     */
+	
 	@Test
     void userAge() {
-	 //fail("Not yet implemented");
+	 
 	  int expectedAge=25;
 	  u.setUserAge(25);
 	assertEquals(expectedAge,u.getUserAge());
 	}
 	
+	
+	/**
+     * testing userGender
+     */
 	@Test
     void userGender() {
 	  String expectedGender="Female";
@@ -78,12 +96,20 @@ class userTest {
 	assertEquals(expectedGender,u.getUserGender());
 	}
 	
+	/**
+     * testing userPassword
+     */
+	
 	@Test
     void userPassword() {
 	  String expectedPassword="csis3275";
 	  u.setUserPassword("csis3275");
 	assertEquals(expectedPassword,u.getUserPassword());
 	}
+	
+	/**
+     * testing typeOfUser
+     */
 	
 	@Test
     void typeOfUser() {

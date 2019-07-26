@@ -22,7 +22,9 @@ import com.csis3275.Entities.UserDiet;
 /**
  * 
  * @author harpreet kaur
- *
+ * student id:300288768
+ * 
+ * Testing UserDAOImpl class
  */
 class UserDAOImplTest {
 	DietDAOImpl dI;
@@ -42,24 +44,30 @@ class UserDAOImplTest {
 		factory=dI.getFactory();
 	}
 
-	
+	/**
+	 * testing session factory
+	 */
 
 	@Test
 	void test_Session_factory() {			
 		assertNotNull(dI);
 		assertNotNull(factory, "factory should be null");
 	}
-	
+	/**
+	 * setting values for user
+	 */
 	public void userInfo() {
 		u.setUserFirstName("harpriit");
 		u.setUserLastName("Kaur");
 		u.setUserEmail("hkp@gmail.com");
 		u.setUserGender("Female");
-		u.setUserPassword("happy");
+		u.setUserPassword("happy123");
 		u.setInstructor("User");
 		u.setUserAge(25);
 	}
-	
+	/**
+	 * testing create a new user
+	 */
 	@Test
 	void testcreateUser() {
 		userInfo();
@@ -69,6 +77,9 @@ class UserDAOImplTest {
 		assertNotNull(createuser);
 		assertNotEquals("", createuser);
 	}
+	/**
+	 * setting values for instructor
+	 */
 	
 	public void InstructorInfo() {
 		u.setUserFirstName("pawanInstruct");
@@ -79,6 +90,9 @@ class UserDAOImplTest {
 		u.setInstructor("Instructor");
 		u.setUserAge(28);
 	}
+	/**
+	 * testing create new instructor
+	 */
 	
 	@Test
 	void testcreateInstructor() {
@@ -90,6 +104,10 @@ class UserDAOImplTest {
 		assertNotEquals("", createInstructor);
 	}
 	
+	/**
+	 * setting parameters for admin
+	 */
+	
 	public void AdminInfo() {
 		
 		a.setAdminid("admin");
@@ -97,7 +115,9 @@ class UserDAOImplTest {
 		a.setAdminPassword("root");
 		
 	}
-	
+	/**
+	 * testing ,getting parameters
+	 */
 	@Test
 	void testAdmin() {
 		AdminInfo();
@@ -113,23 +133,35 @@ class UserDAOImplTest {
 				);
 	}
 	
+	/**
+	 * testing user login credentials
+	 */
+	
 	@Test
 	void testUserLogin()
 	{
-		String 	CurrentEmail="harpreetkaurh8@gmail.com";
-		String CurentPass="happy";
+		String 	CurrentEmail="user@gmail.com";
+		String CurentPass="csis3275";
 		boolean isvalidUser=ud.checkUEPass(CurrentEmail, CurentPass);
 		assertEquals(true, isvalidUser);
 	}
 	
+	/**
+	 * testing instructor login credentials
+	 */
+	
 	@Test
 	void testInstructorLogin()
 	{
-		String 	CurrentEmail="hkk@gmail.com";
+		String 	CurrentEmail="instructor@gmail.com";
 		String CurentPass="csis3275";
 		boolean isvalidInstructor=ud.checkInstrucorEPass(CurrentEmail, CurentPass);
 		assertEquals(true, isvalidInstructor);
 	}
+	
+	/**
+	 * testing admin login credentials
+	 */
 	
 	@Test
 	void testAdminLogin()

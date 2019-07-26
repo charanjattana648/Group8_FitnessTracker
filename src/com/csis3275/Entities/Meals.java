@@ -7,9 +7,12 @@ import java.util.Vector;
 
 /**
  * @author charanpreet Singh
- *
+ * Meals Object for WebService.
  */
 public class Meals {
+	/**
+	 * Attributes along with getters and setters.
+	 */
 private int id;
 private String title;
 private int readyInMinutes;
@@ -68,6 +71,10 @@ public void setCarbohydrates(double carbohydrates) {
 	this.carbohydrates = carbohydrates;
 }
 
+/**
+ * getMealVector() to convert data to vector object.
+ * @return vector object.
+ */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public Vector getMealVector()
 {

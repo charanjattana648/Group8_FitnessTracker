@@ -42,6 +42,9 @@ public class WorkoutsGUI {
 	private JTextArea textAreaExerciseDescription;
 	static String[] currentUser = new String[2];
 	private BodyMeasurements bodyMeasurements;
+	private JButton btnPostWorkouts;
+	private JButton btnDietPlan;
+	private JButton btnUserGoals;
 
 	/**
 	 * Launch the application.
@@ -50,6 +53,7 @@ public class WorkoutsGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					currentUser[0] = args[0];
 					currentUser[1] = args[1];
 					WorkoutsGUI window = new WorkoutsGUI();
 					window.frame.setVisible(true);
@@ -105,6 +109,7 @@ public class WorkoutsGUI {
 			}
 		};
 		
+	
 		JLabel lblWorkouts = new JLabel("Workouts");
 		lblWorkouts.setHorizontalAlignment(SwingConstants.CENTER);
 		lblWorkouts.setFont(new Font("Open Sans", Font.BOLD, 18));
@@ -131,14 +136,15 @@ public class WorkoutsGUI {
 		textAreaExerciseDescription.setBounds(688, 112, 300, 260);
 		frame.getContentPane().add(textAreaExerciseDescription);
 		
-		JButton btnPostWorkouts = new JButton("Post Workouts");
+		btnPostWorkouts = new JButton("Post Workouts");
+		btnPostWorkouts.setVisible(false);
 		btnPostWorkouts.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				PostWorkoutGUI.main(currentUser);
 			}
 		});
-		btnPostWorkouts.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnPostWorkouts.setBounds(44, 390, 123, 30);
+		btnPostWorkouts.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnPostWorkouts.setBounds(44, 390, 139, 30);
 		frame.getContentPane().add(btnPostWorkouts);
 		
 		JButton btnViewDietPlan = new JButton("View Diet Plan");
@@ -150,6 +156,35 @@ public class WorkoutsGUI {
 		});
 		btnViewDietPlan.setBounds(186, 390, 106, 30);
 		frame.getContentPane().add(btnViewDietPlan);
+		btnDietPlan = new JButton("Diet Plan");
+		btnDietPlan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DietGUI.main(currentUser);
+			}
+		});
+		btnDietPlan.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnDietPlan.setBounds(272, 390, 139, 30);
+		frame.getContentPane().add(btnDietPlan);
+		
+		btnUserGoals = new JButton("User Goals");
+		btnUserGoals.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				UserGoals.main(currentUser);
+			}
+		});
+		btnUserGoals.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnUserGoals.setBounds(446, 390, 139, 30);
+		frame.getContentPane().add(btnUserGoals);
+		
+		if(currentUser[1].equalsIgnoreCase("User"))
+		{
+			btnPostWorkouts.setVisible(false);
+			
+			
+		}else {
+			btnPostWorkouts.setVisible(true);
+			btnUserGoals.setVisible(false);
+		}
 	
 		updateTable();
 		

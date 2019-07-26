@@ -8,10 +8,22 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.csis3275.Entities.DailyActivity;
-
+/**
+ * 
+ * @author harpreet kaur
+ * student id : 300288768
+ */
 public class DailyActivityDAOImpl {
 	
+	
 	DietDAOImpl dI=new DietDAOImpl();
+	
+	/**
+	 * 
+	 * @param da instance of DailyActivity class
+	 * @return id  of user
+	 * In this method the user can add record of daily Activities. 
+	 */
 	
 	public int addDailyActivities(DailyActivity da) {
 		
@@ -39,6 +51,13 @@ public class DailyActivityDAOImpl {
 		return id;
 		
 	}
+	
+	/**
+	 * 
+	 * @param date  the current date when daily activity is added
+	 * @param email of user
+	 * @return daList the list of daily activities by date and email of user.
+	 */
 public ArrayList<DailyActivity> getDailyActivities(String date,String email) {
 	
 	SessionFactory fx=null;
@@ -68,7 +87,11 @@ public ArrayList<DailyActivity> getDailyActivities(String date,String email) {
 		
 	}
 	
-
+    /**
+     * 
+     * @param email of user
+     * @return daList the list of daily activities by email of user
+     */
 
 public ArrayList<DailyActivity> getDailyActivitiesList(String email) {
 		
@@ -81,7 +104,7 @@ public ArrayList<DailyActivity> getDailyActivitiesList(String email) {
 		fx=dI.getFactory();
 		sx=fx.openSession();
 		tx=sx.beginTransaction();		
-		daList=(ArrayList<DailyActivity>) sx.getNamedQuery("getDailyActivityListQuery").setParameter("curremail", email).list();
+		daList=(ArrayList<DailyActivity>) sx.getNamedQuery("getDailyActivityListQuery").setParameter("curremail", email).setMaxResults(7).list();
 		tx.commit();
 		
 		}catch(HibernateException ex) {

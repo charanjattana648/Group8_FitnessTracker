@@ -14,29 +14,26 @@ import com.csis3275.Entities.DailyActivity;
 /**
  * 
  * @author harpreet kaur
- *
+ * student id:300288768
+ * 
+ * Testing all getter setter of DailyActivity class
  */
+
 
 class DailyActivityTest {
 	
 	DailyActivity da;
 
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-	}
 
 	@BeforeEach
 	void setUp() throws Exception {
 		da=new DailyActivity();
 	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-	}
+   
+	/**
+	 * testing id
+	 */
+	
 
 	@Test
 	void testid() {
@@ -48,6 +45,10 @@ class DailyActivityTest {
 		
 	}
 	
+	/**
+	 * testing date
+	 */
+	
 	@Test
 	void testdate() {
 		
@@ -58,6 +59,10 @@ class DailyActivityTest {
 		
 	}
 	
+	/**
+	 * testing userEmail
+	 */
+	
 	@Test
 	void testuserEmail() {
 		String expectedEmail="hk@gmail.com";
@@ -66,6 +71,10 @@ class DailyActivityTest {
 		assertEquals(expectedEmail, da.getUserEmail());
 		
 	}
+	
+	/**
+	 * testing sleepHours
+	 */
 	
 	@Test
 	void testsleepHours() {
@@ -76,6 +85,10 @@ class DailyActivityTest {
 		
 	}
 	
+	/**
+	 * testing sleepMinutes
+	 */
+	
 	@Test
 	void testsleepMinute() {
 		int expectedSleepMinutes=7;
@@ -84,6 +97,10 @@ class DailyActivityTest {
 		assertEquals(expectedSleepMinutes, da.getSleepMinute());
 		
 	}
+	
+	/**
+	 * testing glassWater
+	 */
 	
 	@Test
 	void testWaterGlass() {
@@ -94,6 +111,10 @@ class DailyActivityTest {
 		
 	}
 	
+	/**
+	 * testing ExerciseHours
+	 */
+	
 	@Test
 	void testExerciseHour() {
 		int expectedExcerciseHours=7;
@@ -102,6 +123,9 @@ class DailyActivityTest {
 		assertEquals(expectedExcerciseHours, da.getExerciseHour());
 		
 	}
+	/**
+	 * testing ExerciseMinute
+	 */
 	
 	@Test
 	void testExerciseMinute() {
@@ -112,6 +136,11 @@ class DailyActivityTest {
 		
 	}
 	
+	/**
+	 * testing Meditation Hours
+	 */
+	
+	
 	@Test
 	void testMeditationHour() {
 		int expectedMeditationHour=3;
@@ -120,6 +149,10 @@ class DailyActivityTest {
 		assertEquals(expectedMeditationHour, da.getMeditationHour());
 		
 	}
+	
+	/**
+	 * testing MeditationMinute
+	 */
 	
 	@Test
 	void testMeditationMinute() {
@@ -130,6 +163,10 @@ class DailyActivityTest {
 		
 	}
 	
+	/**
+	 * testing Walking Hours
+	 */
+	
 	@Test
 	void testWalkingHour() {
 		int expectedWalkingHour=2;
@@ -138,6 +175,10 @@ class DailyActivityTest {
 		assertEquals(expectedWalkingHour, da.getWalkingHour());
 		
 	}
+	
+	/**
+	 * testing Walking Minute
+	 */
 	
 	@Test
 	void testWalkingMinute() {
@@ -148,6 +189,10 @@ class DailyActivityTest {
 		
 	}
 	
+	/**
+	 * testing Extra Calories
+	 */
+	
 	@Test
 	void testExtraCalories() {
 		double expectedExtraCalories=120;
@@ -156,6 +201,10 @@ class DailyActivityTest {
 		assertEquals(expectedExtraCalories, da.getExtraCalories());
 		
 	}
+	
+	/**
+	 * testing Extra Protein
+	 */
 	
 	@Test
 	void testExtraProtein() {
@@ -166,6 +215,10 @@ class DailyActivityTest {
 		
 	}
 	
+	/**
+	 * testing Extra Fats
+	 */
+	
 	@Test
 	void testExtraFat() {
 		double expectedExtraProtein=60;
@@ -174,6 +227,10 @@ class DailyActivityTest {
 		assertEquals(expectedExtraProtein, da.getExtraProtein());
 		
 	}
+	
+	/**
+	 * testing Work Type
+	 */
 	
 	@Test
 	void testWorkType() {
@@ -184,6 +241,10 @@ class DailyActivityTest {
 		
 	}
 	
+	/**
+	 * testing Work Hours
+	 */
+	
 	@Test
 	void testWorkHour() {
 		int expectedWorkHour=8;
@@ -192,6 +253,10 @@ class DailyActivityTest {
 		assertEquals(expectedWorkHour, da.getWorkHour());
 		
 	}
+	
+	/**
+	 * testing Work Minutes
+	 */
 	
 	@Test
 	void testWorkMinute() {

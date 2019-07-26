@@ -15,7 +15,7 @@ import com.csis3275.Entities.Meals;
 
 /**
  * @author Charanpreet Singh
- *
+ * Testing Meals Object with getters and setters.
  */
 class MealsTest {
 	Meals m;
@@ -36,51 +36,82 @@ class MealsTest {
 		m=new Meals();
 	}
 
+	/**
+	 * testing instance
+	 */
 	@Test
 	void test_intance() {
 		assertNotNull(m);
 	}
 	
+
+	/**
+	 * testing id
+	 */
 	@Test
 	void test_id() {
 		m.setId(id);
 		assertEquals(id, m.getId());		
 	}
+
+	/**
+	 * testing title
+	 */
 	
 	@Test
 	void test_title() {
 		m.setTitle(title);
 		assertTrue(title.equalsIgnoreCase(m.getTitle()));		
 	}
-	
+
+	/**
+	 * testing readyInMinutes
+	 */
 	@Test
 	void test_readyInMinutes() {
 		m.setReadyInMinutes(readyInMinutes);
 		assertEquals(readyInMinutes, m.getReadyInMinutes());		
 	}
-	
+
+	/**
+	 * testing servings
+	 */
 	@Test
 	void test_servings() {
 		m.setServings(servings);
 		assertEquals(servings, m.getServings());		
 	}
-	
+
+	/**
+	 * testing calories
+	 */
 	@Test
 	void test_calories() {
 		m.setCalories(calories);
 		assertEquals(calories, m.getCalories());		
 	}
-	
+
+	/**
+	 * testing protein
+	 */
 	@Test
 	void test_protein() {
 		m.setProtein(protein);
 		assertEquals(protein, m.getProtein());		
 	}
+
+	/**
+	 * testing fat
+	 */
 	@Test
 	void test_fat() {
 		m.setFat(fat);
 		assertEquals(fat, m.getFat());		
 	}
+
+	/**
+	 * testing carbohydrates
+	 */
 	
 	@Test
 	void test_carbohydrates() {
