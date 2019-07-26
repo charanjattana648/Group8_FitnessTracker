@@ -708,6 +708,7 @@ public class UserGoals {
 		frame.getContentPane().add(btnAddValues);
 		
 		btnUpdateValues = new JButton("Update Values");
+		btnUpdateValues.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnUpdateValues.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(rdbtnStayFitPlan.isSelected()) {
@@ -776,7 +777,7 @@ public class UserGoals {
 				boduydao.updateBodydata(userDetails);
 			}
 		});
-		btnUpdateValues.setBounds(348, 480, 97, 25);
+		btnUpdateValues.setBounds(332, 472, 136, 33);
 		frame.getContentPane().add(btnUpdateValues);
 		
 	}
