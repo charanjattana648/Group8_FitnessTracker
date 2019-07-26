@@ -6,6 +6,11 @@ import org.junit.jupiter.api.Test;
 
 import com.csis3275.Entities.BodyMeasurements;
 
+/**
+ * Testing Entity Body Measurements
+ * @author Gurinder Singh 300289450
+ *
+ */
 class BodyMeasurementsTest {
 	
 	private BodyMeasurements body = new BodyMeasurements();

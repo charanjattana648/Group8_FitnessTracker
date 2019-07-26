@@ -17,6 +17,11 @@ import java.nio.charset.StandardCharsets;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 
+/**
+ * Post Workouts for admin and instructor
+ * @author Gurinder Singh 300289450
+ *
+ */
 public class PostWorkoutGUI {
 
 	private JFrame frame;
@@ -161,6 +166,10 @@ public class PostWorkoutGUI {
 		frame.getContentPane().add(btnViewWorkout);
 	}
 	
+	/**
+	 * Post the workouts to the spring boot service
+	 * @throws IOException
+	 */
 	public void postWorkout() throws IOException {
 		URL obj = new URL("http://localhost:8081/exercises");
 		HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
