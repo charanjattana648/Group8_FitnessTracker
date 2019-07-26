@@ -159,7 +159,7 @@ public class WorkoutsGUI {
 			}
 		});
 		btnDietPlan.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnDietPlan.setBounds(326, 390, 139, 30);
+		btnDietPlan.setBounds(241, 390, 139, 30);
 		frame.getContentPane().add(btnDietPlan);
 		
 		btnUserGoals = new JButton("User Goals");
@@ -169,7 +169,7 @@ public class WorkoutsGUI {
 			}
 		});
 		btnUserGoals.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnUserGoals.setBounds(526, 390, 139, 30);
+		btnUserGoals.setBounds(442, 390, 139, 30);
 		frame.getContentPane().add(btnUserGoals);
 		
 		if(currentUser[1].equalsIgnoreCase("User"))
