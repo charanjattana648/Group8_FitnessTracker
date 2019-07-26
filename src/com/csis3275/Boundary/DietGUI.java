@@ -189,22 +189,6 @@ public class DietGUI {
 		ArrayList<String> authorListCB=dI.getAuthorList();
 			
 		comboBoxMealType = new JComboBox(mealTypeListCB.toArray());
-		comboBoxMealType.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
-			}
-		});
-		comboBoxMealType.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(comboBoxMealType.getSelectedIndex()!=0)
-				{
-				dI.getFilteredMealTypeList(comboBoxMealType.getSelectedItem().toString());
-				}
-				
-				comboBoxMealType.setSelectedIndex(0);
-				comboBoxMealType.setSelectedIndex(0);
-				comboBoxMealType.setSelectedIndex(0);
-			}
-		});
 		comboBoxMealType.setBounds(80, 40, 114, 22);
 		UserPanel.add(comboBoxMealType);
 	  
@@ -278,6 +262,11 @@ public class DietGUI {
 			public void actionPerformed(ActionEvent arg0) {
 				isFiltered=false;
 				isOrder=false;
+				mealtypeSel="";
+				foodCategorySel="";
+				foodtypeSel="";
+				authorSel="";
+				
 				int count=0;
 				
 				if(comboBoxAscDesc.getSelectedIndex()==1)
@@ -298,29 +287,37 @@ public class DietGUI {
 					orderby=(String) comboBoxNutrients.getSelectedItem().toString();//+" ASC";
 					}
 				}
-				if(comboBoxAuthor.getSelectedItem()!="None")
-				{
-					authorSel=comboBoxAuthor.getSelectedItem().toString();
+				if(comboBoxMealType.getSelectedItem()!="None")
+				{							
 					isFiltered=true;
-				}
-				if(comboBoxFoodCategory.getSelectedItem()!="None")
-				{
-					isFiltered=true;
-					foodCategorySel=comboBoxFoodCategory.getSelectedItem().toString();
-					
+					mealtypeSel=comboBoxMealType.getSelectedItem().toString();
 				}
 				if(comboBoxFoodType.getSelectedItem()!="None")
 				{
+					comboBoxMealType.setSelectedIndex(0);
 					isFiltered=true;
 					foodtypeSel=comboBoxFoodType.getSelectedItem().toString();
 					System.out.println("c----"+mealtypeSel);
 					
 				}
-				if(comboBoxMealType.getSelectedItem()!="None")
-				{					
+				if(comboBoxAuthor.getSelectedItem()!="None")
+				{
+					comboBoxMealType.setSelectedIndex(0);
+					comboBoxFoodType.setSelectedIndex(0);
 					isFiltered=true;
-					mealtypeSel=comboBoxMealType.getSelectedItem().toString();
+					authorSel=comboBoxAuthor.getSelectedItem().toString();
 				}
+				if(comboBoxFoodCategory.getSelectedItem()!="None")
+				{
+					comboBoxAuthor.setSelectedIndex(0);
+					comboBoxMealType.setSelectedIndex(0);
+					comboBoxFoodType.setSelectedIndex(0);
+					isFiltered=true;
+					foodCategorySel=comboBoxFoodCategory.getSelectedItem().toString();
+					
+				}
+				
+			
 				
 				updateTable();
 			}
@@ -343,7 +340,6 @@ public class DietGUI {
 		UserPanel.add(btnRefresh_1);
 		
 		JLabel lblCaloriesNeeded = new JLabel("Calories Needed : ");
-		lblCaloriesNeeded.setVisible(false);
 		lblCaloriesNeeded.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		lblCaloriesNeeded.setBounds(41, 178, 153, 16);
 		UserPanel.add(lblCaloriesNeeded);
