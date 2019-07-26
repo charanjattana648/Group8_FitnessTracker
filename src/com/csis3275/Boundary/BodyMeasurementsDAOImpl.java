@@ -7,13 +7,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-
 import com.csis3275.Entities.BodyMeasurements;
-import com.csis3275.Entities.Diet;
 
 /**
  * BodyMeasurementsDAOImpl class
@@ -66,10 +60,7 @@ public class BodyMeasurementsDAOImpl implements IBodyMeasurementsDAO {
 			factory = DietDAOImpl.getFactory();
 			session = factory.openSession();
 			transaction = session.beginTransaction();
-			
-			String sql = "SELECT d FROM BodyMeasurements d";
-			userBodyList = session.createQuery(sql).list();
-			
+			userBodyList = session.getNamedQuery("getBodyDataList").list();			
 			transaction.commit();
 			
 			for(BodyMeasurements b : userBodyList) {
@@ -130,10 +121,7 @@ public class BodyMeasurementsDAOImpl implements IBodyMeasurementsDAO {
 			fx = DietDAOImpl.getFactory();
 			sx = fx.openSession();
 			tx = sx.beginTransaction();
-			//b=(BodyMeasurements) sx.getNamedQuery("getBodyDatabyEmail").setParameter("userEmail", userEmail).list().get(0);
 			bList = (ArrayList<BodyMeasurements>) sx.getNamedQuery("getBodyDatabyEmail").setParameter("userEmail", userEmail).list();
-
-			System.out.println(bList.size()+" ------------------------------------------------ ");
 			tx.commit();
 		} catch (HibernateException hx) {	
 			if(tx!=null)
@@ -149,5 +137,29 @@ public class BodyMeasurementsDAOImpl implements IBodyMeasurementsDAO {
 		return bList;
 	}
 	
+public void updateBodydata(BodyMeasurements body) {
+	SessionFactory sf = null;
+		Session session = null;
+		Transaction transaction = null;
+		
+		try {
+			sf = DietDAOImpl.getFactory();
+			session = sf.openSession();
+			transaction = session.beginTransaction();
+			
+			session.update(body);
+			transaction.commit();
+		}
+		catch(HibernateException hx) {
+			if(transaction != null) {
+				transaction.rollback();
+				System.err.println("Error: " + hx.getMessage());
+			}
+		}
+		finally {
+			sf.close();
+			session.close();
+		}
+	}
 
 }

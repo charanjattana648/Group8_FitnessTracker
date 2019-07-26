@@ -79,7 +79,7 @@ public class LoginRegisterGUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1372, 830);
+		frame.setBounds(100, 100, 1183, 769);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		

@@ -75,6 +75,7 @@ public class ProgressActivityGUI {
 	private JRadioButton rdbtnBargraph;
 	private JLabel lblCurrentCalNeeded;
 	private JLabel txtUnit ;
+	private JLabel lblCurrentDate;
 
 	/**
 	 * Launch the application.
@@ -177,10 +178,16 @@ public class ProgressActivityGUI {
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				ProgressActivity pa=getProgressData();
-				String newd=paI.saveProgress(pa);
-				CalculateCaloriesNeeded ccn=new CalculateCaloriesNeeded();
+				
 
+				if(txtCurrWeight.getText().isEmpty())
+				{
+					JOptionPane.showMessageDialog(null, "Please enter current Weight.");
+				}else
+				{
+					ProgressActivity pa=getProgressData();
+					String newd=paI.saveProgress(pa);
+					CalculateCaloriesNeeded ccn=new CalculateCaloriesNeeded();
 				if(!newd.isEmpty())
 				{
 				 double calneeded=ccn.calNeeded(txtCaloriesDifference.getText(), txtCalConsumed.getText(), txtCalBurned.getText(), currUser[0]);
@@ -200,6 +207,7 @@ public class ProgressActivityGUI {
 				}else {
 					JOptionPane.showMessageDialog(null, "Entry for "+pa.getDate()+" is already added you can update data.");
 				}
+				}
 				
 			}
 		});
@@ -210,8 +218,8 @@ public class ProgressActivityGUI {
 		lblDate.setBounds(567, 13, 56, 16);
 		userplanPanel.add(lblDate);
 		
-		JLabel lblCurrentDate = new JLabel("");
-		lblCurrentDate.setBounds(615, 13, 56, 16);
+		lblCurrentDate = new JLabel("");
+		lblCurrentDate.setBounds(615, 13, 119, 16);
 		userplanPanel.add(lblCurrentDate);
 		
 		JLabel lblUnits = new JLabel("Units :");
@@ -269,6 +277,7 @@ public class ProgressActivityGUI {
 		userplanPanel.add(lblCurrentWeight_1);
 		
 		txtCalNeededConsm = new JTextField();
+		txtCalNeededConsm.setEditable(false);
 		txtCalNeededConsm.setText("0");
 		txtCalNeededConsm.setColumns(10);
 		txtCalNeededConsm.setBounds(736, 48, 116, 22);
@@ -282,6 +291,11 @@ public class ProgressActivityGUI {
 		JButton btnUpdate = new JButton("Update");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+
+				if(txtCurrWeight.getText().isEmpty())
+				{
+					JOptionPane.showMessageDialog(null, "Please enter current Weight.");
+				}else {
 				ProgressActivity pa=getProgressData();
 				paI.updateProgress(pa);
 				CalculateCaloriesNeeded ccn=new CalculateCaloriesNeeded();
@@ -300,6 +314,7 @@ public class ProgressActivityGUI {
 				 }
 				 
 				 updateTable();
+				}
 			}
 		});
 		btnUpdate.setBounds(736, 125, 97, 25);
@@ -322,19 +337,20 @@ public class ProgressActivityGUI {
 				daList=daI.getDailyActivitiesList(currUser[0]);
 				  			
 					DefaultCategoryDataset dcd=new DefaultCategoryDataset();
-					for(int i=0;i<daList.size();++i)
+					int j=0;
+					for(int i=daList.size()-1;i>=0 && j<7;i--)
 					{
-						
+						j++;
 						double hr=daList.get(i).getWalkingHour();
 						double min=daList.get(i).getWalkingMinute();
-						double time=(hr*60)+min;
-					dcd.addValue(time, "minutes",daList.get(i).getDate());
+						double time=(hr)+(min*.01);
+					dcd.addValue(time, "Hours",daList.get(i).getDate());
 					}
 					if(rdbtnBargraph.isSelected())
 					{
-					updateBarChart("Walking Status", "Date", "minutes", dcd);
+					updateBarChart("Walking Status", "Date", "Hours", dcd);
 					}else {
-					updateLineChart("Walking Status", "Date", "minutes", dcd);
+					updateLineChart("Walking Status", "Date", "Hours", dcd);
 					}
 			}
 		});
@@ -347,18 +363,20 @@ public class ProgressActivityGUI {
 				
 				daList=daI.getDailyActivitiesList(currUser[0]);				  			
 					DefaultCategoryDataset dcd=new DefaultCategoryDataset();
-					for(int i=0;i<daList.size();++i)
+					int j=0;
+					for(int i=daList.size()-1;i>=0 && j<7;i--)
 					{
+						j++;
 						double hr=daList.get(i).getExerciseHour();
 						double min=daList.get(i).getExerciseMinute();
-						double time=(hr*60)+min;
-					dcd.addValue(time, "minutes",daList.get(i).getDate());
+						double time=(hr)+(min*.01);
+					dcd.addValue(time, "Hours",daList.get(i).getDate());
 					}
 					if(rdbtnBargraph.isSelected())
 					{
-					updateBarChart("Exercise Status", "Date", "minutes", dcd);
+					updateBarChart("Exercise Status", "Date", "Hours", dcd);
 					}else {
-					updateLineChart("Exercise Status", "Date", "minutes", dcd);
+					updateLineChart("Exercise Status", "Date", "Hours", dcd);
 					}
 			}
 		});
@@ -375,8 +393,10 @@ public class ProgressActivityGUI {
 			ArrayList<Double> calList=new ArrayList<Double>();
 			   calList=paI.getCaloriesConsumed(currUser[0]);				
 				DefaultCategoryDataset dcd=new DefaultCategoryDataset();
-				for(int i=0;i<calList.size();++i)
+				int j=0;
+				for(int i=calList.size()-1;i>=0 && j<7;i--)
 				{
+					j++;
 					System.out.println(calList.get(i)+"Calories Consumed");
 					
 				dcd.addValue(calList.get(i), "Calories Consumed",udI.getLastDPDates(currUser[0]).get(i));
@@ -396,21 +416,22 @@ public class ProgressActivityGUI {
 		btnSleepStatus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				daList=daI.getDailyActivitiesList(currUser[0]);
-	  			
+				daList=daI.getDailyActivitiesList(currUser[0]);	  			
 				DefaultCategoryDataset dcd=new DefaultCategoryDataset();
-				for(int i=daList.size()-1;i>0;i--)
+				int j=0;
+				for(int i=daList.size()-1;i>=0 && j<7;i--)
 				{
+					j++;
 					double hr=daList.get(i).getSleepHour();
 					double min=daList.get(i).getSleepMinute();
-					double time=(hr*60)+min;
-				dcd.addValue(time, "minutes",daList.get(i).getDate());
+					double time=(hr)+(min*.01);
+				dcd.addValue(time, "Hours",daList.get(i).getDate());
 				}
 				if(rdbtnBargraph.isSelected())
 				{
-				updateBarChart("Sleep Status", "Date", "minutes", dcd);
+				updateBarChart("Sleep Status", "Date", "Hours", dcd);
 				}else {
-				updateLineChart("Sleep Status", "Date", "minutes", dcd);
+				updateLineChart("Sleep Status", "Date", "Hours", dcd);
 				}
 				
 			}
@@ -427,15 +448,18 @@ public class ProgressActivityGUI {
 				bmList=(ArrayList<BodyMeasurements>) bmI.getBodyDataList();
 				DefaultCategoryDataset dcd=new DefaultCategoryDataset();
 				dcd.addValue(bmList.get(0).getWeight(),bmList.get(0).getWeightType() , "Initial Weight");
-				for(int i=0;i<paList.size() && i<6;i++)
-				{	
+				
+				int j=0;
+				for(int i=paList.size()-2;i>=0 && j<6;i--)
+				{
+					j++;	
 				dcd.addValue(paList.get(i).getCurrentWeight(), bmList.get(0).getWeightType(),paList.get(i).getDate());
 				}
 				if(rdbtnBargraph.isSelected())
 				{
-				updateBarChart("Weight Status", "Date", "Weight"+bmList.get(0).getWeightType() , dcd);
+				updateBarChart("Weight Status", "Date", "Weight "+bmList.get(0).getWeightType() , dcd);
 				}else {
-				updateLineChart("Weight Status", "Date", "Weight"+bmList.get(0).getWeightType() , dcd);
+				updateLineChart("Weight Status", "Date", "Weight "+bmList.get(0).getWeightType() , dcd);
 				}
 			}
 		});
@@ -456,6 +480,11 @@ public class ProgressActivityGUI {
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
+		
+		JLabel lblCalorieStatus = new JLabel("Calorie Status");
+		lblCalorieStatus.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCalorieStatus.setBounds(244, 287, 116, 21);
+		frame.getContentPane().add(lblCalorieStatus);
 		
 	
 		 updateTable();
@@ -530,6 +559,9 @@ public class ProgressActivityGUI {
 		txtPlanSelected.setText(bList.get(0).getFitnessPlanType());
 		txtGoalWeight.setText(bList.get(0).getUserGoalType());
 		txtUnit.setText(bList.get(0).getWeightType());
+		Date d=new Date();
+		SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy");
+		lblCurrentDate.setText(sdf.format(d));
 		if(bList.get(0).getFitnessPlanType().equalsIgnoreCase("Stay Fit Plan")){
 			
 		}else if(bList.get(0).getFitnessPlanType().equalsIgnoreCase("Weight Loss Plan"))
@@ -542,16 +574,16 @@ public class ProgressActivityGUI {
 		{			
 			 if(bList.get(0).getUserGoalType().contains("3 LB"))
 			 {
-				 txtCaloriesDifference.setText(""+3000);
+				 txtCaloriesDifference.setText(""+400);
 			 }else if(bList.get(0).getUserGoalType().contains("5 LB"))
 			 {
-				 txtCaloriesDifference.setText(""+5000);
+				 txtCaloriesDifference.setText(""+700);
 			 }
 			 else if(bList.get(0).getUserGoalType().contains("7 LB"))
 			 {
-				 txtCaloriesDifference.setText(""+7000);
+				 txtCaloriesDifference.setText(""+1000);
 			 }else {
-				 txtCaloriesDifference.setText(""+10000);
+				 txtCaloriesDifference.setText(""+1400);
 			 }
 		}
 		}	
@@ -564,19 +596,23 @@ public class ProgressActivityGUI {
 	 */
 	private void setCalDiff(ArrayList<BodyMeasurements> bList)
 	{
+		double calDiff=0;
 		 if(bList.get(0).getUserGoalType().contains("0.5 LB"))
 		 {
-			 txtCaloriesDifference.setText(""+300);
+			 calDiff=42;
+			
 		 }else if(bList.get(0).getUserGoalType().contains("1 LB"))
 		 {
-			 txtCaloriesDifference.setText(""+500);
+			 calDiff=70;
 		 }
 		 else if(bList.get(0).getUserGoalType().contains("1.5 LB"))
 		 {
-			 txtCaloriesDifference.setText(""+750);
+			 calDiff=110;
 		 }else {
-			 txtCaloriesDifference.setText(""+1000);
+			 calDiff=140;
 		 }		
+		 txtCaloriesDifference.setText(""+calDiff);
+		 
 	}
 	
 	/**

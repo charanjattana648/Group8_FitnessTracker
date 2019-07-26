@@ -108,6 +108,7 @@ public class UserGoals {
 	private JButton btnAddValues;
 	private JCheckBox chckbxNoProblems;
 	private JButton btnPostWorkout;
+	private JButton btnUpdateValues;
 	
 	
 	/**
@@ -149,7 +150,7 @@ public class UserGoals {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1189, 705);
+		frame.setBounds(100, 100, 1183, 769);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -705,6 +706,79 @@ public class UserGoals {
 		btnAddValues.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnAddValues.setBounds(331, 416, 137, 35);
 		frame.getContentPane().add(btnAddValues);
+		
+		btnUpdateValues = new JButton("Update Values");
+		btnUpdateValues.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnUpdateValues.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(rdbtnStayFitPlan.isSelected()) {
+					userDetails.setFitnessPlanType(rdbtnStayFitPlan.getText().toString());
+				}
+				else if(rdbtnWeightLossPlan.isSelected()) {
+					userDetails.setFitnessPlanType(rdbtnWeightLossPlan.getText().toString());
+					if(rdbtnLooseLb.isSelected()) {
+						userDetails.setUserGoalType(rdbtnLooseLb.getText().toString());
+					}
+					else if(rdbtnLooseLb_1.isSelected()) {
+						userDetails.setUserGoalType(rdbtnLooseLb_1.getText().toString());
+					}
+					else if(rdbtnLooseLb_2.isSelected()) {
+						userDetails.setUserGoalType(rdbtnLooseLb_2.getText().toString());
+					}
+					else if(rdbtnLooseLb_3.isSelected()) {
+						userDetails.setUserGoalType(rdbtnLooseLb_3.getText().toString());
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Please select a user goal type");
+					}
+				}
+				else if(rdbtnWeightGainPlan.isSelected()) {
+					userDetails.setFitnessPlanType(rdbtnWeightGainPlan.getText().toString());
+					if(rdbtnGainLb.isSelected()) {
+						userDetails.setUserGoalType(rdbtnGainLb.getText().toString());
+					}
+					else if(rdbtnGainLb_1.isSelected()) {
+						userDetails.setUserGoalType(rdbtnGainLb_1.getText().toString());
+					}
+					else if(rdbtnGainLb_2.isSelected()) {
+						userDetails.setUserGoalType(rdbtnGainLb_2.getText().toString());
+					}
+					else if(rdbtnGainLb_3.isSelected()) {
+						userDetails.setUserGoalType(rdbtnGainLb_3.getText().toString());
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Please select a user goal type");
+					}
+				}
+				else if(rdbtnExtremeWeightLoss.isSelected()) {
+					userDetails.setFitnessPlanType(rdbtnExtremeWeightLoss.getText().toString());
+					if(rdbtnEXLooseLb_1.isSelected()) {
+						userDetails.setUserGoalType(rdbtnEXLooseLb_1.getText().toString());
+					}
+					else if(rdbtnEXLooseLb_2.isSelected()) {
+						userDetails.setUserGoalType(rdbtnEXLooseLb_2.getText().toString());
+					}
+					else if(rdbtnExLooseLb_3.isSelected()) {
+						userDetails.setUserGoalType(rdbtnExLooseLb_3.getText().toString());
+					}
+					else if(rdbtnExLooseLb_4.isSelected()) {
+						userDetails.setUserGoalType(rdbtnExLooseLb_4.getText().toString());
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Please select a user goal type");
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Please select a fitness plan type");
+				}
+				
+				userDetails.setBmiValues(bmiValue);
+				userDetails.setUserEmail(currentUEmail[0]);
+				boduydao.updateBodydata(userDetails);
+			}
+		});
+		btnUpdateValues.setBounds(332, 472, 136, 33);
+		frame.getContentPane().add(btnUpdateValues);
 		
 	}
 }

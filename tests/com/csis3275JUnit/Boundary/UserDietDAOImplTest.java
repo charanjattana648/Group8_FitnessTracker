@@ -59,7 +59,7 @@ class UserDietDAOImplTest {
 	@Test
 	void test_userDietList()
 	{
-		String email="csis@gmail.com";
+		String email="user@gmail.com";
 		String date="06/29/2019";
 		ArrayList<UserDiet> userDietList=new ArrayList<UserDiet>();
 		userDietList=udI.getUserDietList(email, date);
@@ -72,7 +72,7 @@ class UserDietDAOImplTest {
 	@Test
 	void test_UserDietdate()
 	{		
-		String email="csis@gmail.com";
+		String email="user@gmail.com";
 		ArrayList<String>  dateList=new ArrayList<String>();
 		dateList=udI.getLastDPDates(email);
 		assertNotNull(dI);
@@ -112,7 +112,7 @@ class UserDietDAOImplTest {
 	@Test
 	void test_deleteUserDiet()
 	{ 	
-		ud=udI.getUserDiet(130);
+		ud=udI.getUserDiet(134);
 		udI.deleteUserDiet(ud);
 		assertNotNull(udI);
 		assertNotNull(dI);

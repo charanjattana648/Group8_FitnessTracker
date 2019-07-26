@@ -31,6 +31,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * WorkoutsGUI for getting and displaying workouts in the JTable
+ * @author Gurinder Singh 300289450
+ *
+ */
 public class WorkoutsGUI {
 
 	private JFrame frame;
@@ -76,7 +81,7 @@ public class WorkoutsGUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1027, 485);
+		frame.setBounds(100, 100, 1183, 769);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -154,7 +159,7 @@ public class WorkoutsGUI {
 			}
 		});
 		btnDietPlan.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnDietPlan.setBounds(272, 390, 139, 30);
+		btnDietPlan.setBounds(241, 390, 139, 30);
 		frame.getContentPane().add(btnDietPlan);
 		
 		btnUserGoals = new JButton("User Goals");
@@ -164,21 +169,26 @@ public class WorkoutsGUI {
 			}
 		});
 		btnUserGoals.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnUserGoals.setBounds(446, 390, 139, 30);
+		btnUserGoals.setBounds(442, 390, 139, 30);
 		frame.getContentPane().add(btnUserGoals);
 		
 		if(currentUser[1].equalsIgnoreCase("User"))
 		{
 			btnPostWorkouts.setVisible(false);
 			
+			
 		}else {
 			btnPostWorkouts.setVisible(true);
+			btnUserGoals.setVisible(false);
 		}
 	
 		updateTable();
 		
 	}
 	
+	/**
+	 * update the JTable with list of workouts
+	 */
 	@SuppressWarnings("rawtypes")
 	public void updateTable() {
 		
@@ -248,6 +258,9 @@ public class WorkoutsGUI {
 		table.getSelectionModel().addListSelectionListener(lsl);
 	}
 	
+	/**
+	 * Get all the Workouts from the spring boot service
+	 */
 	public void getExercises() {
 		String url = "http://localhost:8080/exercises";
 		try {
@@ -277,6 +290,11 @@ public class WorkoutsGUI {
 		}
 		
 	}
+	
+	/**
+	 * Vector object for displaying in the JTable
+	 * @return vector object
+	 */
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public ArrayList<Vector> getVector() {

@@ -18,6 +18,11 @@ import org.junit.jupiter.api.Test;
 import com.csis3275.Boundary.BodyMeasurementsDAOImpl;
 import com.csis3275.Entities.BodyMeasurements;
 
+/**
+ * Testing BodyMeasurementsDAOImpl 
+ * @author Gurinder Singh 300289450
+ *
+ */
 class BodyMeasurementsDAOImplTest {
 	
 	BodyMeasurementsDAOImpl bodyDao;
@@ -77,7 +82,7 @@ class BodyMeasurementsDAOImplTest {
 	@Test
 	void testGetBody()
 	{
-		int id = 116;
+		int id = 131;
 	    body = bodyDao.getBodyData(id);
 		assertNotNull(body);
 	    assertEquals(id, body.getId());
