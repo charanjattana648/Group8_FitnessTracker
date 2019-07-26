@@ -260,7 +260,7 @@ public class WorkoutsGUI {
 	}
 	
 	public void getExercises() {
-		String url = "http://localhost:8080/exercises";
+		String url = "http://localhost:8081/exercises";
 		try {
 			URL obj = new URL(url);
 			HttpURLConnection conn = (HttpURLConnection) obj.openConnection();

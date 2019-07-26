@@ -162,7 +162,7 @@ public class PostWorkoutGUI {
 	}
 	
 	public void postWorkout() throws IOException {
-		URL obj = new URL("http://localhost:8080/exercises");
+		URL obj = new URL("http://localhost:8081/exercises");
 		HttpURLConnection conn = (HttpURLConnection) obj.openConnection();
 		
 		conn.setRequestMethod("POST");
