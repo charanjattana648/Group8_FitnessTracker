@@ -79,7 +79,7 @@ public class LoginRegisterGUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1372, 830);
+		frame.setBounds(100, 100, 1183, 769);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -165,7 +165,8 @@ public class LoginRegisterGUI {
 					if(isMatched)
 					{
 						System.out.println("Instructor Login Successful");	
-						UserGoals.main(currEmail);
+						//UserGoals.main(currEmail);
+						WorkoutsGUI.main(currEmail);
 					}else {
 						JOptionPane.showMessageDialog(null, "Sorry,Please try Again");
 					}
@@ -174,7 +175,8 @@ public class LoginRegisterGUI {
 					if(isMatched)
 					{
 						System.out.println("Admin Login Successful");	
-						UserGoals.main(currEmail);
+						//UserGoals.main(currEmail);
+						WorkoutsGUI.main(currEmail);
 					}else {
 						JOptionPane.showMessageDialog(null, "Sorry,Please try Again");
 					}

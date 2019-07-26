@@ -1,18 +1,13 @@
 package com.csis3275.Boundary;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-
 import com.csis3275.Entities.BodyMeasurements;
-import com.csis3275.Entities.Diet;
 
 /**
  * BodyMeasurementsDAOImpl class
@@ -65,10 +60,7 @@ public class BodyMeasurementsDAOImpl implements IBodyMeasurementsDAO {
 			factory = DietDAOImpl.getFactory();
 			session = factory.openSession();
 			transaction = session.beginTransaction();
-			
-			String sql = "SELECT d FROM BodyMeasurements d";
-			userBodyList = session.createQuery(sql).list();
-			
+			userBodyList = session.getNamedQuery("getBodyDataList").list();			
 			transaction.commit();
 			
 			for(BodyMeasurements b : userBodyList) {
@@ -118,5 +110,31 @@ public class BodyMeasurementsDAOImpl implements IBodyMeasurementsDAO {
 		return b;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public ArrayList<BodyMeasurements> getBodyDatabyEmail(String userEmail) {
+		SessionFactory fx = null;
+		Session sx = null;
+		Transaction tx = null;
+		ArrayList<BodyMeasurements> bList=new ArrayList<BodyMeasurements>();
+		BodyMeasurements b;
+		try {
+			fx = DietDAOImpl.getFactory();
+			sx = fx.openSession();
+			tx = sx.beginTransaction();
+			bList = (ArrayList<BodyMeasurements>) sx.getNamedQuery("getBodyDatabyEmail").setParameter("userEmail", userEmail).list();
+			tx.commit();
+		} catch (HibernateException hx) {	
+			if(tx!=null)
+		{
+			tx.rollback();
+		}
+		System.err.println(hx.getMessage());
+		} finally {
+			fx.close();
+			sx.close();
+		}
 
+		return bList;
+	}
+	
 }

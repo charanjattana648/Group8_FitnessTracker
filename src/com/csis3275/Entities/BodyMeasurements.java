@@ -2,9 +2,11 @@ package com.csis3275.Entities;
 
 import java.util.Vector;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -14,13 +16,16 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="userBodyMeasurements")
+@NamedQuery(name="getBodyDatabyEmail",query="select b from BodyMeasurements b where b.userEmail=:userEmail")
+@NamedQuery(name="getBodyDataList",query="select b from BodyMeasurements b")
+@Table(name="BodyMeasurements")
 
 public class BodyMeasurements {
 	
 	@Id
 	@GeneratedValue
 	private int id;
+	@Column(name="userEmail",nullable=false,unique=true)
 	private String userEmail;
 	private String unit;
 	private double heightFeets; //user height in feet
