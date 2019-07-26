@@ -7,6 +7,11 @@ import org.junit.jupiter.api.Test;
 import com.csis3275.Controller.CalculateBMI;
 import com.csis3275.Entities.BodyMeasurements;
 
+/**
+ * Testing Controller BMICalculator
+ * @author Gurinder Singh 300289450
+ *
+ */
 class BMICalculatorTest {
 	
 	BodyMeasurements body = new BodyMeasurements();
