@@ -17,6 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @NamedQuery(name="getBodyDatabyEmail",query="select b from BodyMeasurements b where b.userEmail=:userEmail")
+@NamedQuery(name="getBodyDataList",query="select b from BodyMeasurements b")
 @Table(name="BodyMeasurements")
 
 public class BodyMeasurements {

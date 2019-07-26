@@ -131,7 +131,7 @@ class DietDAOImplTest {
 	@Test
 	void test_deleteMeal()
 	{
-		d=dI.getDiet(129);		
+		d=dI.getDiet(124);		
 		assertNotNull(dI.getDiet(d.getId()));
 		dI.deleteDiet(d);
 		assertNotNull(dI);
@@ -144,13 +144,13 @@ class DietDAOImplTest {
 	@Test
 	void test_UpdateDiet()
 	{
-		String foodName="Shahi Paneer";
+		String foodName="Paneer Butter Masala";
 		d=dI.getDiet(85);
 		d.setFoodName(foodName);
 		dI.updateDiet(d);
 		assertNotNull(dI);
 	    assertNotNull(d);
-	    assertEquals(foodName, dI.getDiet(82).getFoodName());
+	    assertEquals(foodName, dI.getDiet(85).getFoodName());
 	}
 	/**
 	 * testing mealTypeList method.

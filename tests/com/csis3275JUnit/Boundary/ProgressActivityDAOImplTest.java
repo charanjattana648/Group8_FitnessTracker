@@ -37,7 +37,7 @@ class ProgressActivityDAOImplTest {
 	DietDAOImpl dI;
 	UserDiet ud;
 	UserDietDAOImpl udI;
-	String userEmail="csis@gmail.com";
+	String userEmail="user@gmail.com";
 	SessionFactory factory = null;
 
 	/**
