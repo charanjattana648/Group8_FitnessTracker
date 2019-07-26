@@ -147,6 +147,15 @@ public class WorkoutsGUI {
 		btnPostWorkouts.setBounds(44, 390, 139, 30);
 		frame.getContentPane().add(btnPostWorkouts);
 		
+		JButton btnViewDietPlan = new JButton("View Diet Plan");
+		btnViewDietPlan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DietGUI.main(currentUser);
+				
+			}
+		});
+		btnViewDietPlan.setBounds(186, 390, 106, 30);
+		frame.getContentPane().add(btnViewDietPlan);
 		btnDietPlan = new JButton("Diet Plan");
 		btnDietPlan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
