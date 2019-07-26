@@ -8,21 +8,34 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.csis3275.Entities.DailyActivity;
-
+/**
+ * 
+ * @author harpreet kaur
+ * student id : 300288768
+ */
 public class DailyActivityDAOImpl {
+	
 	
 	DietDAOImpl dI=new DietDAOImpl();
 	
-	public void addDailyActivities(DailyActivity da) {
+	/**
+	 * 
+	 * @param da instance of DailyActivity class
+	 * @return id  of user
+	 * In this method the user can add record of daily Activities. 
+	 */
+	
+	public int addDailyActivities(DailyActivity da) {
 		
 		SessionFactory fx=null;
 		Session sx=null;
 		Transaction tx=null;
+		int id=0;
 		try {
 		fx=dI.getFactory();
 		sx=fx.openSession();
 		tx=sx.beginTransaction();		
-		sx.save(da);
+	    id=(int) sx.save(da);
 		tx.commit();
 		
 		}catch(HibernateException ex) {
@@ -35,36 +48,50 @@ public class DailyActivityDAOImpl {
 			fx.close();
 			sx.close();
 		}
-		
-	}
-public DailyActivity getDailyActivities(String date,String email) {
-		
-		SessionFactory fx=null;
-		Session sx=null;
-		Transaction tx=null;
-		DailyActivity da=new DailyActivity();
-		try {
-		fx=dI.getFactory();
-		sx=fx.openSession();
-		tx=sx.beginTransaction();		
-		da=(DailyActivity) sx.getNamedQuery("getDailyActivityQuery").setParameter("currdate", date).setParameter("curremail", email);
-		tx.commit();
-		
-		}catch(HibernateException ex) {
-			if(tx!=null) {
-				tx.rollback();
-			}
-			System.err.println(ex.getMessage());
-			
-		}finally {
-			fx.close();
-			sx.close();
-		}
-		return da;
+		return id;
 		
 	}
 	
-
+	/**
+	 * 
+	 * @param date  the current date when daily activity is added
+	 * @param email of user
+	 * @return daList the list of daily activities by date and email of user.
+	 */
+public ArrayList<DailyActivity> getDailyActivities(String date,String email) {
+	
+	SessionFactory fx=null;
+	Session sx=null;
+	Transaction tx=null;
+	ArrayList<DailyActivity> daList=new ArrayList<DailyActivity>();
+	
+	try {
+	fx=dI.getFactory();
+	sx=fx.openSession();
+	tx=sx.beginTransaction();		
+	daList=(ArrayList<DailyActivity>) sx.getNamedQuery("getDailyActivityQuery").setParameter("currdate", date).setParameter("curremail", email).list();
+	tx.commit();
+	
+	}catch(HibernateException ex) {
+		if(tx!=null) {
+			tx.rollback();
+		}
+		System.err.println(ex.getMessage());
+		
+	}finally {
+		fx.close();
+		sx.close();
+	}
+	return daList;
+	
+		
+	}
+	
+    /**
+     * 
+     * @param email of user
+     * @return daList the list of daily activities by email of user
+     */
 
 public ArrayList<DailyActivity> getDailyActivitiesList(String email) {
 		
@@ -77,7 +104,7 @@ public ArrayList<DailyActivity> getDailyActivitiesList(String email) {
 		fx=dI.getFactory();
 		sx=fx.openSession();
 		tx=sx.beginTransaction();		
-		daList=(ArrayList<DailyActivity>) sx.getNamedQuery("getDailyActivityListQuery").setParameter("curremail", email).list();
+		daList=(ArrayList<DailyActivity>) sx.getNamedQuery("getDailyActivityListQuery").setParameter("curremail", email).setMaxResults(7).list();
 		tx.commit();
 		
 		}catch(HibernateException ex) {

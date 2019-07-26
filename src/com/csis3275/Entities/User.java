@@ -42,7 +42,7 @@ public class User {
 	 * @param userGender   Gender Of User
 	 * @param userEmail    EmailAddress of user
 	 * @param userPassword  Password of user
-	 * @param isInstructor   Type of user(user,Instructor or Admin)
+	 * @param isInstructor   Type of user(user,Instructor)
 	 */
 	
 	public User(String userFirstName, String userLastName, int userAge, String userGender, String userEmail,
