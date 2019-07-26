@@ -56,7 +56,7 @@ class DailyActivityDAOImplTest {
 
 	public void addDailyActivity() {
 		d.setId(5);
-		d.setDate("07/24/2019");
+		d.setDate("07/26/2019");
 		d.setUserEmail("user@gmail.com ");
 		d.setSleepHour(6);
 		d.setSleepMinute(35);
